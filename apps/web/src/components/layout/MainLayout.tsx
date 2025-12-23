@@ -19,15 +19,14 @@ import {
 } from "@/components/ui/breadcrumb";
 import { SidebarInset, SidebarProvider, useSidebar } from "@/components/sidebar/sidebar";
 import PageHeader from "@/components/layout/header/page-header";
-import { MemoryProvider } from "@/contexts/MemoryContext";
 
 import { navigation } from "@/hooks/useNavigation";
 import { usePromptById } from "@/hooks/usePrompt";
 import { testcasesApi } from "@/api/testcases/testcases.api";
 import { useNotificationById } from "@/hooks/useNotificationById";
 import { promptApi } from "@/api/prompt";
-import { TestCaseResponse } from "@/types/TestСase";
-import { UserType } from "@/types/User";
+import type { TestCaseResponse } from "@/types/TestСase";
+import type { UserType } from "@/types/User";
 import { CookiesPopover } from "@/components/popovers/CookiesPopover";
 import { useDeviceOrientation } from "@/hooks/useDeviceOrientation";
 import Phone from "@/assets/phone.svg";
@@ -359,13 +358,11 @@ function LayoutContent({ user }: { user: UserType }) {
 
 export default function MainLayout({ user }: { user: UserType }) {
 	return (
-		<MemoryProvider>
-			<PromptStatusProvider>
-				<SidebarProvider>
-					<LayoutContent user={user} />
-				</SidebarProvider>
-			</PromptStatusProvider>
-		</MemoryProvider>
+		<PromptStatusProvider>
+			<SidebarProvider>
+				<LayoutContent user={user} />
+			</SidebarProvider>
+		</PromptStatusProvider>
 	);
 }
 

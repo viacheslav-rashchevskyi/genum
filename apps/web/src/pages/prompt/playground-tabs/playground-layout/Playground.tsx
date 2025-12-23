@@ -1,31 +1,29 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useAuth } from "@/hooks/useAuth";
-import { Options, usePromptById } from "@/hooks/usePrompt";
+import { Loader2 } from "lucide-react";
+import clsx from "clsx";
+import type { Options } from "@/hooks/usePrompt";
+import { usePromptById } from "@/hooks/usePrompt";
 import TextEditor from "@/pages/prompt/playground-tabs/playground-layout/prompt-editor/TextEditor";
-import OutputBlock, {
-	UpdateExpected,
-} from "@/pages/prompt/playground-tabs/playground-layout/outputs/Output";
+import type { UpdateExpected } from "@/pages/prompt/playground-tabs/playground-layout/outputs/Output";
+import OutputBlock from "@/pages/prompt/playground-tabs/playground-layout/outputs/Output";
 import { useToast } from "@/hooks/useToast";
-import { AuditData } from "@/types/audit";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { useRunPrompt, PromptResponse } from "@/hooks/useRunPrompt";
+import type { PromptResponse } from "@/hooks/useRunPrompt";
+import { useRunPrompt } from "@/hooks/useRunPrompt";
 import { Button } from "@/components/ui/button";
 import SettingsBar from "@/pages/prompt/playground-tabs/playground-layout/settings-block/SettingsBar";
-import { Loader2 } from "lucide-react";
 import useQueryWithAuth from "@/hooks/useQueryWithAuth";
 import { TestcaseAssertionModal } from "@/components/dialogs/TestcaseAssertionDialog";
-import { Model } from "@/types/AIModel";
 import useMutationWithAuth from "@/hooks/useMutationWithAuth";
-import { TestCaseResponse } from "@/types/TestСase";
 import useAuditDataModal from "@/hooks/useAuditDataModal";
 import AuditResultsModal from "@/components/dialogs/AuditResultsDialog";
 import PromptDiff from "@/components/dialogs/PromptDiffDialog";
 import { InputTextArea } from "@/pages/prompt/playground-tabs/playground-layout/InputTextArea";
 import { useSidebar } from "@/components/sidebar/sidebar";
-import clsx from "clsx";
-import { useMemory } from "@/contexts/MemoryContext";
+import type { AuditData } from "@/types/audit";
+import type { Model } from "@/types/AIModel";
+import type { TestCaseResponse } from "@/types/TestСase";
 import { usePromptStatus } from "@/contexts/PromptStatusContext";
 import {
 	usePlaygroundContent,
@@ -84,9 +82,6 @@ export default function Playground() {
 		setCurrentAssertionType,
 		resetForNewTestcase,
 		clearAllState,
-		setSelectedMemoryId,
-		setSelectedMemoryKeyName,
-		setPersistedMemoryId,
 	} = usePlaygroundActions();
 	const {
 		outputContent: storeOutputContent,
@@ -95,7 +90,6 @@ export default function Playground() {
 	} = usePlaygroundContent();
 	const { currentAssertionType } = usePlaygroundTestcase();
 	const { modalOpen, status, wasRun, isTestcaseLoaded } = usePlaygroundUI();
-	const { currentMemoryKey, setCurrentMemoryKey } = useMemory();
 	const get = usePlaygroundStore.getState;
 
 	const [, setIsUncommitted] = useState(false);
@@ -127,7 +121,6 @@ export default function Playground() {
 	const [searchParams] = useSearchParams();
 	const testcaseId = searchParams.get("testcaseId");
 	const queryClient = useQueryClient();
-	const { getAccessTokenSilently } = useAuth();
 	const { setAuditDataModal } = useAuditDataModal();
 	const navigate = useNavigate();
 
@@ -138,10 +131,9 @@ export default function Playground() {
 	useEffect(() => {
 		return () => {
 			clearAllState();
-			setCurrentMemoryKey("");
 			setFlags({ clearedOutput: null });
 		};
-	}, [clearAllState, setCurrentMemoryKey, setFlags]);
+	}, [clearAllState, setFlags]);
 
 	useEffect(() => {
 		setActivePromptId(promptId);
@@ -169,14 +161,6 @@ export default function Playground() {
 		onError: (err) => {},
 	});
 
-	const memoriesQuery = useQueryWithAuth({
-		keys: ["memoriesForPromt", String(promptId || "none")],
-		enabled: !!promptId,
-		queryFn: async () => {
-			if (!promptId) throw new Error("Prompt ID is required");
-			return await promptApi.getMemories(promptId);
-		},
-	});
 
 	const { runPrompt, result: outputContent, loading: runLoading } = useRunPrompt();
 
@@ -208,20 +192,12 @@ export default function Playground() {
 
 		if (prevTestcaseId && (!currentTestcaseId || prevTestcaseId !== currentTestcaseId)) {
 			resetForNewTestcase();
-			setCurrentMemoryKey("");
-			setPersistedMemoryId("");
-			setSelectedMemoryId("");
-			setSelectedMemoryKeyName("");
 		}
 
 		prevTestcaseIdRef.current = currentTestcaseId;
 	}, [
 		testcaseId,
 		resetForNewTestcase,
-		setCurrentMemoryKey,
-		setPersistedMemoryId,
-		setSelectedMemoryId,
-		setSelectedMemoryKeyName,
 	]);
 
 	useEffect(() => {
@@ -266,68 +242,6 @@ export default function Playground() {
 		setFlags,
 	]);
 
-	const prevTestcaseMemoryIdRef = useRef<number | null | undefined>(undefined);
-	const prevTestcaseIdForMemoryRef = useRef<string | null>(null);
-
-	const { persistedMemoryId, selectedMemoryId } = usePlaygroundTestcase();
-
-	useEffect(() => {
-		if (testcase) {
-			const testcaseMemoryId = testcase.memoryId;
-			const prevMemoryId = prevTestcaseMemoryIdRef.current;
-			const prevTestcaseId = prevTestcaseIdForMemoryRef.current;
-			const currentTestcaseId = testcaseId;
-
-			const isNewTestcase = prevTestcaseId !== currentTestcaseId;
-
-			if (testcaseMemoryId) {
-				const memoryIdString = String(testcaseMemoryId);
-
-				if (persistedMemoryId !== memoryIdString) {
-					if (memoriesQuery.data?.memories) {
-						const memory = memoriesQuery.data.memories.find(
-							(item: any) => item.id === testcaseMemoryId,
-						);
-
-						if (memory) {
-							setPersistedMemoryId(memoryIdString);
-							setSelectedMemoryId(memoryIdString);
-							setSelectedMemoryKeyName(memory.key);
-							setCurrentMemoryKey(memoryIdString);
-							prevTestcaseMemoryIdRef.current = testcaseMemoryId;
-						}
-					} else {
-						// Don't update prevMemoryId yet - wait for memories to load
-						return;
-					}
-				} else {
-					prevTestcaseMemoryIdRef.current = testcaseMemoryId;
-				}
-			} else if (!testcaseMemoryId) {
-				if (isNewTestcase || (prevMemoryId !== undefined && prevMemoryId !== null)) {
-					if (persistedMemoryId || selectedMemoryId) {
-						setPersistedMemoryId("");
-						setSelectedMemoryId("");
-						setSelectedMemoryKeyName("");
-						setCurrentMemoryKey("");
-					}
-				}
-				prevTestcaseMemoryIdRef.current = testcaseMemoryId;
-			}
-
-			prevTestcaseIdForMemoryRef.current = currentTestcaseId;
-		}
-	}, [
-		testcase?.memoryId,
-		testcaseId,
-		memoriesQuery.data?.memories,
-		persistedMemoryId,
-		selectedMemoryId,
-		setPersistedMemoryId,
-		setSelectedMemoryId,
-		setSelectedMemoryKeyName,
-		setCurrentMemoryKey,
-	]);
 
 	useEffect(() => {
 		if (prompt?.prompt) {
@@ -706,9 +620,11 @@ export default function Playground() {
 		setFlags({ clearedOutput: null });
 
 		try {
+			const { selectedMemoryId } = usePlaygroundStore.getState();
+
 			const runParams = {
 				question: inputContent,
-				...(currentMemoryKey && { memoryId: Number(currentMemoryKey) }),
+				...(selectedMemoryId && { memoryId: Number(selectedMemoryId) }),
 			};
 
 			if (!testcaseId) {

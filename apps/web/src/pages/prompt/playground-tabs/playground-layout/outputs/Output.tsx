@@ -35,11 +35,9 @@ import {
 } from "@/components/ui/select";
 import { usePromptById } from "@/hooks/usePrompt";
 import debounce from "lodash.debounce";
-import useQueryWithAuth from "@/hooks/useQueryWithAuth";
 import clsx from "clsx";
 import MemoryKey from "../../memory/MemoryKey";
 import AssertionPopover from "@/components/popovers/AssertionPopover";
-import { useMemory } from "@/contexts/MemoryContext";
 
 export interface UpdateExpected {
 	answer: string;
@@ -250,25 +248,14 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 		inputContent: inputValue,
 		outputContent: content,
 		expectedOutput: initialExpectedContent,
-		currentExpectedThoughts,
 	} = usePlaygroundContent();
 	const {
 		setExpectedOutput,
 		clearOutput,
 		setCurrentAssertionType,
 		setAssertionValue,
-		setSelectedMemoryId,
-		setSelectedMemoryKeyName,
-		setPersistedMemoryId,
 	} = usePlaygroundActions();
-	const {
-		currentAssertionType,
-		assertionValue,
-		selectedMemoryId,
-		selectedMemoryKeyName,
-		persistedMemoryId,
-	} = usePlaygroundTestcase();
-	const { setCurrentMemoryKey } = useMemory();
+	const { currentAssertionType, assertionValue, selectedMemoryId } = usePlaygroundTestcase();
 
 	const isShowTunePrompt = !!onPromptUpdate;
 	const queryClient = useQueryClient();
@@ -280,7 +267,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 	const { toast } = useToast();
 	const [modifiedValue, setModifiedValue] = useState(initialExpectedContent?.answer || "");
 	const [isOpenAssertion, setIsOpenAssertion] = useState(false);
-	const [isOpenMemory, setIsOpenMemory] = useState(false);
 	const [isPopupOpen, setIsPopupOpen] = useState(false);
 	const [expectedMetrics, setExpectedMetrics] = useState<PromptResponse | undefined>(
 		initialExpectedContent ?? undefined,
@@ -301,15 +287,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 		},
 	});
 
-	const memoriesQuery = useQueryWithAuth({
-		keys: ["memoriesForPromt", String(promptId || "none")],
-		enabled: !!promptId,
-		queryFn: async () => {
-			if (!promptId) throw new Error("Prompt ID is required");
-			return await promptApi.getMemories(promptId);
-		},
-	});
-
 	const prevPromptIdRef = useRef<number | undefined>(promptId);
 	const prevTestcaseIdRef = useRef<string | null>(testcaseId);
 
@@ -318,9 +295,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 		const currentPromptId = promptId;
 
 		if (prevPromptId !== undefined && prevPromptId !== currentPromptId) {
-			setSelectedMemoryId("");
-			setSelectedMemoryKeyName("");
-			setPersistedMemoryId("");
 			if (!testcaseId) {
 				setExpectedOutput(null);
 				setModifiedValue("");
@@ -332,9 +306,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 	}, [
 		promptId,
 		testcaseId,
-		setSelectedMemoryId,
-		setSelectedMemoryKeyName,
-		setPersistedMemoryId,
 		setExpectedOutput,
 	]);
 
@@ -430,53 +401,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 		[promptId, currentAssertionType, updatePromptMutation, queryClient, toast],
 	);
 
-	useEffect(() => {
-		if (memoriesQuery.data?.memories) {
-			if (selectedMemoryKeyName) {
-				const memoryExists = memoriesQuery.data.memories.some(
-					(item: any) => item.key === selectedMemoryKeyName,
-				);
-				if (!memoryExists) {
-					setSelectedMemoryKeyName("");
-					setSelectedMemoryId("");
-					setPersistedMemoryId("");
-				}
-			}
-
-			if (persistedMemoryId && !selectedMemoryKeyName) {
-				const memory = memoriesQuery.data.memories.find(
-					(item: any) => item.id === Number(persistedMemoryId),
-				);
-				if (!memory) {
-					setPersistedMemoryId("");
-					setSelectedMemoryId("");
-				}
-			}
-		}
-	}, [
-		memoriesQuery.data?.memories,
-		selectedMemoryKeyName,
-		persistedMemoryId,
-		setSelectedMemoryKeyName,
-		setSelectedMemoryId,
-		setPersistedMemoryId,
-	]);
-
-	const displayMemoryName = useMemo(() => {
-		if (selectedMemoryKeyName) {
-			return selectedMemoryKeyName;
-		}
-
-		if (persistedMemoryId && memoriesQuery.data?.memories) {
-			const memory = memoriesQuery.data.memories.find(
-				(item: any) => item.id === Number(persistedMemoryId),
-			);
-			return memory?.key || "";
-		}
-
-		return "";
-	}, [selectedMemoryKeyName, persistedMemoryId, memoriesQuery.data?.memories]);
-
 	const handleAssertionTypeChange = (value: string) => {
 		setCurrentAssertionType(value);
 
@@ -505,35 +429,6 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 			);
 		}
 	};
-
-	const handleMemoryKeyChange = useCallback(
-		(memoryId: string) => {
-			setSelectedMemoryId(memoryId);
-			if (memoryId) {
-				setPersistedMemoryId(memoryId);
-				if (memoriesQuery.data?.memories) {
-					const memory = memoriesQuery.data.memories.find(
-						(item: any) => item.id === Number(memoryId),
-					);
-					if (memory) {
-						setSelectedMemoryKeyName(memory.key);
-					}
-				}
-			} else {
-				setPersistedMemoryId("");
-				setSelectedMemoryKeyName("");
-			}
-
-			setCurrentMemoryKey(memoryId);
-		},
-		[
-			setSelectedMemoryId,
-			setPersistedMemoryId,
-			memoriesQuery.data?.memories,
-			setSelectedMemoryKeyName,
-			setCurrentMemoryKey,
-		],
-	);
 
 	const hasValidOutput = !!content?.answer;
 
@@ -657,41 +552,7 @@ const OutputBlock: React.FC<OutputBlockProps> = ({
 				<div className="flex w-full items-center justify-between">
 					<CardTitle className="text-sm font-medium">Output</CardTitle>
 					<div className="flex flex-row transition-all pr-6">
-						<Popover open={isOpenMemory} onOpenChange={setIsOpenMemory}>
-							<TooltipProvider>
-								<Tooltip>
-									<TooltipTrigger asChild>
-										<PopoverTrigger asChild>
-											<button className="w-[130px] h-[32px] px-3 rounded-md transition-colors flex items-center gap-2 hover:bg-muted/20">
-												<h2 className="text-[#18181B] dark:text-[#FFFFFF] text-[12px] not-italic font-bold flex-shrink-0">
-													Memory:
-												</h2>
-												<span className="flex-1 min-w-0 text-[#71717A] dark:text-[#FFFFFFBF] text-[12px] font-normal truncate">
-													{displayMemoryName || "Select"}
-												</span>
-											</button>
-										</PopoverTrigger>
-									</TooltipTrigger>
-									<TooltipContent>
-										<p>Choose extra runtime context</p>
-									</TooltipContent>
-								</Tooltip>
-							</TooltipProvider>
-							<PopoverContent className="w-[400px] rounded-xl p-4" align="start">
-								<div className="space-y-4">
-									<h3 className="text-[#09090B] dark:text-[#FFFFFF] text-[14px] font-bold">
-										Memory
-									</h3>
-									{promptId && (
-										<MemoryKey
-											promptId={promptId}
-											onMemoryKeyChange={handleMemoryKeyChange}
-											selectedMemoryId={persistedMemoryId}
-										/>
-									)}
-								</div>
-							</PopoverContent>
-						</Popover>
+						{promptId && <MemoryKey promptId={promptId} />}
 
 						<Popover open={isOpenAssertion} onOpenChange={setIsOpenAssertion}>
 							<TooltipProvider>
