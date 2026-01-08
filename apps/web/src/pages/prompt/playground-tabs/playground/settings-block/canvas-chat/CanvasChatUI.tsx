@@ -43,27 +43,25 @@ const CanvasChatUI: React.FC<CanvasChatUIProps> = ({
 
 	return (
 		<div className="flex flex-col h-full relative overflow-x-visible">
-			{isOpen && (
-				<>
-					{!hasMessages ? (
-						<div
-							ref={messagesRef}
-							className="flex flex-col flex-grow justify-center gap-3 mt-3 mb-6 overflow-y-auto"
-							style={{
-								maxHeight: `calc(75vh - ${inputHeight + 300}px)`,
-							}}
-						>
-							<DefaultOptions onOptionClick={sendMessageWithText} />
-						</div>
-					) : (
-						<MessagesList
-							messages={messages}
-							isLoading={isLoading}
-							messagesRef={messagesRef}
-							inputHeight={inputHeight}
-						/>
-					)}
-				</>
+			{isOpen && !hasMessages ? (
+				<div
+					ref={messagesRef}
+					className="flex flex-col flex-grow justify-center gap-3 mt-3 mb-6 overflow-y-auto"
+					style={{
+						maxHeight: `calc(75vh - ${inputHeight + 300}px)`,
+					}}
+				>
+					<DefaultOptions onOptionClick={sendMessageWithText} />
+				</div>
+			) : (
+				isOpen && (
+					<MessagesList
+						messages={messages}
+						isLoading={isLoading}
+						messagesRef={messagesRef}
+						inputHeight={inputHeight}
+					/>
+				)
 			)}
 
 			<ChatInput
