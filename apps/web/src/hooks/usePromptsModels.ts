@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import type { ResponseModelConfig } from "@/types/AIModel";
 import { promptApi } from "@/api/prompt";
-import type { ModelConfig } from "@/api/prompt";
 
 // Define types for model and model configuration
 interface Model {
@@ -42,18 +41,12 @@ export function usePromptsModels() {
 		}
 	}, []);
 
-	const getModelConfig = useCallback(async (id: number): Promise<ModelConfig | null> => {
+	const getModelConfig = useCallback(async (id: number): Promise<ResponseModelConfig | null> => {
 		setLoading(true);
 		setError(null);
 		try {
 			const data = await promptApi.getModelConfig(id);
-			// Convert ModelConfig to ResponseModelConfig format for state
-			const responseConfig: ResponseModelConfig = {
-				name: "",
-				vendor: "",
-				parameters: {},
-			};
-			setModelConfig(responseConfig);
+			setModelConfig(data.config);
 			return data.config;
 		} catch (err: any) {
 			console.error("❌ Fetch model configuration error:", err);

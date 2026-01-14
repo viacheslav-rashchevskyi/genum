@@ -1,5 +1,5 @@
 import type { PromptSettings } from "@/types/Prompt";
-import type { VisualSchema, VisualProperty } from "../../shared/utils/schemaHelpers";
+import type { VisualSchema, VisualProperty } from "./schemaHelpers";
 
 export enum TabsValue {
 	VISUAL = "VISUAL",
