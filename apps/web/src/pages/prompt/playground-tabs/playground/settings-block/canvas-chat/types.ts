@@ -1,4 +1,4 @@
-import type { Message, Action } from "@/types/Canvas";
+import type { Message } from "@/types/Canvas";
 
 export interface CanvasChatProps {
 	systemPrompt: string;

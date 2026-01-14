@@ -1,8 +1,11 @@
 import { apiClient, ApiRequestConfig } from "../client";
 import { PromptSettings, TLanguageModel, TestcaseStatuses } from "@/types/Prompt";
 import { TestCase } from "@/types/TestСase";
+import { ResponseModelConfig } from "@/types/AIModel";
 
 export interface PromptResponse {
+	// ... existing code ...
+
 	answer: string;
 	tokens: {
 		prompt: number;
@@ -222,7 +225,7 @@ export interface ModelConfig {
 }
 
 export interface ModelConfigResponse {
-	config: ModelConfig;
+	config: ResponseModelConfig;
 }
 
 // ============================================================================
