@@ -2,7 +2,8 @@ import { useState, useCallback } from "react";
 import { testcasesApi } from "@/api/testcases/testcases.api";
 import type { TestcasePayload } from "@/hooks/useCreateTestcase";
 import { useToast } from "@/hooks/useToast";
-import { usePlaygroundActions, usePlaygroundTestcase } from "@/stores/playground.store";
+import { usePlaygroundTestcase } from "@/stores/playground.store";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface UseTestcaseActionsProps {
 	promptId: number | undefined;
@@ -12,8 +13,8 @@ interface UseTestcaseActionsProps {
 export const useTestcaseActions = ({ promptId, onTestcaseAdded }: UseTestcaseActionsProps) => {
 	const [isTestcaseLoading, setIsTestcaseLoading] = useState(false);
 	const { toast } = useToast();
-	const { fetchTestcases } = usePlaygroundActions();
 	const { selectedMemoryId } = usePlaygroundTestcase();
+	const queryClient = useQueryClient();
 
 	const createTestcase = useCallback(
 		async (input: string, expectedOutput: string, lastOutput: string) => {
@@ -42,7 +43,12 @@ export const useTestcaseActions = ({ promptId, onTestcaseAdded }: UseTestcaseAct
 				success = true;
 
 				if (promptId) {
-					fetchTestcases(promptId);
+					queryClient.invalidateQueries({
+						queryKey: ["prompt-testcases", promptId],
+					});
+					queryClient.invalidateQueries({
+						queryKey: ["testcase-status-counts", promptId],
+					});
 				}
 				onTestcaseAdded?.();
 			} catch (err: any) {
@@ -61,7 +67,7 @@ export const useTestcaseActions = ({ promptId, onTestcaseAdded }: UseTestcaseAct
 
 			return { success };
 		},
-		[promptId, selectedMemoryId, fetchTestcases, onTestcaseAdded, toast],
+		[promptId, selectedMemoryId, onTestcaseAdded, toast, queryClient],
 	);
 
 	return {

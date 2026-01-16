@@ -1,19 +1,22 @@
-import { useEffect } from "react";
-import { usePlaygroundActions, usePlaygroundTestcase } from "@/stores/playground.store";
+import { useQuery } from "@tanstack/react-query";
+import { promptApi } from "@/api/prompt/prompt.api";
+import { calculateTestcaseStatusCounts } from "@/lib/testcaseUtils";
 
-export const useTestcaseStatusCounts = (promptId?: number | string) => {
-	const { fetchTestcases } = usePlaygroundActions();
-	const { testcaseStatusCounts } = usePlaygroundTestcase();
-
-	useEffect(() => {
-		if (promptId) {
-			fetchTestcases(promptId);
-		}
-	}, [promptId, fetchTestcases]);
+export const useTestcaseStatusCounts = (promptIdProp?: number | string) => {
+	const promptId = promptIdProp ? Number(promptIdProp) : undefined;
+	const { data, isLoading, refetch } = useQuery({
+		queryKey: ["testcase-status-counts", promptId],
+		queryFn: async () => {
+			if (!promptId) return { ok: 0, nok: 0, needRun: 0 };
+			const response = await promptApi.getPromptTestcases(promptId);
+			return calculateTestcaseStatusCounts(response.testcases);
+		},
+		enabled: !!promptId,
+	});
 
 	return {
-		data: testcaseStatusCounts, // Return the counts directly
-		refetch: () => promptId && fetchTestcases(promptId),
-		isLoading: false, // Loading state can be added to store if needed, but for now we simplify
+		data: data ?? { ok: 0, nok: 0, needRun: 0 },
+		isLoading,
+		refetch,
 	};
 };

@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import type { PromptResponse } from "@/hooks/useRunPrompt";
 import { testcasesApi } from "@/api/testcases/testcases.api";
-import type { UpdateExpected } from "@/pages/prompt/playground-tabs/playground-layout/outputs/Output";
+import type { UpdateExpected } from "@/pages/prompt/playground-tabs/playground/components/outputs/Output";
 import { defaultPromptResponse } from "@/stores/playground.store";
 import { formatTestcaseOutput } from "@/lib/formatTestcaseOutput";
 import type { TestCase } from "@/types/TestСase";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function usePlaygroundTestcaseController({
 	promptId,
@@ -20,7 +21,6 @@ export function usePlaygroundTestcaseController({
 	setCurrentExpectedThoughts,
 	setTestcaseLoadState,
 	resetForNewTestcase,
-	fetchTestcases,
 }: {
 	promptId: number | undefined;
 	testcaseId: string | null;
@@ -35,11 +35,11 @@ export function usePlaygroundTestcaseController({
 	setCurrentExpectedThoughts: (value: string) => void;
 	setTestcaseLoadState: (state: { loaded: boolean; status?: string }) => void;
 	resetForNewTestcase: () => void;
-	fetchTestcases: (promptId: number | string) => Promise<void>;
 }) {
 	const prevTestcaseIdRef = useRef<string | null>(testcaseId);
 	const lastSavedInputRef = useRef<string>("");
 	const clearExpectedOutputRef = useRef<(() => void) | null>(null);
+	const queryClient = useQueryClient();
 
 	const testcase = useMemo(() => {
 		if (!testcaseId || !testcases.length) return null;
@@ -84,9 +84,9 @@ export function usePlaygroundTestcaseController({
 				}
 			}
 
-		setCurrentExpectedThoughts(testcase.expectedChainOfThoughts || "");
-		setTestcaseLoadState({ loaded: true });
-	} else if (!testcaseId) {
+			setCurrentExpectedThoughts(testcase.expectedChainOfThoughts || "");
+			setTestcaseLoadState({ loaded: true });
+		} else if (!testcaseId) {
 			setExpectedOutput(null);
 		}
 	}, [
@@ -134,18 +134,23 @@ export function usePlaygroundTestcaseController({
 				};
 
 				await testcasesApi.updateTestcase(testcaseId, updateData);
-				if (promptId) await fetchTestcases(promptId);
+				if (promptId) {
+					queryClient.invalidateQueries({ queryKey: ["prompt-testcases", promptId] });
+					queryClient.invalidateQueries({
+						queryKey: ["testcase-status-counts", promptId],
+					});
+				}
 			} catch (error) {
 				console.error("Failed to save as expected:", error);
 			}
 		},
 		[
 			currentExpectedThoughts,
-			fetchTestcases,
 			promptId,
 			setExpectedOutput,
 			storeOutputContent,
 			testcaseId,
+			queryClient,
 		],
 	);
 
@@ -156,12 +161,17 @@ export function usePlaygroundTestcaseController({
 			try {
 				await testcasesApi.updateTestcase(testcaseId, { input: inputContent });
 				lastSavedInputRef.current = inputContent;
-				if (promptId) await fetchTestcases(promptId);
+				if (promptId) {
+					queryClient.invalidateQueries({ queryKey: ["prompt-testcases", promptId] });
+					queryClient.invalidateQueries({
+						queryKey: ["testcase-status-counts", promptId],
+					});
+				}
 			} catch (error) {
 				console.error("Failed to update testcase input:", error);
 			}
 		}
-	}, [fetchTestcases, inputContent, promptId, testcaseId]);
+	}, [inputContent, promptId, testcaseId, queryClient]);
 
 	const expectedContent = formatTestcaseOutput(testcase?.expectedOutput);
 
@@ -174,5 +184,3 @@ export function usePlaygroundTestcaseController({
 		handleInputBlur,
 	};
 }
-
-
