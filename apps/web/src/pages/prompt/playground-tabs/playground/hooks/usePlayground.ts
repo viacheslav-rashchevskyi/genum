@@ -13,6 +13,7 @@ import { usePlaygroundTestcaseController } from "@/pages/prompt/playground-tabs/
 import { usePlaygroundRunController } from "@/pages/prompt/playground-tabs/playground/hooks/usePlaygroundRun";
 import { usePlaygroundAuditController } from "@/pages/prompt/playground-tabs/playground/hooks/usePlaygroundAudit";
 import type { PlaygroundControllerReturn } from "@/pages/prompt/playground-tabs/playground/hooks/types";
+import { usePromptTestcases } from "@/hooks/usePromptTestcases";
 
 export function usePlaygroundController({
 	promptId,
@@ -31,7 +32,6 @@ export function usePlaygroundController({
 		setCurrentExpectedThoughts,
 		resetForNewTestcase,
 		clearAllState,
-		fetchTestcases,
 		setInputContent,
 		setTestcaseLoadState,
 		setRunState,
@@ -55,7 +55,7 @@ export function usePlaygroundController({
 		hasPromptContent,
 		hasInputContent,
 	} = usePlaygroundContent();
-	const { currentAssertionType, testcases, selectedMemoryId } = usePlaygroundTestcase();
+	const { currentAssertionType, selectedMemoryId } = usePlaygroundTestcase();
 	const {
 		modalOpen,
 		status,
@@ -69,6 +69,8 @@ export function usePlaygroundController({
 		isTestcaseLoaded,
 	} = usePlaygroundUI();
 	const { isPromptChangedAfterAudit } = usePlaygroundAudit();
+
+	const { data: testcases = [] } = usePromptTestcases(promptId);
 
 	const { models } = usePlaygroundModels();
 	const { prompt, promptLoading, updatePromptError, updatePromptContent, handlePromptUpdate } =
@@ -84,6 +86,7 @@ export function usePlaygroundController({
 			setClearedOutput(null);
 		};
 	}, [clearAllState, setClearedOutput]);
+
 	const {
 		testcase,
 		expectedContent,
@@ -105,7 +108,6 @@ export function usePlaygroundController({
 		setCurrentExpectedThoughts,
 		setTestcaseLoadState,
 		resetForNewTestcase,
-		fetchTestcases,
 	});
 
 	const { handleRun } = usePlaygroundRunController({
@@ -123,7 +125,6 @@ export function usePlaygroundController({
 		setOutputContent,
 		setStatus,
 		openAssertionModal,
-		fetchTestcases,
 	});
 
 	const {

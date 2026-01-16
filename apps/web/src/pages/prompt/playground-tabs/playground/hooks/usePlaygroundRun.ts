@@ -4,6 +4,7 @@ import { promptApi } from "@/api/prompt";
 import type { PromptResponse } from "@/hooks/useRunPrompt";
 import type { PromptSettings } from "@/types/Prompt";
 import type { TestCase } from "@/types/TestСase";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function usePlaygroundRunController({
 	promptId,
@@ -20,7 +21,6 @@ export function usePlaygroundRunController({
 	setOutputContent,
 	setStatus,
 	openAssertionModal,
-	fetchTestcases,
 }: {
 	promptId: number | undefined;
 	testcaseId: string | null;
@@ -36,9 +36,9 @@ export function usePlaygroundRunController({
 	setOutputContent: (value: PromptResponse | null) => void;
 	setStatus: (status: string) => void;
 	openAssertionModal: () => void;
-	fetchTestcases: (promptId: number | string) => Promise<void>;
 }) {
 	const { runPrompt } = useRunPrompt();
+	const queryClient = useQueryClient();
 
 	const handleRun = useCallback(async () => {
 		if (!promptId) return;
@@ -66,20 +66,25 @@ export function usePlaygroundRunController({
 				setOutputContent(result);
 				setRunState({ loading: false, wasRun: true });
 
-				await fetchTestcases(promptId);
+				if (promptId) {
+					queryClient.invalidateQueries({ queryKey: ["prompt-testcases", promptId] });
+					queryClient.invalidateQueries({
+						queryKey: ["testcase-status-counts", promptId],
+					});
+				}
 				window.dispatchEvent(new CustomEvent("testcaseUpdated"));
 				return;
 			}
 		} catch (error) {
 			console.error("Failed to run prompt/testcase:", error);
-			if (testcaseId) {
-				await fetchTestcases(promptId);
+			if (testcaseId && promptId) {
+				queryClient.invalidateQueries({ queryKey: ["prompt-testcases", promptId] });
+				queryClient.invalidateQueries({ queryKey: ["testcase-status-counts", promptId] });
 			}
 		} finally {
 			setRunState({ loading: false });
 		}
 	}, [
-		fetchTestcases,
 		inputContent,
 		promptId,
 		runPrompt,
@@ -88,6 +93,7 @@ export function usePlaygroundRunController({
 		setRunState,
 		setOutputContent,
 		testcaseId,
+		queryClient,
 	]);
 
 	// After a testcase run: open assertion modal + refresh latest status counts
@@ -138,5 +144,3 @@ export function usePlaygroundRunController({
 
 	return { handleRun };
 }
-
-

@@ -23,12 +23,13 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import DeleteConfirmDialog from "@/components/dialogs/DeleteConfirmDialog";
 import type { TestCase, TestStatus } from "@/types/TestСase";
 import { SearchInput } from "@/components/ui/searchInput";
-import { usePlaygroundActions, usePlaygroundTestcase } from "@/stores/playground.store";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePromptTestcases } from "@/hooks/usePromptTestcases";
+
 import ActiveFilterChips from "./ActiveFilterChips";
 import { useAddParamsToUrl } from "@/lib/addParamsToUrl";
 import ButtonWithDropdown from "@/components/ui/buttonWithDropdown";
 import { EmptyState } from "@/pages/info-pages/EmptyState";
-import { useCallback } from "react";
 
 type UsedOptionValue = "all" | "nok" | "selected" | "need_run" | "passed";
 
@@ -76,18 +77,12 @@ export default function Testcases() {
 
 	const navigate = useNavigate();
 	const addParamsToUrl = useAddParamsToUrl();
-	const { fetchTestcases, updateSingleTestcase } = usePlaygroundActions();
-	const { testcases } = usePlaygroundTestcase();
-	const handleFetchTestcases = useCallback(async () => {
-		if (id) await fetchTestcases(id);
-	}, [id, fetchTestcases]);
+	const queryClient = useQueryClient();
+	const promptId = id ? Number(id) : undefined;
+	const { data: testcases = [], refetch } = usePromptTestcases(promptId);
 
-	useEffect(() => {
-		handleFetchTestcases();
-	}, [handleFetchTestcases]);
-
-	const refetch = async () => {
-		await handleFetchTestcases();
+	const handleRefetch = async () => {
+		await refetch();
 	};
 
 	const isCheckboxesDisabled =
@@ -197,16 +192,25 @@ export default function Testcases() {
 					const item = testcasesForRun[i];
 
 					try {
-						const updatedTestcase = await testcasesApi.runTestcase(item.id);
-						updateSingleTestcase(updatedTestcase);
+						await testcasesApi.runTestcase(item.id);
+
+						// Force refetch to get fresh data and trigger re-render
+						await refetch();
+
+						// Also update status counts cache
+						if (promptId) {
+							await queryClient.invalidateQueries({
+								queryKey: ["testcase-status-counts", promptId],
+							});
+						}
 
 						setRunningRows((prevState) =>
-							prevState.filter((state) => state !== item.id),
+							prevState.filter((state) => Number(state) !== Number(item.id)),
 						);
 					} catch (error) {
 						console.error(`Error running test case ${item.id}:`, error);
 						setRunningRows((prevState) =>
-							prevState.filter((state) => state !== item.id),
+							prevState.filter((state) => Number(state) !== Number(item.id)),
 						);
 					}
 				}
@@ -224,7 +228,9 @@ export default function Testcases() {
 			setIsDeleting(true);
 			try {
 				await testcasesApi.deleteTestcase(selectedTestcase.id);
-				await refetch();
+				await handleRefetch();
+				queryClient.invalidateQueries({ queryKey: ["testcase-status-counts", promptId] });
+				queryClient.invalidateQueries({ queryKey: ["prompt-testcases", promptId] });
 				setConfirmModalOpen(false);
 				setSelectedTestcase(null);
 			} catch (error) {
