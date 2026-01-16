@@ -20,7 +20,8 @@ import { EmptyState } from "@/pages/info-pages/EmptyState";
 import type { LogsFilterState } from "@/pages/logs/LogsFilter";
 import { LogsFilter } from "@/pages/logs/LogsFilter";
 import { LogDetailsDialog } from "@/components/dialogs/LogDetailsDialog";
-import { usePlaygroundActions } from "@/stores/playground.store";
+import { useQueryClient } from "@tanstack/react-query";
+
 import { formatUserLocalDateTime } from "@/lib/formatUserLocalDateTime";
 
 interface Log {
@@ -138,9 +139,12 @@ export default function LogsTable() {
 	}, [promptId, page, pageSize, logsFilter]);
 
 	// Fetch Memories
-	const [memoriesData, setMemoriesData] = useState<{
-		memories: Array<{ id: number; key: string }>;
-	} | undefined>(undefined);
+	const [memoriesData, setMemoriesData] = useState<
+		| {
+				memories: Array<{ id: number; key: string }>;
+		  }
+		| undefined
+	>(undefined);
 
 	const fetchMemories = useCallback(async () => {
 		if (!promptId) return;
@@ -195,7 +199,7 @@ export default function LogsTable() {
 
 	const { toast } = useToast();
 	const { createTestcase, loading: creatingTestcase } = useCreateTestcase();
-	const { fetchStatusCounts } = usePlaygroundActions();
+	const queryClient = useQueryClient();
 
 	const handleAddTestcaseFromLog = async () => {
 		if (!selectedLog || !promptId) return;
@@ -224,7 +228,12 @@ export default function LogsTable() {
 					variant: "default",
 				});
 				if (promptId) {
-					await fetchStatusCounts(promptId);
+					queryClient.invalidateQueries({
+						queryKey: ["prompt-testcases", Number(promptId)],
+					});
+					queryClient.invalidateQueries({
+						queryKey: ["testcase-status-counts", promptId],
+					});
 				}
 			} else {
 				toast({

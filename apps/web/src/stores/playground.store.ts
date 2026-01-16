@@ -7,6 +7,10 @@ import { testcasesApi } from "@/api/testcases/testcases.api";
 import { calculateTestcaseStatusCounts } from "@/lib/testcaseUtils";
 import type { AuditData } from "@/types/audit";
 import type { TestCase } from "@/types/TestСase";
+import type {
+	RunState,
+	TestcaseLoadState,
+} from "@/pages/prompt/playground-tabs/playground/hooks/types";
 
 export const defaultPromptResponse: PromptResponse = {
 	answer: "",
@@ -35,6 +39,7 @@ interface PlaygroundData {
 	wasRun: boolean;
 	runLoading: boolean;
 	isAuditLoading: boolean;
+	isFixing: boolean;
 	isUpdatingPromptContent: boolean;
 	isFormattingUpdate: boolean;
 	isUncommitted: boolean;
@@ -73,7 +78,7 @@ interface PlaygroundData {
 
 // Interface for Actions
 interface PlaygroundActions {
-	setFlags: (flags: Partial<PlaygroundData>) => void;
+	// Content setters
 	setInputContent: (inputContent: string) => void;
 	setOutputContent: (outputContent: PromptResponse | null) => void;
 	setExpectedOutput: (expectedOutput: PromptResponse | null) => void;
@@ -82,7 +87,6 @@ interface PlaygroundActions {
 	setOriginalPromptContent: (content: string) => void;
 	setLivePromptValue: (value: string) => void;
 	setCurrentAuditData: (data: AuditData | null) => void;
-	setDiffModalInfo: (info: { prompt: string } | null) => void;
 	setAssertionValue: (value: string) => void;
 	setCommitMessage: (message: string) => void;
 	setSelectedMemoryId: (id: string) => void;
@@ -94,6 +98,30 @@ interface PlaygroundActions {
 	fetchTestcases: (promptId: number | string) => Promise<void>;
 	fetchAllTestcases: () => Promise<void>;
 
+	// UI Modal actions
+	openAssertionModal: () => void;
+	closeAssertionModal: () => void;
+	openAuditModal: () => void;
+	closeAuditModal: () => void;
+	setDiffModal: (info: { prompt: string } | null) => void;
+
+	// Loading state actions
+	setRunLoading: (loading: boolean) => void;
+	setAuditLoading: (loading: boolean) => void;
+	setFixingState: (fixing: boolean) => void;
+	setUpdatingPromptContent: (updating: boolean) => void;
+	setStatusCountsLoading: (loading: boolean) => void;
+
+	// Batch update actions
+	setRunState: (state: RunState) => void;
+	setTestcaseLoadState: (state: TestcaseLoadState) => void;
+
+	// Other state setters
+	setStatus: (status: string) => void;
+	setIsPromptChangedAfterAudit: (changed: boolean) => void;
+	setClearedOutput: (output: PromptResponse | null) => void;
+
+	// Reset actions
 	clearOutput: () => void;
 	resetForNewTestcase: () => void;
 	resetOutput: () => void;
@@ -112,6 +140,7 @@ const initialState: PlaygroundData = {
 	wasRun: false,
 	runLoading: false,
 	isAuditLoading: false,
+	isFixing: false,
 	isUpdatingPromptContent: false,
 	isFormattingUpdate: false,
 	isUncommitted: false,
@@ -154,11 +183,7 @@ const usePlaygroundStore = create<PlaygroundState>()(
 		(set, get) => ({
 			...initialState,
 
-			// Actions
-			setFlags: (flags) => {
-				return set((state) => ({ ...state, ...flags }), false, "setFlags");
-			},
-
+			// Content setters
 			setInputContent: (inputContent) => {
 				return set(
 					{ inputContent, hasInputContent: !!inputContent?.trim() },
@@ -195,9 +220,6 @@ const usePlaygroundStore = create<PlaygroundState>()(
 			},
 			setCurrentAuditData: (currentAuditData) => {
 				return set({ currentAuditData }, false, "setCurrentAuditData");
-			},
-			setDiffModalInfo: (diffModalInfo) => {
-				return set({ diffModalInfo }, false, "setDiffModalInfo");
 			},
 			setAssertionValue: (assertionValue) => {
 				return set({ assertionValue }, false, "setAssertionValue");
@@ -274,6 +296,77 @@ const usePlaygroundStore = create<PlaygroundState>()(
 				}
 			},
 
+			// UI Modal actions
+			openAssertionModal: () => {
+				return set({ modalOpen: true }, false, "openAssertionModal");
+			},
+			closeAssertionModal: () => {
+				return set({ modalOpen: false }, false, "closeAssertionModal");
+			},
+			openAuditModal: () => {
+				return set({ showAuditModal: true }, false, "openAuditModal");
+			},
+			closeAuditModal: () => {
+				return set({ showAuditModal: false }, false, "closeAuditModal");
+			},
+			setDiffModal: (diffModalInfo: { prompt: string } | null) => {
+				return set({ diffModalInfo }, false, "setDiffModal");
+			},
+
+			// Loading state actions
+			setRunLoading: (runLoading) => {
+				return set({ runLoading }, false, "setRunLoading");
+			},
+			setAuditLoading: (isAuditLoading) => {
+				return set({ isAuditLoading }, false, "setAuditLoading");
+			},
+			setFixingState: (isFixing) => {
+				return set({ isFixing }, false, "setFixingState");
+			},
+			setUpdatingPromptContent: (isUpdatingPromptContent) => {
+				return set({ isUpdatingPromptContent }, false, "setUpdatingPromptContent");
+			},
+			setStatusCountsLoading: (isStatusCountsLoading) => {
+				return set({ isStatusCountsLoading }, false, "setStatusCountsLoading");
+			},
+
+			// Batch update actions
+			setRunState: (state) => {
+				return set(
+					{
+						runLoading: state.loading,
+						...(state.wasRun !== undefined && { wasRun: state.wasRun }),
+						...(state.clearedOutput !== undefined && {
+							clearedOutput: state.clearedOutput,
+						}),
+					},
+					false,
+					"setRunState",
+				);
+			},
+			setTestcaseLoadState: (state) => {
+				return set(
+					{
+						isTestcaseLoaded: state.loaded,
+						...(state.status !== undefined && { status: state.status }),
+					},
+					false,
+					"setTestcaseLoadState",
+				);
+			},
+
+			// Other state setters
+			setStatus: (status) => {
+				return set({ status }, false, "setStatus");
+			},
+			setIsPromptChangedAfterAudit: (isPromptChangedAfterAudit) => {
+				return set({ isPromptChangedAfterAudit }, false, "setIsPromptChangedAfterAudit");
+			},
+			setClearedOutput: (clearedOutput) => {
+				return set({ clearedOutput }, false, "setClearedOutput");
+			},
+
+			// Reset actions
 			clearOutput: () => {
 				return set({ outputContent: null, clearedOutput: null }, false, "clearOutput");
 			},
@@ -333,6 +426,7 @@ export const usePlaygroundUI = () =>
 			wasRun: state.wasRun,
 			runLoading: state.runLoading,
 			isAuditLoading: state.isAuditLoading,
+			isFixing: state.isFixing,
 			isUpdatingPromptContent: state.isUpdatingPromptContent,
 			status: state.status,
 			isStatusCountsLoading: state.isStatusCountsLoading,
@@ -380,7 +474,7 @@ export const usePlaygroundTestcase = () =>
 export const usePlaygroundActions = () =>
 	usePlaygroundStore(
 		useShallow((state) => ({
-			setFlags: state.setFlags,
+			// Content setters
 			setInputContent: state.setInputContent,
 			setOutputContent: state.setOutputContent,
 			setExpectedOutput: state.setExpectedOutput,
@@ -389,7 +483,6 @@ export const usePlaygroundActions = () =>
 			setOriginalPromptContent: state.setOriginalPromptContent,
 			setLivePromptValue: state.setLivePromptValue,
 			setCurrentAuditData: state.setCurrentAuditData,
-			setDiffModalInfo: state.setDiffModalInfo,
 			setAssertionValue: state.setAssertionValue,
 			setSelectedMemoryId: state.setSelectedMemoryId,
 			setSelectedMemoryKeyName: state.setSelectedMemoryKeyName,
@@ -399,6 +492,31 @@ export const usePlaygroundActions = () =>
 			updateSingleTestcase: state.updateSingleTestcase,
 			fetchTestcases: state.fetchTestcases,
 			fetchAllTestcases: state.fetchAllTestcases,
+
+			// UI Modal actions
+			openAssertionModal: state.openAssertionModal,
+			closeAssertionModal: state.closeAssertionModal,
+			openAuditModal: state.openAuditModal,
+			closeAuditModal: state.closeAuditModal,
+			setDiffModal: state.setDiffModal,
+
+			// Loading state actions
+			setRunLoading: state.setRunLoading,
+			setAuditLoading: state.setAuditLoading,
+			setFixingState: state.setFixingState,
+			setUpdatingPromptContent: state.setUpdatingPromptContent,
+			setStatusCountsLoading: state.setStatusCountsLoading,
+
+			// Batch update actions
+			setRunState: state.setRunState,
+			setTestcaseLoadState: state.setTestcaseLoadState,
+
+			// Other state setters
+			setStatus: state.setStatus,
+			setIsPromptChangedAfterAudit: state.setIsPromptChangedAfterAudit,
+			setClearedOutput: state.setClearedOutput,
+
+			// Reset actions
 			clearOutput: state.clearOutput,
 			resetForNewTestcase: state.resetForNewTestcase,
 			resetOutput: state.resetOutput,

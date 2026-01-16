@@ -11,25 +11,15 @@ import { Textarea } from "@/components/ui/textarea";
 import { Separator } from "@/components/ui/separator";
 import { CircleAlert, CircleCheck, CirclePlus } from "lucide-react";
 
-import type { TestStatus } from "@/types/TestСase";
-
-interface Testcase {
-	id: number;
-	name: string;
-	status: "OK" | "NOK" | "NEED_RUN";
-	assertionThoughts: string;
-	promptRunStatus: string;
-	prompt?: {
-		assertionType: "STRICT" | "MANUAL" | "AI";
-	};
-}
+import type { TestCase, TestStatus } from "@/types/TestСase";
+import type { PromptSettings } from "@/types/Prompt";
 
 interface TestcaseAssertionModalProps {
 	open: boolean;
 	onClose: () => void;
-	testcase: Testcase;
-	status: string;
-	assertionType?: string;
+	testcase: TestCase;
+	status?: string;
+	assertionType?: PromptSettings["assertionType"];
 }
 
 export const getTestCaseIcon = (type: TestStatus) => {
@@ -80,11 +70,12 @@ export const TestcaseAssertionModal = ({
 	status,
 	assertionType,
 }: TestcaseAssertionModalProps) => {
-	const currentAssertionType = assertionType || testcase?.prompt?.assertionType || "";
-	const showAssertionFields = currentAssertionType === "AI";
+	const currentAssertionType = assertionType || "AI";
+	const hasAssertionThoughts = testcase.assertionThoughts && testcase.assertionThoughts.trim().length > 0;
+	const showAssertionFields = hasAssertionThoughts && (currentAssertionType === "AI" || currentAssertionType === "STRICT");
 
 	return (
-		<Dialog open={open} onOpenChange={onClose}>
+		<Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Testcase Assertion</DialogTitle>
