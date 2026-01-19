@@ -1,11 +1,9 @@
 import clsx from "clsx";
-
-import { Button } from "@/components/ui/button";
-import { Branch } from "@/pages/prompt/playground-tabs/version/Versions";
-import { MoreHorizontal, GitCommitHorizontal, Copy } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
+import { GitCommitHorizontal } from "lucide-react";
 import { EmptyState } from "@/pages/info-pages/EmptyState";
+import { formatUserLocalDateTime } from "@/lib/formatUserLocalDateTime";
+import type { Branch, PromptVersion } from "../utils/types";
 
 const LETTER_COLOR_MAP: Record<string, string> = {
 	A: "bg-[#D6CFFF]",
@@ -41,48 +39,14 @@ const getColorByFirstLetter = (name: string): string => {
 	return LETTER_COLOR_MAP[firstLetter] || "bg-[#D6CFFF]";
 };
 
-const PopoverCustom = () => {
-	return (
-		<Popover>
-			<PopoverTrigger asChild>
-				<Button variant="ghost" size="icon" disabled className="h-7 w-7">
-					<MoreHorizontal className="h-4 w-4" />
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent align="end" className="w-44 p-1">
-				<div className="flex flex-col">
-					<Button variant="ghost" className="justify-start">
-						<Copy className="w-4 h-4 mr-2" />
-						Duplicate
-					</Button>
-				</div>
-			</PopoverContent>
-		</Popover>
-	);
-};
-
-type CommitTimelineProps = {
-	branches: Branch[];
-};
-
-interface Author {
-	id: number;
-	name: string;
-	email: string;
-}
-
-interface PromptVersion {
-	id: number;
-	commitMsg: string;
-	commitHash: string;
-	createdAt: string;
-	author: Author;
-}
-
 interface GroupedCommits {
 	date: string;
 	commits: PromptVersion[];
 }
+
+type CommitTimelineProps = {
+	branches: Branch[];
+};
 
 function groupCommitsByDate(branches: Branch[]): GroupedCommits[] {
 	if (!branches) return [];
@@ -97,11 +61,7 @@ function groupCommitsByDate(branches: Branch[]): GroupedCommits[] {
 	allCommits.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
 	const grouped = allCommits.reduce((acc, commit) => {
-		const date = new Date(commit.createdAt).toLocaleDateString("en-US", {
-			year: "numeric",
-			month: "long",
-			day: "numeric",
-		});
+		const date = formatUserLocalDateTime(commit.createdAt);
 
 		const existing = acc.find((group) => group.date === date);
 		if (existing) {
@@ -121,7 +81,7 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 
 	const productiveCommitId =
 		branches && branches.length > 0 && "productiveCommitId" in branches[0]
-			? (branches[0] as any).productiveCommitId
+			? (branches[0] as Branch & { productiveCommitId?: number }).productiveCommitId
 			: null;
 
 	const hasBranches = branches && branches.length > 0;
@@ -164,8 +124,7 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 				const isLastGroup = groupIndex === groupedCommits.length - 1;
 
 				return (
-					<div key={groupIndex} className="relative">
-						{/* Header row per date */}
+					<div key={group.date} className="relative">
 						<div className="flex justify-between">
 							<div className="flex items-center gap-2">
 								<GitCommitHorizontal className="w-7 h-7 text-foreground" />
@@ -185,13 +144,11 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 										<span className="w-28 flex items-center justify-center">
 											Commit Hash
 										</span>
-										{/* <span className="w-16 text-center">Actions</span> */}
 									</div>
 								</div>
 							)}
 						</div>
 
-						{/* Vertical line + commits */}
 						<div
 							className={clsx(
 								"border-l-2 border-border ml-3 pl-4 py-3",
@@ -205,16 +162,14 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 										key={version.id}
 										className="flex items-start gap-4 relative py-3 pl-4 border-b border-border hover:bg-muted/60 transition-colors"
 									>
-										{/* Author letter box — ЗАЛИШАЄМО ТВОЇ КОЛЬОРИ ФОНУ */}
 										<div
 											className={clsx(
 												"w-8 h-8 rounded-md flex items-center justify-center font-semibold",
-												// to make the text readable over your light background in both themes:
 												"text-slate-800 dark:text-slate-900",
 												authorBg,
 											)}
 										>
-											{version.author.name[0].toUpperCase()}
+											{version.author.name[0]?.toUpperCase() || "S"}
 										</div>
 
 										<div className="flex-1">
@@ -233,7 +188,6 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 												</Link>
 
 												<div className="flex items-center gap-2">
-													{/* productive badge */}
 													<span className="w-28">
 														{productiveCommitId &&
 															version.id === productiveCommitId && (
@@ -243,7 +197,6 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 															)}
 													</span>
 
-													{/* commit hash chip */}
 													<div className="w-28 flex items-center justify-center">
 														<div className="flex items-center w-fit text-[12px] dark:bg-[#27272a] dark:border-[#3a3a3a] dark:text-[#fff] rounded-sm border border-border px-2 py-0 font-semibold text-foreground">
 															<span>
@@ -251,10 +204,6 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 															</span>
 														</div>
 													</div>
-
-													{/* <div className="w-16 flex justify-center actions">
-                            <PopoverCustom />
-                          </div> */}
 												</div>
 											</div>
 										</div>

@@ -11,14 +11,14 @@ import Playground from "@/pages/prompt/playground-tabs/playground/Playground";
 import ProtectedRoute from "@/app/router/ProtectedRoute";
 import Memory from "@/pages/prompt/playground-tabs/memory/Memory";
 import Versions from "@/pages/prompt/playground-tabs/version/Versions";
-import Compare from "@/pages/prompt/playground-tabs/version/compare/Compare";
+import Compare from "@/pages/prompt/playground-tabs/version/components/compare/Compare";
 import { LogsPage } from "@/pages/logs/LogsPage";
 
 import Api from "@/pages/prompt/playground-tabs/api/Api";
 import Logs from "@/pages/prompt/playground-tabs/logs/LogsTab";
 import Notifications from "../../components/ui/notifications/Notifications";
 import NotificationDetails from "../../components/ui/notifications/NotificationDetails";
-import VersionDetails from "@/pages/prompt/playground-tabs/version/VersionDetails";
+import VersionDetails from "@/pages/prompt/playground-tabs/version/components/VersionDetails";
 
 import UserProfile from "../../pages/settings/UserProfile";
 import OrgGeneral from "../../pages/settings/OrgGeneral";

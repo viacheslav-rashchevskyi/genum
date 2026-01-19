@@ -4,23 +4,29 @@ interface ResizeHandleProps {
 	isExpanded: boolean;
 	onResizeStart: (e: React.MouseEvent) => void;
 	editorHeight?: number;
+	minHeight?: number;
 }
 
-export const ResizeHandle = ({ isExpanded, onResizeStart, editorHeight }: ResizeHandleProps) => {
+export const ResizeHandle = ({
+	isExpanded,
+	onResizeStart,
+	editorHeight,
+	minHeight = 130,
+}: ResizeHandleProps) => {
 	if (isExpanded) return null;
 
-	const currentHeight = editorHeight || 130;
+	const currentHeight = editorHeight || minHeight;
 
 	return (
 		<div className="relative w-full">
 			<div className="w-full h-px bg-border" />
 			<div
-				className="absolute right-0 bottom-0 w-4 h-4 cursor-ns-resize flex items-end justify-end select-none bg-transparent z-10"
+				className="absolute left-0 bottom-0 w-full h-1.5 cursor-ns-resize flex items-end justify-end select-none bg-transparent z-10"
 				onMouseDown={onResizeStart}
 				style={{ userSelect: "none" }}
 				aria-label="Resize editor"
 				role="slider"
-				aria-valuemin={130}
+				aria-valuemin={minHeight}
 				aria-valuemax={1000}
 				aria-valuenow={currentHeight}
 				aria-orientation="vertical"
