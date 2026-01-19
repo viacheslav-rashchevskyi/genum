@@ -33,7 +33,7 @@ import Phone from "@/assets/phone.svg";
 import Rotate from "@/assets/rotate.svg";
 import Logo from "@/assets/logo.svg";
 import clsx from "clsx";
-import VersionStatus from "@/pages/prompt/playground-tabs/version/VersionStatus";
+import VersionStatus from "@/pages/prompt/playground-tabs/version/components/VersionStatus";
 import { PromptStatusProvider, usePromptStatus } from "@/contexts/PromptStatusContext";
 import PendingInviteHandler from "@/pages/invite/PendingInviteHandler";
 

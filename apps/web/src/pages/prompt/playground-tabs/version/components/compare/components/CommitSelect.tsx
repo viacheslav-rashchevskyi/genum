@@ -5,7 +5,7 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { CommitSelectProps } from "../types";
+import type { CommitSelectProps } from "../types";
 
 export const CommitSelect = ({ value, onChange, versions, placeholder }: CommitSelectProps) => (
 	<Select value={value} onValueChange={onChange}>

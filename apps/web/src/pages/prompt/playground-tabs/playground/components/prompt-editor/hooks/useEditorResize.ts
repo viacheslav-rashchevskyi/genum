@@ -4,12 +4,14 @@ interface UseEditorResizeProps {
 	isExpanded: boolean;
 	editorHeight?: number;
 	setEditorHeight?: (height: number) => void;
+	minHeight?: number;
 }
 
 export const useEditorResize = ({
 	isExpanded,
 	editorHeight,
 	setEditorHeight,
+	minHeight = 130,
 }: UseEditorResizeProps) => {
 	const [isResizing, setIsResizing] = useState(false);
 	const [startY, setStartY] = useState(0);
@@ -20,7 +22,7 @@ export const useEditorResize = ({
 
 		const handleMouseMove = (e: MouseEvent) => {
 			if (setEditorHeight) {
-				const newHeight = Math.max(130, startHeight + (e.clientY - startY));
+				const newHeight = Math.max(minHeight, startHeight + (e.clientY - startY));
 				setEditorHeight(newHeight);
 			}
 		};
@@ -36,12 +38,12 @@ export const useEditorResize = ({
 			window.removeEventListener("mousemove", handleMouseMove);
 			window.removeEventListener("mouseup", handleMouseUp);
 		};
-	}, [isResizing, isExpanded, setEditorHeight, startHeight, startY]);
+	}, [isResizing, isExpanded, setEditorHeight, startHeight, startY, minHeight]);
 
 	const handleResizeStart = (e: React.MouseEvent) => {
 		setIsResizing(true);
 		setStartY(e.clientY);
-		setStartHeight(editorHeight || 130);
+		setStartHeight(editorHeight || minHeight);
 		e.stopPropagation();
 	};
 
