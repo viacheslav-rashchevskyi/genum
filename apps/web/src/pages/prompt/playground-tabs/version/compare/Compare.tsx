@@ -11,6 +11,8 @@ import { CommitDropdowns } from "@/pages/prompt/playground-tabs/version/compare/
 import { parseJson } from "@/lib/jsonUtils";
 import { diffLines } from "diff";
 import { useTheme } from "@/components/theme/theme-provider";
+import type { PromptVersion } from "@/api/prompt";
+import type { PromptSettings } from "@/types/Prompt";
 
 const formatDate = (date: string) =>
 	new Date(date).toLocaleString("en-GB", {
@@ -100,7 +102,7 @@ const Compare = () => {
 	const fetchDataA = useCallback(async () => {
 		if (!id) return;
 		try {
-			let result;
+			let result: { prompt: PromptSettings } | { version: PromptVersion & { prompt: PromptSettings } };
 			if (!commitA || commitA === "current") {
 				result = await promptApi.getPrompt(id);
 			} else {
@@ -115,7 +117,7 @@ const Compare = () => {
 	const fetchDataB = useCallback(async () => {
 		if (!id || !commitB) return;
 		try {
-			let result;
+			let result: { prompt: PromptSettings } | { version: PromptVersion & { prompt: PromptSettings } };
 			if (commitB === "current") {
 				result = await promptApi.getPrompt(id);
 			} else {
