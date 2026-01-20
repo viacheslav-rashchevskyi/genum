@@ -1,11 +1,10 @@
-import { apiClient, ApiRequestConfig } from "../client";
-import { PromptSettings, TLanguageModel, TestcaseStatuses } from "@/types/Prompt";
-import { TestCase } from "@/types/TestСase";
-import { ResponseModelConfig } from "@/types/AIModel";
+import { apiClient } from "../client";
+import type { ApiRequestConfig } from "../client";
+import type { PromptSettings, TLanguageModel, TestcaseStatuses } from "@/types/Prompt";
+import type { TestCase } from "@/types/TestСase";
+import type { ResponseModelConfig } from "@/types/AIModel";
 
 export interface PromptResponse {
-	// ... existing code ...
-
 	answer: string;
 	tokens: {
 		prompt: number;
@@ -435,8 +434,8 @@ export const promptApi = {
 		promptId: number | string,
 		data: CommitData,
 		config?: ApiRequestConfig,
-	): Promise<{ commit: any }> => {
-		const response = await apiClient.post<{ commit: any }>(
+	): Promise<{ commit: string }> => {
+		const response = await apiClient.post<{ commit: string }>(
 			`/prompts/${promptId}/commit`,
 			data,
 			config,

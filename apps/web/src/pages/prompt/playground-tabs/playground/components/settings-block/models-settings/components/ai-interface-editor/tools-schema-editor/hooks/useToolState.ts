@@ -6,9 +6,10 @@ import {
 } from "../../shared/utils/schemaHelpers";
 
 import { TabsValue } from "../../shared/utils/types";
+import type { ToolItem } from "../../../../utils/types";
 
 interface UseToolStateProps {
-	editingTool?: any;
+	editingTool?: ToolItem | null;
 	open: boolean;
 }
 

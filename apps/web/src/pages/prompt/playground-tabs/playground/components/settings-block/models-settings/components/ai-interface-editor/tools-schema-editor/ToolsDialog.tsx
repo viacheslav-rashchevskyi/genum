@@ -21,15 +21,15 @@ import { useToolTabSwitch } from "./hooks/useToolTabSwitch";
 import { useToolSave } from "./hooks/useToolSave";
 import { useAITool } from "./hooks/useAITool";
 import { TabsValue } from "../shared/utils/types";
+import type { ToolItem } from "../../../utils/types";
 
 interface ToolsModalProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	llmConfig?: any;
 	promptId?: number;
-	tools?: any[];
-	setTools?: (tools: any[]) => void;
-	editingTool?: any;
+	tools?: ToolItem[];
+	setTools?: (tools: ToolItem[]) => void;
+	editingTool?: ToolItem | null;
 }
 
 export default function ToolsModal({
@@ -40,7 +40,7 @@ export default function ToolsModal({
 	editingTool,
 	promptId,
 }: ToolsModalProps) {
-	const editorRef = useRef<any>(null);
+	const editorRef = useRef<{ dispose: () => void } | null>(null);
 
 	// State management
 	const {
@@ -118,7 +118,7 @@ export default function ToolsModal({
 		};
 	}, []);
 
-	const handleEditorDidMount = (editor: any) => {
+	const handleEditorDidMount = (editor: { dispose: () => void }) => {
 		editorRef.current = editor;
 	};
 

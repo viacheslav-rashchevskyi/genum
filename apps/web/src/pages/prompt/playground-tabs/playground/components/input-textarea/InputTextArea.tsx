@@ -15,7 +15,7 @@ interface InputTextAreaProps {
 
 export const InputTextArea = forwardRef<HTMLTextAreaElement, InputTextAreaProps>(
 	({ onBlur, promptId, systemPrompt }, ref) => {
-		const { inputContent, hasPromptContent, hasInputContent } = usePlaygroundContent();
+		const { inputContent, hasPromptContent } = usePlaygroundContent();
 		const { setInputContent } = usePlaygroundActions();
 
 		// State management
@@ -46,11 +46,12 @@ export const InputTextArea = forwardRef<HTMLTextAreaElement, InputTextAreaProps>
 			}
 		};
 
-		// AI button state
-		const isAIButtonActive = hasPromptContent && !hasInputContent && !!promptId;
+		const hasActualInput = inputContent.trim().length > 0;
+		const isAIButtonActive = hasPromptContent && !hasActualInput && !!promptId;
+		
 		const getInactiveReason = () => {
 			if (!hasPromptContent) return "No prompt available";
-			if (hasInputContent) return "Input already exists";
+			if (hasActualInput) return "Input already exists";
 			if (!promptId) return "No prompt selected";
 			return "";
 		};

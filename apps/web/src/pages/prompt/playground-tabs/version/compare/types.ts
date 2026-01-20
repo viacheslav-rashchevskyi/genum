@@ -67,7 +67,7 @@ export interface VersionData {
 			summary: string;
 		};
 		authorId: number;
-		createdAt: string; // ISO дата
+		createdAt: string;
 		author: {
 			id: number;
 			name: string;

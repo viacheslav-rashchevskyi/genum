@@ -3,6 +3,8 @@ import validator from "../../shared/utils/validator";
 
 import { TabsValue } from "../../shared/utils/types";
 
+import type { ToolItem } from "../../../../utils/types";
+
 interface UseToolSaveProps {
 	activeTab: string;
 	code: string;
@@ -11,7 +13,7 @@ interface UseToolSaveProps {
 	schema: VisualSchema;
 	setValidationErrors: (errors: string[]) => void;
 	validateTool: (name: string, schema: VisualSchema, strict: boolean) => string[];
-	setTools?: (tools: any[]) => void;
+	setTools?: (tools: ToolItem[]) => void;
 	onOpenChange: (open: boolean) => void;
 }
 
@@ -27,7 +29,7 @@ export const useToolSave = ({
 	onOpenChange,
 }: UseToolSaveProps) => {
 	const handleSave = () => {
-		let toolToSave: any;
+		let toolToSave: ToolItem;
 
 		if (activeTab === TabsValue.CODE) {
 			try {
