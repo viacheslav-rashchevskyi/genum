@@ -9,6 +9,7 @@ interface UseAIToolProps {
 }
 
 import { TabsValue } from "../../shared/utils/types";
+import type { ToolItem } from "../../../../utils/types";
 
 export const useAITool = ({
 	setToolName,
@@ -17,7 +18,7 @@ export const useAITool = ({
 	setValidationErrors,
 	setActiveTab,
 }: UseAIToolProps) => {
-	const handleToolReceived = (aiTool: any) => {
+	const handleToolReceived = (aiTool: string | (ToolItem & { function?: ToolItem })) => {
 		try {
 			const parsedTool = typeof aiTool === "string" ? JSON.parse(aiTool) : aiTool;
 

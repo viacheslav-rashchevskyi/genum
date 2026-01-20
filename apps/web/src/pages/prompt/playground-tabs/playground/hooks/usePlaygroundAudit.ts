@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { useAudit } from "@/hooks/useAudit";
+import type { UpdatePromptContentOptions } from "./types";
 
 export function usePlaygroundAuditController({
 	promptId,
@@ -18,15 +19,9 @@ export function usePlaygroundAuditController({
 	closeAuditModal: () => void;
 	setDiffModal: (info: { prompt: string } | null) => void;
 	setFixingState: (fixing: boolean) => void;
-	updatePromptContent: (value: string, options?: any) => Promise<void>;
+	updatePromptContent: (value: string, options?: UpdatePromptContentOptions) => Promise<void>;
 }) {
-	const {
-		currentAuditData,
-		runAudit,
-		isAuditLoading,
-		fixRisks,
-		clearAuditData,
-	} = useAudit({
+	const { currentAuditData, runAudit, isAuditLoading, fixRisks, clearAuditData } = useAudit({
 		onAuditSuccess: () => {
 			setIsPromptChangedAfterAudit(false);
 			openAuditModal();
@@ -95,5 +90,3 @@ export function usePlaygroundAuditController({
 		handleDiffSave,
 	};
 }
-
-

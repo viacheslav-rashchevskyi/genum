@@ -73,6 +73,7 @@ export interface ToolItem {
 	name: string;
 	description?: string;
 	parameters?: unknown;
+	strict?: boolean;
 }
 
 export interface FormSelectFieldProps {

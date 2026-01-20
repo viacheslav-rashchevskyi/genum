@@ -5,9 +5,11 @@ import {
 } from "../../shared/utils/schemaHelpers";
 import validator from "../../shared/utils/validator";
 
+import type { ToolItem } from "../../../../utils/types";
+
 interface UseToolValidationProps {
-	tools?: any[];
-	editingTool?: any;
+	tools?: ToolItem[];
+	editingTool?: ToolItem | null;
 	setValidationErrors: (errors: string[]) => void;
 	setNameExistsError: (exists: boolean) => void;
 }

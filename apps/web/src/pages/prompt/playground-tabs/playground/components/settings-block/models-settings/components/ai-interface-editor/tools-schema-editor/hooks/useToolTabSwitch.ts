@@ -7,9 +7,14 @@ import {
 import validator from "../../shared/utils/validator";
 
 import { TabsValue } from "../../shared/utils/types";
+import type { ToolItem } from "../../../../utils/types";
 
 // Helper to create tool object from visual schema
-const createToolObject = (name: string, description: string, visualSchema: VisualSchema) => {
+const createToolObject = (
+	name: string,
+	description: string,
+	visualSchema: VisualSchema,
+): ToolItem => {
 	const jsonSchema = transformToJsonSchema(visualSchema);
 	return {
 		name,

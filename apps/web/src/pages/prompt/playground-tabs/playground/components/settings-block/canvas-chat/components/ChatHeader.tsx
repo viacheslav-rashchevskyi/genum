@@ -20,9 +20,7 @@ export const ChatHeader = ({
 }: ChatHeaderProps) => {
   return (
     <div className="flex items-center justify-between w-full">
-      {/* Left side */}
       <div className="flex items-center gap-[6px]">
-        {/* Toggle button */}
         <button
           type="button"
           onClick={onToggle}
@@ -32,7 +30,6 @@ export const ChatHeader = ({
           Chat
         </button>
 
-        {/* New chat */}
         {!!messagesCount && (
           <ButtonWithLoader
             variant="secondary"
@@ -46,7 +43,6 @@ export const ChatHeader = ({
         )}
       </div>
 
-      {/* Right side */}
       <div className="flex items-center gap-3">
         {isOpen && (
           <Button
@@ -59,7 +55,6 @@ export const ChatHeader = ({
           </Button>
         )}
 
-        {/* Chevron toggle */}
         <button
           type="button"
           onClick={onToggle}

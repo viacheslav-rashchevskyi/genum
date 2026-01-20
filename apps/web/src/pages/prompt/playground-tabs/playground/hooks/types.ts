@@ -1,4 +1,5 @@
 import type { PromptResponse } from "@/api/prompt/prompt.api";
+import type { Options } from "@/hooks/usePrompt";
 import type { PromptSettings, TLanguageModel } from "@/types/Prompt";
 import type { TestCase } from "@/types/TestСase";
 import type { AuditData } from "@/types/audit";
@@ -6,6 +7,11 @@ import type { AuditData } from "@/types/audit";
 // ============================================================================
 // Grouped Data Types for Playground Controller
 // ============================================================================
+
+export type UpdatePromptContentOptions = {
+	isEmpty?: boolean;
+	isFormattingOnly?: boolean;
+} & Options;
 
 /**
  * Prompt-related data group
@@ -102,7 +108,7 @@ export interface PlaygroundActionsGroup {
 	/** Prompt-related actions */
 	prompt: {
 		/** Update prompt content */
-		update: (value: string, options?: any) => Promise<void>;
+		update: (value: string, options?: UpdatePromptContentOptions) => Promise<void>;
 		/** Handle prompt update with toast notifications */
 		handleUpdate: (newPrompt: string) => Promise<void>;
 	};
@@ -175,4 +181,3 @@ export interface TestcaseLoadState {
 	loaded: boolean;
 	status?: string;
 }
-
