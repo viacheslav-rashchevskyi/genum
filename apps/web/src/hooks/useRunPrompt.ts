@@ -1,7 +1,8 @@
 import { useState, useCallback } from "react";
 import { useToast } from "@/hooks/useToast";
-import { promptApi, PromptResponse } from "@/api/prompt";
+import { promptApi, type PromptResponse } from "@/api/prompt";
 import { testcasesApi } from "@/api/testcases/testcases.api";
+import { formatTestcaseOutput } from "@/lib/formatTestcaseOutput";
 
 export interface TokensInfo {
 	prompt: number;
@@ -40,9 +41,10 @@ export function useRunPrompt() {
 			try {
 				if (testcaseId) {
 					try {
-						const data = await testcasesApi.runTestcase(testcaseId, payload);
-						setResult(data);
-						return data;
+						const testcase = await testcasesApi.runTestcase(testcaseId, payload);
+						const formattedOutput = formatTestcaseOutput(testcase.lastOutput);
+						setResult(formattedOutput);
+						return formattedOutput;
 					} catch (testcaseError: any) {
 						throw testcaseError;
 					}
