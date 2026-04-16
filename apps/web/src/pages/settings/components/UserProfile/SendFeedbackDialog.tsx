@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,6 +35,12 @@ export function SendFeedbackDialog({
 	const [subject, setSubject] = useState("");
 	const [message, setMessage] = useState("");
 
+	const resetForm = () => {
+		setType("Question");
+		setSubject("");
+		setMessage("");
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
 
@@ -44,9 +50,7 @@ export function SendFeedbackDialog({
 
 		const success = await onSubmit(type, subject, message);
 		if (success) {
-			setType("Question");
-			setSubject("");
-			setMessage("");
+			resetForm();
 			onOpenChange(false);
 		}
 	};
@@ -55,16 +59,13 @@ export function SendFeedbackDialog({
 		onOpenChange(false);
 	};
 
-	useEffect(() => {
-		if (!open) {
-			setType("Question");
-			setSubject("");
-			setMessage("");
-		}
-	}, [open]);
+	const handleOpenChange = (isOpen: boolean) => {
+		if (!isOpen) resetForm();
+		onOpenChange(isOpen);
+	};
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogTrigger asChild>
 				<Button className="text-[14px] h-[36px] mt-0">Send Feedback</Button>
 			</DialogTrigger>

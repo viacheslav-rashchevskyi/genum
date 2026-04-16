@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
@@ -50,21 +50,21 @@ const AuditResultsModal = ({
 	onRunAudit,
 	onFixRisks,
 }: AuditResultsModalProps) => {
-	const [selectedRiskIndices, setAuditSelectedRiskIndices] = useState<number[]>([]);
+	const [prevAuditData, setPrevAuditData] = useState(auditData);
+	const [selectedRiskIndices, setAuditSelectedRiskIndices] = useState<number[]>(
+		() => auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? []
+	);
+
+	if (prevAuditData !== auditData) {
+		setPrevAuditData(auditData);
+		setAuditSelectedRiskIndices(
+			auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? []
+		);
+	}
 
 	const allRisks: AuditRisk[] = auditData?.risks || [];
 	const summary: string = auditData?.summary || "No summary available.";
 	const rate: number | undefined = auditData?.rate;
-
-	useEffect(() => {
-		if (auditData?.risks) {
-			setAuditSelectedRiskIndices(
-				auditData.risks.map((_: AuditRisk, index: number) => index)
-			);
-		} else {
-			setAuditSelectedRiskIndices([]);
-		}
-	}, [auditData]);
 
 	const handleToggleRiskSelection = (index: number) => {
 		setAuditSelectedRiskIndices(

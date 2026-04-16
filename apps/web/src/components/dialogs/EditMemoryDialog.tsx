@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -30,19 +30,14 @@ const EditMemoryDialog: React.FC<EditMemoryDialogProps> = ({
 }) => {
 	const [value, setValue] = useState("");
 
-	// Set initial values when dialog opens or initialData changes
-	useEffect(() => {
-		if (initialData && open) {
+	const handleOpenChange = (isOpen: boolean) => {
+		if (isOpen && initialData) {
 			setValue(initialData.value || "");
-		}
-	}, [initialData, open]);
-
-	// Reset form when dialog closes
-	useEffect(() => {
-		if (!open) {
+		} else if (!isOpen) {
 			setValue("");
 		}
-	}, [open]);
+		setOpen(isOpen);
+	};
 
 	const handleConfirm = () => {
 		if (value.trim()) {
@@ -55,7 +50,7 @@ const EditMemoryDialog: React.FC<EditMemoryDialogProps> = ({
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent className="max-w-lg">
 				<DialogHeader className="flex flex-row items-center justify-between">
 					<DialogTitle>Edit Memory</DialogTitle>

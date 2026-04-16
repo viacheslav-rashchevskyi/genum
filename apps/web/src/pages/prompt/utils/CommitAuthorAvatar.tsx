@@ -9,43 +9,34 @@ export interface CommitAuthorAvatarProps {
 	rounded?: string;
 }
 
-export function CommitAuthorAvatar({ 
-	author, 
+export function CommitAuthorAvatar({
+	author,
 	size = "h-5 w-5",
 	textSize = "text-[10px]",
 	rounded = "rounded-full"
 }: CommitAuthorAvatarProps) {
-	const [imageLoaded, setImageLoaded] = useState(false);
-	const [imageError, setImageError] = useState(false);
+	const [imageState, setImageState] = useState<{ url: string | null; loaded: boolean; error: boolean }>(
+		{ url: null, loaded: false, error: false }
+	);
 
 	const initial = getAvatarInitial(author.name ?? "U");
 	const colorClass = getAvatarColor(author.name ?? "U");
 	const avatarUrl = getAvatarUrl(author);
 	const hasPicture = Boolean(avatarUrl);
 
-	// Предзагрузка изображения
-	useEffect(() => {
-		if (!hasPicture || !avatarUrl) {
-			setImageLoaded(false);
-			setImageError(false);
-			return;
-		}
+	const isCurrentUrl = imageState.url === avatarUrl;
+	const showImage = hasPicture && isCurrentUrl && imageState.loaded && !imageState.error;
+	const showFallback = !hasPicture || (isCurrentUrl && imageState.error);
+	const showSkeleton = hasPicture && !showImage && !showFallback;
 
-		setImageLoaded(false);
-		setImageError(false);
+	useEffect(() => {
+		if (!hasPicture || !avatarUrl) return;
 
 		const img = new Image();
 		img.src = avatarUrl;
 
-		img.onload = () => {
-			setImageLoaded(true);
-			setImageError(false);
-		};
-
-		img.onerror = () => {
-			setImageLoaded(false);
-			setImageError(true);
-		};
+		img.onload = () => setImageState({ url: avatarUrl, loaded: true, error: false });
+		img.onerror = () => setImageState({ url: avatarUrl, loaded: false, error: true });
 
 		return () => {
 			img.onload = null;
@@ -55,10 +46,10 @@ export function CommitAuthorAvatar({
 
 	return (
 		<Avatar className={`${size} ${rounded} cursor-default select-none`}>
-			{hasPicture && !imageLoaded && !imageError && (
+			{showSkeleton && (
 				<div className={`${size} ${rounded} bg-muted/40 animate-pulse`} />
 			)}
-			{hasPicture && imageLoaded && !imageError && avatarUrl && (
+			{showImage && avatarUrl && (
 				<AvatarImage
 					src={avatarUrl}
 					alt={author.name}
@@ -66,7 +57,7 @@ export function CommitAuthorAvatar({
 					className={rounded}
 				/>
 			)}
-			{(!hasPicture || imageError) && (
+			{showFallback && (
 				<AvatarFallback className={`${rounded} ${textSize} font-bold ${colorClass} cursor-default select-none`}>
 					{initial}
 				</AvatarFallback>

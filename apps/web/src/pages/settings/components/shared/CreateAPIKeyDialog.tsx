@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckIcon, CopyIcon, EyeClosedIcon, EyeIcon, PlusCircleIcon } from "@phosphor-icons/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,15 +56,16 @@ export function CreateAPIKeyDialog({
 		onOpenChange(false);
 	};
 
-	useEffect(() => {
-		if (!open) {
+	const handleOpenChange = (isOpen: boolean) => {
+		if (!isOpen) {
 			setKeyName("");
 			setShowKey(false);
 		}
-	}, [open]);
+		onOpenChange(isOpen);
+	};
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogTrigger asChild>
 				<Button size="default" className="[&_svg]:size-6">
 					<PlusCircleIcon />

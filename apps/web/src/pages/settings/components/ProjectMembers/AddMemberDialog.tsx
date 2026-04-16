@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,32 +32,33 @@ export function AddMemberDialog({
 	const [selectedUserId, setSelectedUserId] = useState<string>("");
 	const [selectedRole, setSelectedRole] = useState<ProjectRole>(ProjectRole.MEMBER);
 
+	const resetState = () => {
+		setSelectedUserId("");
+		setSelectedRole(ProjectRole.MEMBER);
+	};
+
 	const handleAdd = async () => {
 		if (!selectedUserId || !selectedRole) return;
 
 		const success = await onAdd(parseInt(selectedUserId, 10), selectedRole);
 		if (success) {
-			setSelectedUserId("");
-			setSelectedRole(ProjectRole.MEMBER);
+			resetState();
 			onOpenChange(false);
 		}
 	};
 
 	const handleCancel = () => {
-		setSelectedUserId("");
-		setSelectedRole(ProjectRole.MEMBER);
+		resetState();
 		onOpenChange(false);
 	};
 
-	useEffect(() => {
-		if (!open) {
-			setSelectedUserId("");
-			setSelectedRole(ProjectRole.MEMBER);
-		}
-	}, [open]);
+	const handleDialogOpenChange = (isOpen: boolean) => {
+		if (!isOpen) resetState();
+		onOpenChange(isOpen);
+	};
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleDialogOpenChange}>
 			<DialogTrigger asChild>
 				<Button size="default">
 					<PlusCircle className="mr-2 h-4 w-4" />

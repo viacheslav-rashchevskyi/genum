@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -35,14 +35,13 @@ export function EditProfileDialog({
 		onOpenChange(false);
 	};
 
-	useEffect(() => {
-		if (open) {
-			setName(currentName);
-		}
-	}, [open, currentName]);
+	const handleOpenChange = (isOpen: boolean) => {
+		if (isOpen) setName(currentName);
+		onOpenChange(isOpen);
+	};
 
 	return (
-		<Dialog open={open} onOpenChange={onOpenChange}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogTrigger asChild>
 				<Button variant="outline" size="sm" className="h-[32px]">
 					Edit

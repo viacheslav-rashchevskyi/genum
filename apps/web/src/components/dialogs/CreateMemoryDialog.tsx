@@ -8,7 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 interface DeleteConfirmDialogProps {
 	open: boolean;
@@ -26,20 +26,20 @@ const CreateMemoryDialog: React.FC<DeleteConfirmDialogProps> = ({
 	const [key, setKey] = useState("");
 	const [value, setValue] = useState("");
 
-	// Clear form when dialog closes
-	useEffect(() => {
-		if (!open) {
+	const handleOpenChange = (isOpen: boolean) => {
+		if (!isOpen) {
 			setKey("");
 			setValue("");
 		}
-	}, [open]);
+		setOpen(isOpen);
+	};
 
 	const confirmHandler = () => {
 		confirmationHandler(key, value);
 	};
 
 	return (
-		<Dialog open={open} onOpenChange={setOpen}>
+		<Dialog open={open} onOpenChange={handleOpenChange}>
 			<DialogContent>
 				<DialogHeader>
 					<DialogTitle>Create Memory</DialogTitle>
