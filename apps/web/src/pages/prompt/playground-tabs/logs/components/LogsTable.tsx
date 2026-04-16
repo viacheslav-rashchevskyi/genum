@@ -117,7 +117,10 @@ function LogsTableComponent({
 												{normalizeVendorName(log.vendor)}
 											</td>
 
-											<td className="w-[180px] p-3 text-center truncate" title={log.model}>
+											<td
+												className="w-[180px] p-3 text-center truncate"
+												title={log.model}
+											>
 												{modelDisplay}
 											</td>
 

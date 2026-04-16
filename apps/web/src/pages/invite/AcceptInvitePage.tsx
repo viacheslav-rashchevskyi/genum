@@ -56,7 +56,11 @@ const AcceptInvitePage: FC = () => {
 				)}
 			>
 				<div className="text-center">
-					<img src={logoSrc} alt="Logo" className="w-[120px] h-[23px] mx-auto dark:invert-0" />
+					<img
+						src={logoSrc}
+						alt="Logo"
+						className="w-[120px] h-[23px] mx-auto dark:invert-0"
+					/>
 					<h1
 						className={cn(
 							"text-[24px] font-bold text-gray-900 mb-[16px] mt-[24px]",
@@ -65,11 +69,17 @@ const AcceptInvitePage: FC = () => {
 					>
 						Accept Invitation
 					</h1>
-					<p className={cn("text-gray-800 text-[14px]", isLocalDark && "dark:text-zinc-400")}>
+					<p
+						className={cn(
+							"text-gray-800 text-[14px]",
+							isLocalDark && "dark:text-zinc-400",
+						)}
+					>
 						{inviteData?.invite?.org_name ? (
 							<>
-								You've been invited to join <strong>{inviteData.invite.org_name}</strong>.
-								{" "}Would you like to accept this invitation?
+								You've been invited to join{" "}
+								<strong>{inviteData.invite.org_name}</strong>. Would you like to
+								accept this invitation?
 							</>
 						) : (
 							"You've been invited to join an organization. Would you like to accept this invitation?"
@@ -96,7 +106,8 @@ const AcceptInvitePage: FC = () => {
 							size="lg"
 							className={cn(
 								"flex-1 min-h-[40px] text-gray-900",
-								isLocalDark && "dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200",
+								isLocalDark &&
+									"dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200",
 							)}
 							onClick={handleLogin}
 						>
@@ -109,7 +120,12 @@ const AcceptInvitePage: FC = () => {
 						<p className="mt-2 text-blue-700 font-medium">Validating invitation...</p>
 					</div>
 				) : inviteError || !inviteData?.invite?.invite_valid ? (
-					<div className={cn("text-center border border-0 rounded-md p-4 py-3 mb-0", isLocalDark && "dark:bg-zinc-900")}>
+					<div
+						className={cn(
+							"text-center border border-0 rounded-md p-4 py-3 mb-0",
+							isLocalDark && "dark:bg-zinc-900",
+						)}
+					>
 						<h3 className="text-[#FF4545] font-medium">Invalid Invitation</h3>
 						<p className="text-[#FF4545] text-[12px]">
 							This invitation does not exist or has expired.
@@ -118,7 +134,10 @@ const AcceptInvitePage: FC = () => {
 							variant="outline"
 							size="lg"
 							onClick={() => navigate("/")}
-							className={cn("w-full mt-4 text-gray-900", isLocalDark && "dark:text-zinc-100")}
+							className={cn(
+								"w-full mt-4 text-gray-900",
+								isLocalDark && "dark:text-zinc-100",
+							)}
 						>
 							Go Home
 						</Button>
@@ -135,17 +154,30 @@ const AcceptInvitePage: FC = () => {
 						)}
 
 						{processError && (
-							<div className={cn("text-center border border-0 rounded-md p-4 py-3 mb-0", isLocalDark && "dark:bg-zinc-900")}>
+							<div
+								className={cn(
+									"text-center border border-0 rounded-md p-4 py-3 mb-0",
+									isLocalDark && "dark:bg-zinc-900",
+								)}
+							>
 								<h3 className="text-[#FF4545] font-medium">Error</h3>
 								<p className="text-[#FF4545] text-[12px]">
 									{getErrorMessage(processError)}
 								</p>
 								{getErrorMessage(processError).includes("email does not match") && (
 									<div className="mt-3 p-3 bg-red-100 rounded-md">
-										<p className="text-red-700 text-sm font-medium">What to do:</p>
+										<p className="text-red-700 text-sm font-medium">
+											What to do:
+										</p>
 										<ul className="text-red-600 text-sm mt-1 list-disc list-inside">
-											<li>Make sure you're logged in with the correct email account</li>
-											<li>Check if the invitation was sent to a different email</li>
+											<li>
+												Make sure you're logged in with the correct email
+												account
+											</li>
+											<li>
+												Check if the invitation was sent to a different
+												email
+											</li>
 											<li>Contact the person who sent the invitation</li>
 										</ul>
 									</div>
@@ -161,7 +193,8 @@ const AcceptInvitePage: FC = () => {
 								disabled={isProcessing}
 								className={cn(
 									"w-full text-white bg-black hover:bg-gray-800",
-									isLocalDark && "dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200",
+									isLocalDark &&
+										"dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200",
 								)}
 							>
 								{isProcessing ? "Accepting..." : "Accept"}
@@ -172,7 +205,10 @@ const AcceptInvitePage: FC = () => {
 								size="lg"
 								onClick={handleDecline}
 								disabled={isProcessing}
-								className={cn("w-full text-gray-900", isLocalDark && "dark:text-zinc-100")}
+								className={cn(
+									"w-full text-gray-900",
+									isLocalDark && "dark:text-zinc-100",
+								)}
 							>
 								Decline
 							</Button>

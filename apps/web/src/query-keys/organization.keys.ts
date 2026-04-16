@@ -11,4 +11,3 @@ export const organizationKeys = {
 	aiKeys: () => ["org", "ai-keys"] as const,
 	quota: () => ["org", "quota"] as const,
 };
-

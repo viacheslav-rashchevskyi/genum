@@ -72,4 +72,3 @@ export const logsKeys = {
 			query,
 		] as const,
 };
-

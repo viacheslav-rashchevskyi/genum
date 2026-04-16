@@ -68,13 +68,10 @@ const useTestcasesGroupedByPrompt = (filteredPrompts?: PromptStats[]) => {
 			? new Set(filteredPrompts.map((p) => p.prompt_id))
 			: null;
 
-		const promptNamesMap = promptsData.reduce(
-			(acc: Record<number, string>, prompt: Prompt) => {
-				acc[prompt.id] = prompt.name;
-				return acc;
-			},
-			{},
-		);
+		const promptNamesMap = promptsData.reduce((acc: Record<number, string>, prompt: Prompt) => {
+			acc[prompt.id] = prompt.name;
+			return acc;
+		}, {});
 
 		const groupedByPrompt = testcasesData.reduce(
 			(acc: Record<number, ChartDataItem>, testcase: TestCase) => {

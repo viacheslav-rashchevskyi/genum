@@ -14,7 +14,11 @@ interface UseTestcaseActionsProps {
 	selectedFiles?: Array<{ id: string }>;
 }
 
-export const useTestcaseActions = ({ promptId, onTestcaseAdded, selectedFiles }: UseTestcaseActionsProps) => {
+export const useTestcaseActions = ({
+	promptId,
+	onTestcaseAdded,
+	selectedFiles,
+}: UseTestcaseActionsProps) => {
 	const { toast } = useToast();
 	const { selection } = useMemorySelection(promptId, null);
 	const selectedMemoryId = selection.selectedMemoryId;
@@ -58,7 +62,10 @@ export const useTestcaseActions = ({ promptId, onTestcaseAdded, selectedFiles }:
 				expectedOutput: expectedOutput,
 				lastOutput: lastOutput || "",
 				memoryId: selectedMemoryId ? Number(selectedMemoryId) : undefined,
-				files: selectedFiles && selectedFiles.length > 0 ? selectedFiles.map((f) => f.id) : undefined,
+				files:
+					selectedFiles && selectedFiles.length > 0
+						? selectedFiles.map((f) => f.id)
+						: undefined,
 			};
 
 			let success = false;

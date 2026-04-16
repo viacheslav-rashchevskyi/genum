@@ -1,5 +1,5 @@
 import { useRef, useEffect, memo } from "react";
-import Editor, { OnMount, EditorProps } from "@monaco-editor/react";
+import Editor, { type OnMount, type EditorProps } from "@monaco-editor/react";
 import { useTheme } from "@/components/theme/theme-provider";
 import type { editor } from "monaco-editor";
 

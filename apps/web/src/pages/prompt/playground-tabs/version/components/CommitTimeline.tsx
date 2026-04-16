@@ -17,6 +17,20 @@ type CommitTimelineProps = {
 	branches: Branch[];
 };
 
+function formatTimeAgo(dateString: string): string {
+	const diffMs = Date.now() - new Date(dateString).getTime();
+	const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+	const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+	if (diffDays > 0) {
+		return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
+	} else if (diffHours > 0) {
+		return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
+	} else {
+		return "just now";
+	}
+}
+
 function groupCommitsByDate(branches: Branch[]): GroupedCommits[] {
 	if (!branches) return [];
 
@@ -71,20 +85,6 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 		);
 	}
 
-	function formatTimeAgo(dateString: string): string {
-		const diffMs = Date.now() - new Date(dateString).getTime();
-		const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-		const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-
-		if (diffDays > 0) {
-			return `${diffDays} day${diffDays > 1 ? "s" : ""} ago`;
-		} else if (diffHours > 0) {
-			return `${diffHours} hour${diffHours > 1 ? "s" : ""} ago`;
-		} else {
-			return "just now";
-		}
-	}
-
 	const groupedCommits = groupCommitsByDate(branches);
 
 	return (
@@ -134,9 +134,9 @@ export default function CommitTimeline({ branches }: CommitTimelineProps) {
 										className="flex items-start gap-4 relative py-3 pl-4 border-b border-border hover:bg-muted/60 transition-colors"
 									>
 										{isCloud ? (
-											<CommitAuthorAvatar 
-												author={version.author} 
-												size="h-8 w-8" 
+											<CommitAuthorAvatar
+												author={version.author}
+												size="h-8 w-8"
 												textSize="text-xs"
 												rounded="rounded-md"
 											/>

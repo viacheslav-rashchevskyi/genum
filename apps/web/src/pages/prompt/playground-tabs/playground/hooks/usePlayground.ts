@@ -32,9 +32,7 @@ export function usePlaygroundController({
 	selectedFiles?: FileMetadata[];
 }) {
 	const { resetForPromptExit } = usePlaygroundActions();
-	const {
-		isAssertionModalOpen,
-	} = useAssertionUI();
+	const { isAssertionModalOpen } = useAssertionUI();
 	const {
 		openAssertionModal,
 		closeAssertionModal,

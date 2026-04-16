@@ -5,10 +5,7 @@ import { testcaseKeys } from "@/query-keys/testcases.keys";
 import type { TestCase } from "@/types/TestСase";
 import { logger } from "@/lib/logger";
 
-export const useHeaderTestcase = (
-	testcaseId: string | null,
-	promptId: number | undefined,
-) => {
+export const useHeaderTestcase = (testcaseId: string | null, promptId: number | undefined) => {
 	const queryClient = useQueryClient();
 
 	const testcaseQuery = useQuery({
@@ -43,7 +40,8 @@ export const useHeaderTestcase = (
 			queryClient.setQueryData(
 				testcaseKeys.promptTestcases(promptId),
 				(prev: TestCase[] | undefined) =>
-					prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ?? prev,
+					prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ??
+					prev,
 			);
 		}
 		return updated;

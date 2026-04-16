@@ -21,7 +21,11 @@ export function useFilesPage() {
 	const [isDeleting, setIsDeleting] = useState(false);
 	const queryClient = useQueryClient();
 
-	const { data: files = [], isLoading, refetch } = useQuery({
+	const {
+		data: files = [],
+		isLoading,
+		refetch,
+	} = useQuery({
 		queryKey: fileKeys.all(),
 		queryFn: () => filesApi.listFiles(),
 	});

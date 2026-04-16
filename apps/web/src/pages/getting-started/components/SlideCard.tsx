@@ -23,7 +23,11 @@ function SlideCardComponent({ slide, isActive, onSelect }: SlideCardProps) {
 		>
 			<div className="w-full aspect-[176/94] shrink-0 rounded-[2px] overflow-hidden bg-muted flex items-center justify-center">
 				{slide.thumb ? (
-					<img src={slide.thumb} alt={slide.title} className="w-full h-full object-cover" />
+					<img
+						src={slide.thumb}
+						alt={slide.title}
+						className="w-full h-full object-cover"
+					/>
 				) : (
 					<Play className="w-5 h-5" />
 				)}

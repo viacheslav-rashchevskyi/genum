@@ -5,7 +5,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { promptApi } from "@/api/prompt";
 import { versionKeys } from "@/query-keys/version.keys";
-import type { BranchesResponse, PromptVersion } from "@/pages/prompt/playground-tabs/version/utils/types";
+import type {
+	BranchesResponse,
+	PromptVersion,
+} from "@/pages/prompt/playground-tabs/version/utils/types";
 
 interface LastCommitInfoProps {
 	promptId: number;

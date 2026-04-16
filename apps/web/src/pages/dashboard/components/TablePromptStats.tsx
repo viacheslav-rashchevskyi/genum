@@ -1,5 +1,10 @@
 import type { ColumnDef, HeaderContext } from "@tanstack/react-table";
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
+import {
+	useReactTable,
+	getCoreRowModel,
+	getSortedRowModel,
+	flexRender,
+} from "@tanstack/react-table";
 import type { MouseEvent } from "react";
 import { useMemo } from "react";
 
@@ -133,11 +138,17 @@ export function TablePromptStats({ prompts, promptNames, isLoading = false }: Pr
 					const val = getValue() as number;
 					return val > 0 ? (
 						<span className="text-destructive dark:text-[#d64646]">
-							<TweenNumber value={val} formatValue={(value) => formatPromptErrorRate(value)} />
+							<TweenNumber
+								value={val}
+								formatValue={(value) => formatPromptErrorRate(value)}
+							/>
 						</span>
 					) : (
 						<span className="text-emerald-600 dark:text-[#2da44a]">
-							<TweenNumber value={val} formatValue={(value) => formatPromptErrorRate(value)} />
+							<TweenNumber
+								value={val}
+								formatValue={(value) => formatPromptErrorRate(value)}
+							/>
 						</span>
 					);
 				},

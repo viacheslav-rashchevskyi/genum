@@ -24,7 +24,13 @@ export function AuthPageFrame({
 			className="fixed inset-0 w-full h-full bg-cover bg-center bg-no-repeat flex items-center justify-center dark:bg-zinc-950"
 			style={{ backgroundImage: `url('${backgroundImage}')` }}
 		>
-			<div className={cardClassName ? `${defaultCardClassName} ${cardClassName}` : defaultCardClassName}>
+			<div
+				className={
+					cardClassName
+						? `${defaultCardClassName} ${cardClassName}`
+						: defaultCardClassName
+				}
+			>
 				<div className="text-center">
 					<div className="mx-auto flex h-[32px] w-[140px] items-center justify-center">
 						<img

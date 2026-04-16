@@ -55,23 +55,23 @@ const CommitDialog: React.FC<CommitDialogProps> = ({
 					<DialogTitle>New Commit</DialogTitle>
 				</DialogHeader>
 
-			<div className="mb-2">
-				<div className="flex items-center justify-between mb-2">
-					<p className="text-xs text-foreground/50 font-medium">Commit message</p>
-					<AIGenerateButton
-						mode="commit"
-						value=""
-						onChange={() => {}}
-						onAction={onGenerate}
-						isOpen={false}
-						setIsOpen={() => {}}
-						isLoading={isGenerating}
-						disabled={isCommitting || isGenerating}
-						simpleButton={true}
-						tooltipText="Generate commit message automatically"
-						buttonClassName="p-1.5 rounded-md transition-all hover:bg-[#437BEF]/10 text-[#437BEF] disabled:opacity-50 disabled:cursor-not-allowed group relative"
-					/>
-				</div>
+				<div className="mb-2">
+					<div className="flex items-center justify-between mb-2">
+						<p className="text-xs text-foreground/50 font-medium">Commit message</p>
+						<AIGenerateButton
+							mode="commit"
+							value=""
+							onChange={() => {}}
+							onAction={onGenerate}
+							isOpen={false}
+							setIsOpen={() => {}}
+							isLoading={isGenerating}
+							disabled={isCommitting || isGenerating}
+							simpleButton={true}
+							tooltipText="Generate commit message automatically"
+							buttonClassName="p-1.5 rounded-md transition-all hover:bg-[#437BEF]/10 text-[#437BEF] disabled:opacity-50 disabled:cursor-not-allowed group relative"
+						/>
+					</div>
 					<Textarea
 						ref={textareaRef}
 						placeholder="Enter message"

@@ -1,5 +1,10 @@
 import type { ColumnDef, HeaderContext, SortingState } from "@tanstack/react-table";
-import { useReactTable, getCoreRowModel, getSortedRowModel, flexRender } from "@tanstack/react-table";
+import {
+	useReactTable,
+	getCoreRowModel,
+	getSortedRowModel,
+	flexRender,
+} from "@tanstack/react-table";
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";

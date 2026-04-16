@@ -51,7 +51,8 @@ export const useInputGeneration = ({
 				queryClient.setQueryData(
 					testcaseKeys.promptTestcases(promptId),
 					(prev: TestCase[] | undefined) =>
-						prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ?? prev,
+						prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ??
+						prev,
 				);
 			}
 		},
@@ -78,7 +79,7 @@ export const useInputGeneration = ({
 					description: "Input was generated successfully",
 					variant: "default",
 				});
-				
+
 				setIsPopoverOpen(false);
 				setAiQuery("");
 			}

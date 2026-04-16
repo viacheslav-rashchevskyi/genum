@@ -15,11 +15,7 @@ import {
 	SelectValue,
 	SelectItem,
 } from "@/components/ui/select";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Badge } from "@/components/ui/badge";
 import { ProjectRole } from "@/api/project";
 import { CommitAuthorAvatar } from "@/pages/prompt/utils/CommitAuthorAvatar";
@@ -80,7 +76,10 @@ export function MembersTable({
 								<TableCell>
 									<div className="flex items-center gap-2">
 										<CommitAuthorAvatar
-											author={{ name: member.user.name, picture: member.user.picture }}
+											author={{
+												name: member.user.name,
+												picture: member.user.picture,
+											}}
 											size="h-7 w-7"
 											textSize="text-xs leading-none"
 											rounded="rounded-lg"
@@ -99,15 +98,21 @@ export function MembersTable({
 									{canEditRole ? (
 										<Select
 											value={member.role}
-											onValueChange={(value) => onRoleChange?.(member.id, value as ProjectRole)}
+											onValueChange={(value) =>
+												onRoleChange?.(member.id, value as ProjectRole)
+											}
 											disabled={updatingRoleId === member.id}
 										>
 											<SelectTrigger className="w-[120px] text-[14px] h-[30px]">
 												<SelectValue />
 											</SelectTrigger>
 											<SelectContent>
-												<SelectItem value={ProjectRole.ADMIN}>Admin</SelectItem>
-												<SelectItem value={ProjectRole.MEMBER}>Member</SelectItem>
+												<SelectItem value={ProjectRole.ADMIN}>
+													Admin
+												</SelectItem>
+												<SelectItem value={ProjectRole.MEMBER}>
+													Member
+												</SelectItem>
 											</SelectContent>
 										</Select>
 									) : isOrgPrivileged ? (
@@ -122,7 +127,9 @@ export function MembersTable({
 											</TooltipContent>
 										</Tooltip>
 									) : (
-										<span className="text-sm">{formatEnumLabel(member.role)}</span>
+										<span className="text-sm">
+											{formatEnumLabel(member.role)}
+										</span>
 									)}
 								</TableCell>
 								{showActions && (

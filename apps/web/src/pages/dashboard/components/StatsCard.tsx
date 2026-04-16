@@ -1,8 +1,4 @@
-import type {
-	UsageData,
-	UsageDailyStat,
-	UsageDailyStatField,
-} from "@/api/project/project.api";
+import type { UsageData, UsageDailyStat, UsageDailyStatField } from "@/api/project/project.api";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatsCardWithLineChart } from "./StatsCardWithLineChart";
 

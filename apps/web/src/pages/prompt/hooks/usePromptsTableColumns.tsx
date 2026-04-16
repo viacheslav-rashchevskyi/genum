@@ -2,12 +2,7 @@ import type { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import TableSortButton from "@/components/ui/TableSortButton";
-import {
-	Tooltip,
-	TooltipContent,
-	TooltipProvider,
-	TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Trash2 } from "lucide-react";
 import TestCaseStatus from "@/pages/prompt/playground-tabs/testcases/TestCaseStatus";
 import { CommitAuthorAvatar } from "@/pages/prompt/utils/CommitAuthorAvatar";

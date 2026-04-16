@@ -38,7 +38,7 @@ const TabsList = forwardRef<
 					left: center,
 				});
 			}
-			};
+		};
 
 		updateActiveTabPosition();
 

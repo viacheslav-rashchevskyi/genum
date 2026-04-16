@@ -24,16 +24,19 @@ export default function OrgModels() {
 		setModelIdPendingDisableConfirmation(null);
 	}, [modelIdPendingDisableConfirmation, toggleModel]);
 
-	const handleToggle = useCallback((modelId: number, enabled: boolean) => {
-		const isDisablingLastEnabledModel = !enabled && enabledModelsCount === 1;
+	const handleToggle = useCallback(
+		(modelId: number, enabled: boolean) => {
+			const isDisablingLastEnabledModel = !enabled && enabledModelsCount === 1;
 
-		if (isDisablingLastEnabledModel) {
-			setModelIdPendingDisableConfirmation(modelId);
-			return;
-		}
+			if (isDisablingLastEnabledModel) {
+				setModelIdPendingDisableConfirmation(modelId);
+				return;
+			}
 
-		toggleModel({ modelId, enabled });
-	}, [enabledModelsCount, toggleModel]);
+			toggleModel({ modelId, enabled });
+		},
+		[enabledModelsCount, toggleModel],
+	);
 
 	return (
 		<>

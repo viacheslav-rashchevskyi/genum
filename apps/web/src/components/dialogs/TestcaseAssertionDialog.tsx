@@ -75,7 +75,8 @@ export const TestcaseAssertionModal = ({
 	const hasAssertionThoughts =
 		testcase.assertionThoughts && testcase.assertionThoughts.trim().length > 0;
 	const showAssertionFields =
-		hasAssertionThoughts && (currentAssertionType === "AI" || currentAssertionType === "STRICT");
+		hasAssertionThoughts &&
+		(currentAssertionType === "AI" || currentAssertionType === "STRICT");
 
 	return (
 		<Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose()}>
@@ -115,15 +116,15 @@ export const TestcaseAssertionModal = ({
 					<div className="flex items-center gap-2 h-[30px] text-[14px]">
 						<span className="font-semibold">Assertion Type</span>
 						<Badge
-							className={
-								`${currentAssertionType === "STRICT"
+							className={`${
+								currentAssertionType === "STRICT"
 									? "bg-[#2A9D90] text-white rounded-xl"
 									: currentAssertionType === "MANUAL"
 										? "bg-[#6C98F2] text-white rounded-xl"
 										: currentAssertionType === "AI"
 											? "bg-[#B66AD6] text-white rounded-xl"
-											: "bg-gray-200 text-black"} border-none`
-							}
+											: "bg-gray-200 text-black"
+							} border-none`}
 						>
 							{currentAssertionType}
 						</Badge>
@@ -131,7 +132,9 @@ export const TestcaseAssertionModal = ({
 
 					{showAssertionFields && (
 						<div className="mt-4 flex flex-col gap-2 text-[14px]">
-							<label className="font-semibold" htmlFor="assertion-thoughts">Reasoning</label>
+							<label className="font-semibold" htmlFor="assertion-thoughts">
+								Reasoning
+							</label>
 							<Textarea
 								id="assertion-thoughts"
 								value={testcase.assertionThoughts}

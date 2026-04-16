@@ -1,6 +1,6 @@
-import { apiClient, ApiRequestConfig } from "../client";
-import { UserType } from "@/types/User";
-import { OrganizationWithProjects } from "@/types/Organization";
+import { apiClient, type ApiRequestConfig } from "../client";
+import type { UserType } from "@/types/User";
+import type { OrganizationWithProjects } from "@/types/Organization";
 
 // ============================================================================
 // Types

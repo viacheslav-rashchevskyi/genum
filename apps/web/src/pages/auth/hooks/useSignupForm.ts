@@ -5,7 +5,11 @@ import { useLocalAuth } from "@/contexts/LocalAuthContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
 import { isCloudAuth } from "@/lib/auth";
-import { getSignupErrorMessage, signupDefaultValues, type SignupFormData } from "../utils/signupForm";
+import {
+	getSignupErrorMessage,
+	signupDefaultValues,
+	type SignupFormData,
+} from "../utils/signupForm";
 
 export const useSignupForm = () => {
 	const navigate = useNavigate();

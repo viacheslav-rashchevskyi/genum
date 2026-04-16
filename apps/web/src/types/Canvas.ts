@@ -36,8 +36,6 @@ type ActionResponse = { role: Role; message: string } & (
 	  }
 );
 
-type ResponseType = ActionResponse["type"];
-
 interface TextResponse {
 	role: Role;
 	type: "text";

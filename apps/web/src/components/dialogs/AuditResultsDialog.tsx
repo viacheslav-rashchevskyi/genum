@@ -52,13 +52,13 @@ const AuditResultsModal = ({
 }: AuditResultsModalProps) => {
 	const [prevAuditData, setPrevAuditData] = useState(auditData);
 	const [selectedRiskIndices, setAuditSelectedRiskIndices] = useState<number[]>(
-		() => auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? []
+		() => auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? [],
 	);
 
 	if (prevAuditData !== auditData) {
 		setPrevAuditData(auditData);
 		setAuditSelectedRiskIndices(
-			auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? []
+			auditData?.risks?.map((_: AuditRisk, index: number) => index) ?? [],
 		);
 	}
 
@@ -76,11 +76,11 @@ const AuditResultsModal = ({
 
 	const handleProceedToTune = () => {
 		if (selectedRiskIndices.length === 0) return;
-		
+
 		const recommendations = selectedRiskIndices.map(
-			(index: number) => allRisks[index].recommendation
+			(index: number) => allRisks[index].recommendation,
 		);
-		
+
 		onFixRisks(recommendations);
 	};
 
@@ -98,8 +98,8 @@ const AuditResultsModal = ({
 				>
 					{isLoading && (
 						<span className="absolute inset-0 flex items-center justify-center">
-							<CircleNotch 
-								size={20} 
+							<CircleNotch
+								size={20}
 								className="animate-spin text-white dark:text-black"
 							/>
 						</span>
@@ -119,8 +119,8 @@ const AuditResultsModal = ({
 					>
 						{isFixing && (
 							<span className="absolute inset-0 flex items-center justify-center">
-								<CircleNotch 
-									size={20} 
+								<CircleNotch
+									size={20}
 									className="animate-spin text-white dark:text-black"
 								/>
 							</span>
@@ -143,10 +143,7 @@ const AuditResultsModal = ({
 				>
 					<div className="flex items-center justify-center py-8">
 						<div className="flex items-center gap-3">
-							<CircleNotch 
-								size={24} 
-								className="animate-spin text-[#437BEF]"
-							/>
+							<CircleNotch size={24} className="animate-spin text-[#437BEF]" />
 							<span className="text-[14px] text-[#71717A] dark:text-[#A1A1AA]">
 								Running audit...
 							</span>

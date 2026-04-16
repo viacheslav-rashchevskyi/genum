@@ -24,7 +24,6 @@ const FEEDBACK_TYPES = ["Question", "Report bug", "Feature request", "Other"];
 const MAX_SUBJECT_LENGTH = 128;
 const MAX_MESSAGE_LENGTH = 2500;
 
-
 export function SendFeedbackDialog({
 	open,
 	onOpenChange,
@@ -104,7 +103,9 @@ export function SendFeedbackDialog({
 							id="feedback-subject"
 							placeholder="Brief description of your feedback"
 							value={subject}
-							onChange={(e) => setSubject(e.target.value.slice(0, MAX_SUBJECT_LENGTH))}
+							onChange={(e) =>
+								setSubject(e.target.value.slice(0, MAX_SUBJECT_LENGTH))
+							}
 							required
 							maxLength={MAX_SUBJECT_LENGTH}
 						/>
@@ -122,7 +123,9 @@ export function SendFeedbackDialog({
 							placeholder="Provide details about your feedback..."
 							rows={5}
 							value={message}
-							onChange={(e) => setMessage(e.target.value.slice(0, MAX_MESSAGE_LENGTH))}
+							onChange={(e) =>
+								setMessage(e.target.value.slice(0, MAX_MESSAGE_LENGTH))
+							}
 							required
 							maxLength={MAX_MESSAGE_LENGTH}
 						/>

@@ -37,17 +37,17 @@ export const getNextModelParameterConfig = (
 					? clampNumberOptional(value, bounds.min, bounds.max)
 					: bounds.min;
 			}
-			} else if (field === "default") {
-				if (value === "") {
-					next.default = "";
-				} else if (typeof value === "number") {
-					next.default = Number.isFinite(value)
-						? clampNumberOptional(value, bounds.min, bounds.max)
-						: bounds.min;
-				} else if (typeof value === "string") {
-					next.default = value;
-				}
+		} else if (field === "default") {
+			if (value === "") {
+				next.default = "";
+			} else if (typeof value === "number") {
+				next.default = Number.isFinite(value)
+					? clampNumberOptional(value, bounds.min, bounds.max)
+					: bounds.min;
+			} else if (typeof value === "string") {
+				next.default = value;
 			}
+		}
 
 		if (typeof next.min === "number") {
 			next.min = clampNumberOptional(next.min, bounds.min, bounds.max);

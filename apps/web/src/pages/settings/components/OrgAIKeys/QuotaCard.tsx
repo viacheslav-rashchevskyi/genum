@@ -22,8 +22,8 @@ export function QuotaCard({ quota, isLoading }: QuotaCardProps) {
 					{isLoading ? "Loading..." : formatBalance(quota)}
 				</p>
 				<p className="text-[12px] leading-[16px] text-[#71717A]">
-					While your organization has quota, it will be used for AI requests. Once the quota is
-					exhausted, user-provided API keys will be used instead.
+					While your organization has quota, it will be used for AI requests. Once the
+					quota is exhausted, user-provided API keys will be used instead.
 				</p>
 			</CardContent>
 		</Card>

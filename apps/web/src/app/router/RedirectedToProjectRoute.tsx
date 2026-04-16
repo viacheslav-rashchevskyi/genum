@@ -73,7 +73,10 @@ const RedirectedToProjectRoute = ({ Element }: RedirectedToProjectRouteProps) =>
 		}
 
 		let orgWithProjects = userData.organizations.find(
-			(org) => hasOrgAccess(org.role, OrganizationRole.OWNER) && org.projects && org.projects.length > 0,
+			(org) =>
+				hasOrgAccess(org.role, OrganizationRole.OWNER) &&
+				org.projects &&
+				org.projects.length > 0,
 		);
 
 		if (!orgWithProjects) {

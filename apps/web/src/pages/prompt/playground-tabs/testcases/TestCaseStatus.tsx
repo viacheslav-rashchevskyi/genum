@@ -1,6 +1,6 @@
 import { CircleAlert, CircleCheck, CirclePlus } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { TestStatus } from "@/types/TestСase";
+import type { TestStatus } from "@/types/TestСase";
 
 export const getTestCaseIcon = (type: TestStatus) => {
 	switch (type) {

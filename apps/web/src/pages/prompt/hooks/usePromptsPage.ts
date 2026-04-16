@@ -21,8 +21,13 @@ const defaultDeleteModalState: DeletePromptModalState = {
 };
 
 export function usePromptsPage() {
-	const { prompts, loading: promptsLoading, removePromptLocally, addPromptLocally, refetch } =
-		useProjectPrompts();
+	const {
+		prompts,
+		loading: promptsLoading,
+		removePromptLocally,
+		addPromptLocally,
+		refetch,
+	} = useProjectPrompts();
 	const { createPrompt, loading: isCreatingPrompt } = useCreatePrompt();
 	const { deletePrompt, loading: isDeletingPrompt } = useDeletePrompt();
 

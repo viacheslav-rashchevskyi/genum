@@ -71,18 +71,18 @@ export function InviteMemberDialog({
 						</div>
 						<div className="space-y-2">
 							<Label>Role</Label>
-						<Select
-							value={role}
-							onValueChange={(value) => setRole(value as OrganizationRole)}
-						>
-							<SelectTrigger>
-								<SelectValue placeholder="Select role..." />
-							</SelectTrigger>
-							<SelectContent>
-								<SelectItem value={OrganizationRole.ADMIN}>Admin</SelectItem>
-								<SelectItem value={OrganizationRole.READER}>Reader</SelectItem>
-							</SelectContent>
-						</Select>
+							<Select
+								value={role}
+								onValueChange={(value) => setRole(value as OrganizationRole)}
+							>
+								<SelectTrigger>
+									<SelectValue placeholder="Select role..." />
+								</SelectTrigger>
+								<SelectContent>
+									<SelectItem value={OrganizationRole.ADMIN}>Admin</SelectItem>
+									<SelectItem value={OrganizationRole.READER}>Reader</SelectItem>
+								</SelectContent>
+							</Select>
 							<p className="text-xs text-muted-foreground">
 								Admins have access to all projects and settings. Readers must be
 								added to individual projects.

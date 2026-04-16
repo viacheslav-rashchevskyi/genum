@@ -25,7 +25,5 @@ export function buildColorByNameMap(
 	chartData: DistributionChartEntry[],
 	colors: string[],
 ): Map<string, string> {
-	return new Map(
-		chartData.map((entry, index) => [entry.name, colors[index % colors.length]]),
-	);
+	return new Map(chartData.map((entry, index) => [entry.name, colors[index % colors.length]]));
 }

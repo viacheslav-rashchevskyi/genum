@@ -82,7 +82,10 @@ const TestCasesFilter = ({ prompts, filterState, setFilterState }: TestCasesFilt
 						</span>
 						<div className="grid gap-2">
 							{testcaseStatusOptions.map(({ value, label }) => (
-								<div key={value} className="flex items-center space-x-2 cursor-pointer">
+								<div
+									key={value}
+									className="flex items-center space-x-2 cursor-pointer"
+								>
 									<Checkbox
 										checked={tempFilters.testcasesStatus.includes(value)}
 										onCheckedChange={() =>

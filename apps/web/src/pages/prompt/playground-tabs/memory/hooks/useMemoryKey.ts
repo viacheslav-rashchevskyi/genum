@@ -58,8 +58,9 @@ export const useMemoryKey = (promptId: number) => {
 			queryClient.setQueryData(
 				promptMemoriesQueryKey(promptId),
 				(prev: Memory[] | undefined) =>
-					prev?.map((memory) => (memory.id === updatedMemory.id ? updatedMemory : memory)) ??
-					prev,
+					prev?.map((memory) =>
+						memory.id === updatedMemory.id ? updatedMemory : memory,
+					) ?? prev,
 			);
 		},
 		onError: () => {
@@ -86,12 +87,15 @@ export const useMemoryKey = (promptId: number) => {
 			if (!updatedTestcase) return;
 
 			if (testcaseId) {
-				queryClient.setQueryData(testcaseKeys.byId(testcaseId), { testcase: updatedTestcase });
+				queryClient.setQueryData(testcaseKeys.byId(testcaseId), {
+					testcase: updatedTestcase,
+				});
 			}
 			queryClient.setQueryData(
 				testcaseKeys.promptTestcases(promptId),
 				(prev: TestCase[] | undefined) =>
-					prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ?? prev,
+					prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ??
+					prev,
 			);
 		},
 		onError: () => {
@@ -271,13 +275,7 @@ export const useMemoryKey = (promptId: number) => {
 				});
 			}
 		},
-		[
-			createMemoryMutation,
-			setSelection,
-			promptId,
-			testcaseId,
-			updateTestcaseMutation,
-		],
+		[createMemoryMutation, setSelection, promptId, testcaseId, updateTestcaseMutation],
 	);
 
 	const selectedMemory = memories.find((item: Memory) => String(item.id) === selectedKey);

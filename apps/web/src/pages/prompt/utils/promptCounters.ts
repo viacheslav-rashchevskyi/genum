@@ -6,6 +6,7 @@ export const getPromptTestcasesCount = (prompt?: Prompt) =>
 	(prompt?.testcaseStatuses?.NEED_RUN || 0);
 
 export const getNewPromptName = (prompts: Prompt[]) => {
-	const newPromptCount = prompts.filter((prompt) => prompt.name.startsWith("New Prompt")).length + 1;
+	const newPromptCount =
+		prompts.filter((prompt) => prompt.name.startsWith("New Prompt")).length + 1;
 	return `New Prompt ${newPromptCount}`;
 };

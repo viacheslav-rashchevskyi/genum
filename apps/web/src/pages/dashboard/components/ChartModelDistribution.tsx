@@ -86,8 +86,7 @@ export function ChartModelDistribution({ models, isLoading = false }: Props) {
 										<Cell
 											key={`pie-cell-${entry.name}`}
 											fill={
-												colorByModelName.get(entry.name) ??
-												CHART_COLORS[0]
+												colorByModelName.get(entry.name) ?? CHART_COLORS[0]
 											}
 										/>
 									))
@@ -112,7 +111,10 @@ export function ChartModelDistribution({ models, isLoading = false }: Props) {
 				<div className="flex flex-col gap-3">
 					{hasData ? (
 						chartData.map((entry) => (
-							<div key={`legend-${entry.name}`} className="flex items-center gap-2 h-4">
+							<div
+								key={`legend-${entry.name}`}
+								className="flex items-center gap-2 h-4"
+							>
 								<span
 									className="h-2 w-2 rounded-[2px]"
 									style={{

@@ -102,7 +102,7 @@ export default function Settings() {
 		<div className="container pt-6 max-w-[1232px] 2xl-plus:max-w-[70%] 2xl-plus:min-w-[1232px] 2xl-plus:w-[70%] mx-3 w-full">
 			<div className="flex flex-col gap-6 md:flex-row mt-3">
 				<aside className="shrink-0 w-[216px]">
-				{MENU.map((section) => {
+					{MENU.map((section) => {
 						const visibleItems = section.items.filter((item) =>
 							hasAccess(item.minRole, orgRole),
 						);

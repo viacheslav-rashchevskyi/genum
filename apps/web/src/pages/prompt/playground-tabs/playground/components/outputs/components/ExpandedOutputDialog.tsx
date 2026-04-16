@@ -90,7 +90,9 @@ export const ExpandedOutputDialog: React.FC<ExpandedOutputDialogProps> = ({
 												size="sm"
 												onClick={onAddTestcase}
 												disabled={
-													isTestcaseLoading || !modifiedValue.trim() || isRunning
+													isTestcaseLoading ||
+													!modifiedValue.trim() ||
+													isRunning
 												}
 												className="text-[14px] h-[36px]"
 											>

@@ -59,12 +59,20 @@ const Compare = () => {
 				{Object.entries(AccordionKeys).map(([title, key]) => {
 					const leftSource =
 						!commitA || commitA === "current"
-							? (dataA && "prompt" in dataA ? dataA.prompt : dataA)
-							: (dataA && "version" in dataA ? dataA.version : dataA);
+							? dataA && "prompt" in dataA
+								? dataA.prompt
+								: dataA
+							: dataA && "version" in dataA
+								? dataA.version
+								: dataA;
 					const rightSource =
 						!commitB || commitB === "current"
-							? (dataB && "prompt" in dataB ? dataB.prompt : dataB)
-							: (dataB && "version" in dataB ? dataB.version : dataB);
+							? dataB && "prompt" in dataB
+								? dataB.prompt
+								: dataB
+							: dataB && "version" in dataB
+								? dataB.version
+								: dataB;
 
 					const leftRaw = getByPath(leftSource, key);
 					const rightRaw = getByPath(rightSource, key);

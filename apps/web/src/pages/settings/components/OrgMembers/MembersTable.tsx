@@ -57,7 +57,9 @@ export function MembersTable({
 					{members.map((member) => {
 						const isSelf = member.user.email === currentUserEmail;
 						const isOwner = hasOrgAccess(member.role, OrganizationRole.OWNER);
-						const currentUserIsOwner = currentUserRole != null && hasOrgAccess(currentUserRole, OrganizationRole.OWNER);
+						const currentUserIsOwner =
+							currentUserRole != null &&
+							hasOrgAccess(currentUserRole, OrganizationRole.OWNER);
 						// Only owners can change another owner's role; admins can change admin/reader only
 						const canChangeRole =
 							canManageMembers &&
@@ -71,7 +73,10 @@ export function MembersTable({
 								<TableCell>
 									<div className="flex items-center gap-2">
 										<CommitAuthorAvatar
-											author={{ name: member.user.name, picture: member.user.picture }}
+											author={{
+												name: member.user.name,
+												picture: member.user.picture,
+											}}
 											size="h-7 w-7"
 											textSize="text-xs leading-none"
 											rounded="rounded-lg"
@@ -90,7 +95,9 @@ export function MembersTable({
 										<Select
 											key={`role-${member.id}`}
 											value={member.role}
-											onValueChange={(value) => onRoleChange?.(member.id, value as OrganizationRole)}
+											onValueChange={(value) =>
+												onRoleChange?.(member.id, value as OrganizationRole)
+											}
 											disabled={updatingRoleId === member.id}
 										>
 											<SelectTrigger className="w-[110px] text-[14px] h-[30px]">
@@ -99,22 +106,35 @@ export function MembersTable({
 											<SelectContent>
 												{isOwner ? (
 													<>
-														<SelectItem value={OrganizationRole.OWNER} disabled>
+														<SelectItem
+															value={OrganizationRole.OWNER}
+															disabled
+														>
 															Owner
 														</SelectItem>
-														<SelectItem value={OrganizationRole.ADMIN}>Admin</SelectItem>
-														<SelectItem value={OrganizationRole.READER}>Reader</SelectItem>
+														<SelectItem value={OrganizationRole.ADMIN}>
+															Admin
+														</SelectItem>
+														<SelectItem value={OrganizationRole.READER}>
+															Reader
+														</SelectItem>
 													</>
 												) : (
 													<>
-														<SelectItem value={OrganizationRole.ADMIN}>Admin</SelectItem>
-														<SelectItem value={OrganizationRole.READER}>Reader</SelectItem>
+														<SelectItem value={OrganizationRole.ADMIN}>
+															Admin
+														</SelectItem>
+														<SelectItem value={OrganizationRole.READER}>
+															Reader
+														</SelectItem>
 													</>
 												)}
 											</SelectContent>
 										</Select>
 									) : (
-										<span className="text-sm">{formatEnumLabel(member.role)}</span>
+										<span className="text-sm">
+											{formatEnumLabel(member.role)}
+										</span>
 									)}
 								</TableCell>
 								{canManageMembers && (

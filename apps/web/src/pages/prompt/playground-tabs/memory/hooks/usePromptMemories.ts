@@ -6,10 +6,7 @@ import { memoryKeys } from "@/query-keys/memory.keys";
 export const promptMemoriesQueryKey = (promptId: number | undefined) =>
 	memoryKeys.promptMemories(promptId);
 
-export const usePromptMemories = (
-	promptIdProp: number | string | undefined,
-	isActive = true,
-) => {
+export const usePromptMemories = (promptIdProp: number | string | undefined, isActive = true) => {
 	const promptId = promptIdProp ? Number(promptIdProp) : undefined;
 
 	return useQuery<Memory[]>({

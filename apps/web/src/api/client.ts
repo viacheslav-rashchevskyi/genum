@@ -1,9 +1,9 @@
 import axios, {
-	AxiosInstance,
-	AxiosRequestConfig,
-	AxiosResponse,
-	InternalAxiosRequestConfig,
-	AxiosError,
+	type AxiosInstance,
+	type AxiosRequestConfig,
+	type AxiosResponse,
+	type InternalAxiosRequestConfig,
+	type AxiosError,
 } from "axios";
 import { isCloudAuth, getApiUrl } from "@/lib/auth";
 import { logger } from "@/lib/logger";

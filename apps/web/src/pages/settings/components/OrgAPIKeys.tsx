@@ -47,7 +47,7 @@ export default function OrgAPIKeys() {
 			await deleteKey(keyToDelete);
 			setDeleteDialogOpen(false);
 			setKeyToDelete(null);
-		} catch (error) {}
+		} catch {}
 	};
 
 	return (

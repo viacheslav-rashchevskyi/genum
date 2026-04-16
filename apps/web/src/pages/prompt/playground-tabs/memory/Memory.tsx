@@ -98,7 +98,10 @@ export default function Memory() {
 							onChange={(e) => setSearch(e.target.value)}
 						/>
 					</div>
-					<Button className="w-full px-7 sm:w-auto" onClick={() => setCreateMemoryModal(true)}>
+					<Button
+						className="w-full px-7 sm:w-auto"
+						onClick={() => setCreateMemoryModal(true)}
+					>
 						<CirclePlus className="mr-2 h-4 w-4" />
 						Create Memory
 					</Button>

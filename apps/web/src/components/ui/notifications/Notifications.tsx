@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Bell, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { NotificationIcon } from "@/components/ui/icons-tsx/NotificationIcon";
-import { userApi, Notification } from "@/api/user";
+import { userApi, type Notification } from "@/api/user";
 import { formatNotificationPreview } from "@/lib/notificationPreview";
 import { getOrgId, getProjectId } from "@/api/client";
 import { logger } from "@/lib/logger";

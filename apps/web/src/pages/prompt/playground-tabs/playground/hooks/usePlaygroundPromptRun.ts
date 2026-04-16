@@ -94,8 +94,7 @@ export function usePlaygroundPromptRun({
 				return;
 			}
 		} catch (err: unknown) {
-			const error =
-				err instanceof Error ? err : new Error("Failed to run prompt/testcase");
+			const error = err instanceof Error ? err : new Error("Failed to run prompt/testcase");
 			logger.error("Failed to run prompt/testcase:", err);
 			setRunError(error.message);
 			toast({

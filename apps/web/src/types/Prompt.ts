@@ -1,4 +1,4 @@
-import { TestStatus } from "@/types/TestСase";
+import type { TestStatus } from "@/types/TestСase";
 
 export type TestcaseStatuses = {
 	[key in TestStatus]?: number;

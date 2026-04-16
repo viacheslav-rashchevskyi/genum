@@ -20,12 +20,7 @@ export default function Versions() {
 
 	const [search, setSearch] = useState("");
 
-	const {
-		data,
-		isLoading,
-		isCommitted,
-		refresh,
-	} = useVersionsData(id, isActive);
+	const { data, isLoading, isCommitted, refresh } = useVersionsData(id, isActive);
 
 	const {
 		isOpen: commitDialogOpen,
@@ -47,10 +42,10 @@ export default function Versions() {
 		if (!data?.branches) return [];
 		const found = data.branches[0];
 		if (!found) return [];
-		
+
 		const productiveCommitId =
 			found.promptVersions.length > 0 ? found.promptVersions[0].id : null;
-		
+
 		const filteredVersions = found.promptVersions.filter((version: PromptVersion) => {
 			const queryLower = search.toLowerCase();
 			return (

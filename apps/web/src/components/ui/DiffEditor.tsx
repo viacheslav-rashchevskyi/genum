@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { DiffEditor, DiffEditorProps, DiffOnMount } from "@monaco-editor/react";
+import { DiffEditor, type DiffEditorProps, type DiffOnMount } from "@monaco-editor/react";
 import { parseJson } from "@/lib/jsonUtils";
-import { editor } from "monaco-editor";
+import type { editor } from "monaco-editor";
 import { useTheme } from "@/components/theme/theme-provider";
 
 const CompareDiffEditor = ({

@@ -65,7 +65,8 @@ export const RunMetrics = memo(
 			</div>
 		);
 	},
-	(prev, next) => isSameTimeParam(prev.tokens, next.tokens) && isSameTimeParam(prev.cost, next.cost),
+	(prev, next) =>
+		isSameTimeParam(prev.tokens, next.tokens) && isSameTimeParam(prev.cost, next.cost),
 );
 
 RunMetrics.displayName = "RunMetrics";

@@ -23,7 +23,10 @@ export function DeleteProviderDialog({
 }: DeleteProviderDialogProps) {
 	const isDeleteBlocked = Boolean(deleteStatus && !deleteStatus.canDelete);
 	const isDeleteDisabled =
-		isDeletingProvider || isCheckingDeleteStatus || Boolean(deleteStatusError) || isDeleteBlocked;
+		isDeletingProvider ||
+		isCheckingDeleteStatus ||
+		Boolean(deleteStatusError) ||
+		isDeleteBlocked;
 
 	const handleConfirm = async () => {
 		await onConfirm();
@@ -54,7 +57,9 @@ export function DeleteProviderDialog({
 
 				{isDeleteBlocked && deleteStatus && (
 					<div className="space-y-3 text-sm">
-						<p className="text-muted-foreground">Deletion is blocked by the prompts below.</p>
+						<p className="text-muted-foreground">
+							Deletion is blocked by the prompts below.
+						</p>
 						{deleteStatus.promptUsagePrompts.length > 0 && (
 							<div className="space-y-2">
 								<p className="text-muted-foreground font-medium">
@@ -62,7 +67,10 @@ export function DeleteProviderDialog({
 								</p>
 								<ul className="space-y-1">
 									{deleteStatus.promptUsagePrompts.map((prompt) => (
-										<li key={`prompt-usage-${prompt.id}`} className="flex items-center gap-2">
+										<li
+											key={`prompt-usage-${prompt.id}`}
+											className="flex items-center gap-2"
+										>
 											<Link
 												to={buildPromptHref(prompt.id)}
 												target="_blank"
@@ -71,7 +79,9 @@ export function DeleteProviderDialog({
 											>
 												{prompt.name}
 											</Link>
-											<span className="text-muted-foreground/70">({prompt.id})</span>
+											<span className="text-muted-foreground/70">
+												({prompt.id})
+											</span>
 										</li>
 									))}
 								</ul>
@@ -96,7 +106,9 @@ export function DeleteProviderDialog({
 											>
 												{prompt.name}
 											</Link>
-											<span className="text-muted-foreground/70">({prompt.id})</span>
+											<span className="text-muted-foreground/70">
+												({prompt.id})
+											</span>
 										</li>
 									))}
 								</ul>
@@ -112,7 +124,11 @@ export function DeleteProviderDialog({
 				)}
 
 				<DialogFooter>
-					<Button variant="outline" onClick={() => onOpenChange(false)} disabled={isDeletingProvider}>
+					<Button
+						variant="outline"
+						onClick={() => onOpenChange(false)}
+						disabled={isDeletingProvider}
+					>
 						Cancel
 					</Button>
 					<Button

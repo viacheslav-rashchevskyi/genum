@@ -6,11 +6,11 @@ import { CreateProjectDialog } from "./OrgProjects/CreateProjectDialog";
 import { ProjectsTable } from "./OrgProjects/ProjectsTable";
 import { DeleteConfirmDialog } from "./shared/DeleteConfirmDialog";
 import type { Project } from "../hooks/useOrgProjects";
-import { getOrgId, getProjectId} from "@/api/client"
+import { getOrgId, getProjectId } from "@/api/client";
 
 export default function OrgProjects() {
 	const orgId = getOrgId();
-	const projectId = getProjectId();	
+	const projectId = getProjectId();
 	const navigate = useNavigate();
 
 	const { projects, isLoading, isCreating, deletingId, createProject, deleteProject } =

@@ -6,11 +6,7 @@ interface ModelConfigCardProps {
 	params: [string, string][];
 }
 
-export const ModelConfigCard: React.FC<ModelConfigCardProps> = ({
-	vendor,
-	name,
-	params,
-}) => {
+export const ModelConfigCard: React.FC<ModelConfigCardProps> = ({ vendor, name, params }) => {
 	return (
 		<div>
 			<h3 className="text-base font-semibold text-foreground mb-2">Model Configuration</h3>

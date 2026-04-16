@@ -164,9 +164,7 @@ export default function CustomModelDialog({
 					<div className="space-y-1">
 						<Label>
 							API Key{" "}
-							<span className="text-muted-foreground font-normal">
-								(optional)
-							</span>
+							<span className="text-muted-foreground font-normal">(optional)</span>
 						</Label>
 						<div className="relative">
 							<Input
@@ -258,7 +256,10 @@ export default function CustomModelDialog({
 					<Button
 						onClick={handleSaveProvider}
 						disabled={
-							!trimmedBaseUrl || isSavingProvider || !isUrlChanged || hasInvalidBaseUrl
+							!trimmedBaseUrl ||
+							isSavingProvider ||
+							!isUrlChanged ||
+							hasInvalidBaseUrl
 						}
 					>
 						{isSavingProvider ? "Saving..." : "Save"}

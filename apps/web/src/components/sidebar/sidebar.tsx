@@ -1,44 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Slot } from "@radix-ui/react-slot";
-import { VariantProps, cva } from "class-variance-authority";
-import { PanelLeft, ExternalLink } from "lucide-react";
-import { useToast } from "@/hooks/useToast";
+import { type VariantProps, cva } from "class-variance-authority";
+import { PanelLeft } from "lucide-react";
 
 import { useIsMobile } from "@/hooks/useMobile";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
-import {
-	Sheet,
-	SheetContent,
-	SheetDescription,
-	SheetHeader,
-	SheetTitle,
-} from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import {
-	Dialog,
-	DialogContent,
-	DialogDescription,
-	DialogHeader,
-	DialogTitle,
-	DialogTrigger,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
-import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state";
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "253px";
-const SIDEBAR_WIDTH_MOBILE = "253px";
 const SIDEBAR_WIDTH_ICON = "57px";
 const SIDEBAR_KEYBOARD_SHORTCUT = "b";
 
@@ -185,7 +160,7 @@ const Sidebar = React.forwardRef<
 		},
 		ref,
 	) => {
-		const { isMobile, state, openMobile, setOpenMobile, setOpen } = useSidebar();
+		const { state } = useSidebar();
 
 		// if (collapsible === 'none') {
 		//   return (
@@ -659,10 +634,7 @@ const SidebarMenuSkeleton = React.forwardRef<
 		showIcon?: boolean;
 	}
 >(({ className, showIcon = false, ...props }, ref) => {
-	// Random width between 50 to 90%.
-	const width = React.useMemo(() => {
-		return `${Math.floor(Math.random() * 40) + 50}%`;
-	}, []);
+	const [width] = useState(() => `${Math.floor(Math.random() * 40) + 50}%`);
 
 	return (
 		<div

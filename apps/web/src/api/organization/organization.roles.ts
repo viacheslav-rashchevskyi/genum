@@ -16,10 +16,7 @@ export const ORG_ROLE_RANK: Record<OrganizationRole, number> = {
  * @param requiredRole - The minimum role required
  * @returns true if user has access
  */
-export function hasOrgAccess(
-	userRole: OrganizationRole,
-	requiredRole: OrganizationRole,
-): boolean {
+export function hasOrgAccess(userRole: OrganizationRole, requiredRole: OrganizationRole): boolean {
 	return ORG_ROLE_RANK[userRole] >= ORG_ROLE_RANK[requiredRole];
 }
 

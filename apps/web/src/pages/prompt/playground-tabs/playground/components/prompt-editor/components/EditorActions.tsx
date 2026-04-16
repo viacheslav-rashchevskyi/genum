@@ -104,38 +104,38 @@ export const EditorActions = ({
 				</TooltipProvider>
 			)}
 
-		{/* Generate Button */}
-		{editorIsEmpty && main && (
-			<AIGenerateButton
-				mode="prompt-generate"
-				value={promptText}
-				onChange={setPromptText}
-				onAction={handleGenerate}
-				isOpen={isGeneratePopoverOpen}
-				setIsOpen={setIsGeneratePopoverOpen}
-				isLoading={loading}
-				placeholder="What would you like to generate?"
-				buttonText="Generate"
-				tooltipText="Generate prompt"
-			/>
-		)}
+			{/* Generate Button */}
+			{editorIsEmpty && main && (
+				<AIGenerateButton
+					mode="prompt-generate"
+					value={promptText}
+					onChange={setPromptText}
+					onAction={handleGenerate}
+					isOpen={isGeneratePopoverOpen}
+					setIsOpen={setIsGeneratePopoverOpen}
+					isLoading={loading}
+					placeholder="What would you like to generate?"
+					buttonText="Generate"
+					tooltipText="Generate prompt"
+				/>
+			)}
 
-		{/* Tune Button */}
-		{!editorIsEmpty && main && (
-			<AIGenerateButton
-				mode="prompt-tune"
-				value={tuneText}
-				onChange={setTuneText}
-				onAction={handleTune}
-				isOpen={isTunePopoverOpen}
-				setIsOpen={setIsTunePopoverOpen}
-				isLoading={loading}
-				placeholder="What would you like to tune?"
-				buttonText="Tune"
-				tooltipText="Tune prompt"
-				textareaClassName="text-primary"
-			/>
-		)}
+			{/* Tune Button */}
+			{!editorIsEmpty && main && (
+				<AIGenerateButton
+					mode="prompt-tune"
+					value={tuneText}
+					onChange={setTuneText}
+					onAction={handleTune}
+					isOpen={isTunePopoverOpen}
+					setIsOpen={setIsTunePopoverOpen}
+					isLoading={loading}
+					placeholder="What would you like to tune?"
+					buttonText="Tune"
+					tooltipText="Tune prompt"
+					textareaClassName="text-primary"
+				/>
+			)}
 
 			{/* Clear Button */}
 			{!editorIsEmpty && !main && (

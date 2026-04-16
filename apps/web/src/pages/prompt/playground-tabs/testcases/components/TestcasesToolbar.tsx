@@ -6,11 +6,7 @@ import TestCasesFilter from "../TestCasesFilter";
 import ActiveFilterChips from "../ActiveFilterChips";
 import type { FilterState } from "../TestCasesFilter";
 import type { UsedOptionValue } from "../utils/testcases.utils";
-import {
-	getRunTestsButtonLabel,
-	getStatusChipLabel,
-	usedOptions,
-} from "../utils/testcases.utils";
+import { getRunTestsButtonLabel, getStatusChipLabel, usedOptions } from "../utils/testcases.utils";
 import type { Prompt } from "@/pages/prompt/utils/types";
 
 type TestcasesToolbarProps = {
@@ -56,7 +52,7 @@ export default function TestcasesToolbar({
 						testcasesStatus: prev.testcasesStatus.filter((s) => s !== status),
 					})),
 			})),
-			...(filterState.prompts || [])
+			...((filterState.prompts || [])
 				.map((promptId) => {
 					const promptName = promptNameById.get(promptId);
 					if (!promptName) return null;
@@ -70,7 +66,7 @@ export default function TestcasesToolbar({
 							})),
 					};
 				})
-				.filter(Boolean) as { key: string; label: string; onRemove: () => void }[],
+				.filter(Boolean) as { key: string; label: string; onRemove: () => void }[]),
 		],
 		[filterState.prompts, filterState.testcasesStatus, onFilterStateChange, promptNameById],
 	);

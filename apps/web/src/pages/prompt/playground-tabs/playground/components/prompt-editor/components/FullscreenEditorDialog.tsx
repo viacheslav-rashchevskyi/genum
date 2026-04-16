@@ -58,14 +58,16 @@ const FullscreenEditorDialog = ({
 
 	const handleDialogOpenChange = (open: boolean) => {
 		if (open) {
-			// Sync from main to fullscreen
+			// Sync from main to fullscreen on open
 			const val = mainEditor.editorValueRef.current;
 			fullscreenEditor.editorRef.current?.setValue(val);
+			// eslint-disable-next-line react-hooks/immutability
 			fullscreenEditor.editorValueRef.current = val;
 		} else {
-			// Sync from fullscreen to main
+			// Sync from fullscreen to main on close
 			const val = fullscreenEditor.editorValueRef.current;
 			mainEditor.editorRef.current?.setValue(val);
+			// eslint-disable-next-line react-hooks/immutability
 			mainEditor.editorValueRef.current = val;
 			fullscreenEditor.handleEditorBlur();
 			mainEditor.handleEditorBlur();

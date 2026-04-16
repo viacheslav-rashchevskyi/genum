@@ -7,12 +7,7 @@ interface TweenNumberProps {
 	formatValue?: (value: number) => string;
 }
 
-export function TweenNumber({
-	value,
-	className,
-	durationMs = 700,
-	formatValue,
-}: TweenNumberProps) {
+export function TweenNumber({ value, className, durationMs = 700, formatValue }: TweenNumberProps) {
 	const [displayValue, setDisplayValue] = useState(value);
 	const animationFrameRef = useRef<number | null>(null);
 	const lastValueRef = useRef(value);

@@ -2,11 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell } from "recharts";
-import {
-	ChartContainer,
-	ChartTooltip,
-	ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { CheckCircle2, XCircle, AlertCircle, ChevronUp, ChevronDown } from "lucide-react";
 import type { PromptStats } from "@/pages/dashboard/hooks/useTestcasesGroupedByPrompt";
 import { useTestcaseStats } from "@/pages/dashboard/hooks/useTestcaseStats";
@@ -100,8 +96,8 @@ export function TestcaseStats({ prompts, isLoading: isForcedLoading = false }: P
 						Prompt Executions Statistics
 					</CardTitle>
 				</CardHeader>
-					<CardContent>
-						<ChartContainer config={testcaseChartConfig}>
+				<CardContent>
+					<ChartContainer config={testcaseChartConfig}>
 						<BarChart layout="vertical" data={dataToShow}>
 							<CartesianGrid
 								horizontal={false}
@@ -153,9 +149,7 @@ export function TestcaseStats({ prompts, isLoading: isForcedLoading = false }: P
 								animationDuration={900}
 								animationBegin={120}
 								animationEasing="ease-out"
-								onMouseEnter={(data) =>
-									setHovered(data.prompt_id, "passed")
-								}
+								onMouseEnter={(data) => setHovered(data.prompt_id, "passed")}
 								onMouseLeave={clearHovered}
 								style={{ cursor: "pointer" }}
 								fill="hsl(var(--chart-2))"
@@ -186,9 +180,7 @@ export function TestcaseStats({ prompts, isLoading: isForcedLoading = false }: P
 								animationDuration={900}
 								animationBegin={220}
 								animationEasing="ease-out"
-								onMouseEnter={(data) =>
-									setHovered(data.prompt_id, "failed")
-								}
+								onMouseEnter={(data) => setHovered(data.prompt_id, "failed")}
 								onMouseLeave={clearHovered}
 								style={{ cursor: "pointer" }}
 								fill="hsl(var(--chart-6))"

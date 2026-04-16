@@ -12,7 +12,7 @@ export function useProjectAPIKeys() {
 	const { toast } = useToast();
 	const queryClient = useQueryClient();
 	const orgId = getOrgId();
-	const projectId = getProjectId();	
+	const projectId = getProjectId();
 
 	const [isCreating, setIsCreating] = useState(false);
 	const [deletingId, setDeletingId] = useState<number | null>(null);

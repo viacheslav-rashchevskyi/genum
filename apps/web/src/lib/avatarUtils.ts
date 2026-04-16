@@ -82,12 +82,12 @@ export function getAvatarUrl(
 ): string | undefined {
 	if (!user) return undefined;
 	const isCloud = isCloudAuth();
-	
+
 	// On cloud: use avatar from backend (both fields come from backend, prioritize avatar)
 	if (isCloud) {
 		return user.avatar || user.picture || undefined;
 	}
-	
+
 	// On local: prefer picture (local avatar), then avatar from backend
 	return user.picture || user.avatar || undefined;
 }

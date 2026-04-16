@@ -2,7 +2,13 @@ import type React from "react";
 import { Textarea } from "@/components/ui/textarea";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "@/components/ui/select";
 import { capitalizeFirstLetter } from "@/lib/capitalizeFirstLetter";
 import AssertionPopover from "@/components/popovers/AssertionPopover";
 import clsx from "clsx";
@@ -49,7 +55,8 @@ export const AssertionPanel: React.FC<AssertionPanelProps> = ({
 									className={clsx(
 										"rounded-xl flex items-center justify-center h-4 text-[12px] font-[600] text-white flex-shrink-0",
 										{
-											"bg-[#2A9D90] w-[56px]": currentAssertionType === "STRICT",
+											"bg-[#2A9D90] w-[56px]":
+												currentAssertionType === "STRICT",
 											"bg-[#B66AD6] w-[56px]": currentAssertionType === "AI",
 										},
 									)}

@@ -1,6 +1,6 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Checkbox } from "@/components/ui/checkbox";
-import React from "react";
+import type React from "react";
 import { cn } from "@/lib/utils";
 
 export type Option = {

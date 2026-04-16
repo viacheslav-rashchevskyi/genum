@@ -36,4 +36,3 @@ export function formatTestcaseOutput(output: any): PromptResponse {
 
 	return defaultPromptResponse;
 }
-

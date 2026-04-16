@@ -70,12 +70,7 @@ function ReadOnlyCopyField({
 		<div className="space-y-2">
 			{label ? <Label className="text-foreground">{label}</Label> : null}
 			<div className="relative w-full">
-				<Input
-					readOnly
-					value={value}
-					spellCheck={false}
-					className={COPY_INPUT_CLASSNAME}
-				/>
+				<Input readOnly value={value} spellCheck={false} className={COPY_INPUT_CLASSNAME} />
 				<Button
 					size="sm"
 					disabled={disabled || copied}
@@ -114,8 +109,7 @@ function JsonSection({ title, content }: JsonSectionProps) {
 }
 
 export default function ApiEndpoint() {
-	const { promptId, apiUrl, copiedId, copiedURL, handleCopyId, handleCopyURL } =
-		useApiEndpoint();
+	const { promptId, apiUrl, copiedId, copiedURL, handleCopyId, handleCopyURL } = useApiEndpoint();
 	const promptIdValue = promptId?.toString() ?? "";
 
 	return (

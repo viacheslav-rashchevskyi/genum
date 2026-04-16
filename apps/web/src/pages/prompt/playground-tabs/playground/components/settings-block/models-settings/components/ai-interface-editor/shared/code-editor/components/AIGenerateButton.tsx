@@ -82,17 +82,19 @@ export default function AIGenerateButton(props: AIGenerateButtonProps) {
 	};
 
 	const label = getLabel();
-	const placeholder = controlled && props.placeholder ? props.placeholder : `What ${label} do you need?`;
+	const placeholder =
+		controlled && props.placeholder ? props.placeholder : `What ${label} do you need?`;
 	const buttonText = controlled && props.buttonText ? props.buttonText : "Generate";
-	const tooltipText = controlled && props.tooltipText ? props.tooltipText : `Generate ${label} with AI`;
-	const allowEmpty = controlled ? props.allowEmpty ?? false : false;
-	const textareaClassName = controlled ? props.textareaClassName ?? "" : "";
+	const tooltipText =
+		controlled && props.tooltipText ? props.tooltipText : `Generate ${label} with AI`;
+	const allowEmpty = controlled ? (props.allowEmpty ?? false) : false;
+	const textareaClassName = controlled ? (props.textareaClassName ?? "") : "";
 
 	const isInputMode = mode === "input";
-	const isActive = isInputMode && controlled ? props.isActive ?? true : true;
-	const inactiveReason = isInputMode && controlled ? props.inactiveReason ?? "" : "";
+	const isActive = isInputMode && controlled ? (props.isActive ?? true) : true;
+	const inactiveReason = isInputMode && controlled ? (props.inactiveReason ?? "") : "";
 
-	const isDisabled = controlled ? props.disabled ?? false : false;
+	const isDisabled = controlled ? (props.disabled ?? false) : false;
 	const simpleButton = controlled && props.simpleButton;
 	const buttonClassName = controlled && props.buttonClassName ? props.buttonClassName : "";
 
@@ -104,15 +106,18 @@ export default function AIGenerateButton(props: AIGenerateButtonProps) {
 						<button
 							type="button"
 							aria-label={tooltipText}
-							className={buttonClassName || "p-1.5 rounded-md transition-all hover:bg-[#437BEF]/10 text-[#437BEF] disabled:opacity-50 disabled:cursor-not-allowed"}
+							className={
+								buttonClassName ||
+								"p-1.5 rounded-md transition-all hover:bg-[#437BEF]/10 text-[#437BEF] disabled:opacity-50 disabled:cursor-not-allowed"
+							}
 							disabled={isDisabled}
 							onClick={handleAction}
 						>
-					{isLoading ? (
-						<CircleNotch size={18} className="animate-spin" />
-					) : (
-						<TuneIcon stroke="currentColor" />
-					)}
+							{isLoading ? (
+								<CircleNotch size={18} className="animate-spin" />
+							) : (
+								<TuneIcon stroke="currentColor" />
+							)}
 						</button>
 					</TooltipTrigger>
 					<TooltipContent>

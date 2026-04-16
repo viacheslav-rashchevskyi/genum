@@ -14,9 +14,7 @@ export const getFileTypeLabel = (contentType: string): string => {
 	return contentType;
 };
 
-export const getFileIconType = (
-	contentType: string,
-): "image" | "pdf" | "file" => {
+export const getFileIconType = (contentType: string): "image" | "pdf" | "file" => {
 	if (isImageFile(contentType)) {
 		return "image";
 	}

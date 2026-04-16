@@ -16,7 +16,6 @@ export function useMonacoEditor({
 }) {
 	const editorRef = useRef<any>(null);
 	const editorValueRef = useRef<string>(initialValue);
-	const wasInitialized = useRef(false);
 
 	useEffect(() => {
 		editorValueRef.current = initialValue;

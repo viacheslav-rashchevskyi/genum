@@ -1,5 +1,5 @@
-import { TestcaseStatuses } from "@/types/Prompt";
-import { TestCase, TestStatus } from "@/types/TestСase";
+import type { TestcaseStatuses } from "@/types/Prompt";
+import type { TestCase, TestStatus } from "@/types/TestСase";
 
 export type FilterState = {
 	prompts?: number[];

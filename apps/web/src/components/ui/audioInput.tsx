@@ -39,7 +39,7 @@ const AudioInput = ({
 	const { toast } = useToast();
 	const { resolvedTheme } = useTheme();
 	const recorderControls = useVoiceVisualizer();
-	const { startRecording, stopRecording, recordedBlob, error, isRecordingInProgress, audioData } =
+	const { startRecording, stopRecording, recordedBlob, error, isRecordingInProgress } =
 		recorderControls;
 
 	// Notify parent about recording state changes

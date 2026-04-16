@@ -8,11 +8,16 @@ interface EmptyStateProps {
 	className?: string;
 }
 
-export const EmptyState = ({ title, description, minHeight = "361px", className }: EmptyStateProps) => (
+export const EmptyState = ({
+	title,
+	description,
+	minHeight = "361px",
+	className,
+}: EmptyStateProps) => (
 	<section
 		className={cn(
 			"flex w-full items-center justify-center rounded-xl border border-dashed border-border p-6 shadow-none bg-background",
-			className
+			className,
 		)}
 		style={{ minHeight }}
 		aria-label="Empty state"

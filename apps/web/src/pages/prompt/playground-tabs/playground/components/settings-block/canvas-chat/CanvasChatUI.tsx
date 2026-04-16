@@ -1,5 +1,5 @@
 import type React from "react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import type { Message } from "@/types/Canvas";
 import { DefaultOptions } from "./components/DefaultOptions";
 import { MessagesList } from "./components/MessagesList";
@@ -37,7 +37,17 @@ const CanvasChatUI: React.FC<CanvasChatUIProps> = ({
 	sendMessageWithText,
 }) => {
 	const inputRef = useRef<HTMLTextAreaElement>(null);
-	const inputHeight = Number(inputRef.current?.offsetHeight ?? 0);
+	const [inputHeight, setInputHeight] = useState(0);
+
+	useEffect(() => {
+		const el = inputRef.current;
+		if (!el) return;
+
+		setInputHeight(el.offsetHeight);
+		const observer = new ResizeObserver(() => setInputHeight(el.offsetHeight));
+		observer.observe(el);
+		return () => observer.disconnect();
+	}, []);
 
 	const hasMessages = messages.length > 0;
 

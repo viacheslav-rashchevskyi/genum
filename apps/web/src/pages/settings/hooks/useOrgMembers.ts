@@ -114,7 +114,9 @@ export function useOrgMembers(orgId: string | undefined) {
 		members,
 		isLoading: query.isLoading,
 		isInviting: inviteMutation.isPending,
-		updatingRoleId: updateRoleMutation.isPending ? updateRoleMutation.variables?.memberId : null,
+		updatingRoleId: updateRoleMutation.isPending
+			? updateRoleMutation.variables?.memberId
+			: null,
 		deletingId: deleteMutation.isPending ? deleteMutation.variables : null,
 		inviteMember,
 		updateMemberRole,

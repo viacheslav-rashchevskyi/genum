@@ -8,9 +8,7 @@ export function usePlaygroundInput({
 	promptId: number | undefined;
 	testcaseId: string | null;
 }) {
-	const inputContent = usePlaygroundStore((state) =>
-		state.getInputDraft(promptId, testcaseId),
-	);
+	const inputContent = usePlaygroundStore((state) => state.getInputDraft(promptId, testcaseId));
 
 	const setInputContent = useCallback(
 		(value: string) => {

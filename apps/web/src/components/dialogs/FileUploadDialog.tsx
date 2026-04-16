@@ -192,7 +192,8 @@ const FileUploadDialog: React.FC<FileUploadDialogProps> = ({
 										Click to upload or drag and drop
 									</p>
 									<p className="text-xs text-muted-foreground">
-										Images and PDF files only (max {Math.round(maxSize / 1024 / 1024)}MB)
+										Images and PDF files only (max{" "}
+										{Math.round(maxSize / 1024 / 1024)}MB)
 									</p>
 								</div>
 							</div>

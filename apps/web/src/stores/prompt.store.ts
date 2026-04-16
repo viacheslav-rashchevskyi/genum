@@ -45,8 +45,7 @@ const usePromptStore = create<PromptStoreState>()(
 		(set, get) => ({
 			...initialState,
 
-			setCommitMessage: (commitMessage) =>
-				set({ commitMessage }, false, "setCommitMessage"),
+			setCommitMessage: (commitMessage) => set({ commitMessage }, false, "setCommitMessage"),
 
 			setPromptDraft: (promptId, value) =>
 				set(

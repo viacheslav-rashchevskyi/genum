@@ -3,10 +3,7 @@ interface PlaceholderLogoProps {
 	variant?: "default" | "white";
 }
 
-export function PlaceholderLogo({
-	companyName = "Acme Inc.",
-	variant = "default",
-}: PlaceholderLogoProps) {
+export function PlaceholderLogo({ variant = "default" }: PlaceholderLogoProps) {
 	const textColor = variant === "white" ? "text-white" : "text-foreground";
 
 	return (

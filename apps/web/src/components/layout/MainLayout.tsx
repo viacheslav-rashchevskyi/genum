@@ -33,7 +33,7 @@ import { logger } from "@/lib/logger";
 const GENUMLAB_LAST_ORG_ID = "genumlab_last_org_id";
 const GENUMLAB_LAST_PROJECT_ID = "genumlab_last_project_id";
 
-function LayoutContent({ user }: { user: UserType }) {
+function LayoutContent({ user: _user }: { user: UserType }) {
 	const location = useLocation();
 	const [searchParams] = useSearchParams();
 	const { orgId, projectId, id, versionId, notificationId } = useParams<{
@@ -109,7 +109,10 @@ function LayoutContent({ user }: { user: UserType }) {
 		return pathWithoutOrgProject.startsWith(item.url);
 	});
 
-	const pageTitle = promptId && prompt?.prompt?.name ? prompt.prompt.name : activeMainItem?.title || "Undefined Prompt";
+	const pageTitle =
+		promptId && prompt?.prompt?.name
+			? prompt.prompt.name
+			: activeMainItem?.title || "Undefined Prompt";
 	const displayPromptName = prompt?.prompt?.name;
 
 	const routeItems = [

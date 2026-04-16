@@ -15,10 +15,7 @@ export const PROJECT_ROLE_RANK: Record<ProjectRole, number> = {
  * @param requiredRole - The minimum role required
  * @returns true if user has access
  */
-export function hasProjectAccess(
-	userRole: ProjectRole,
-	requiredRole: ProjectRole,
-): boolean {
+export function hasProjectAccess(userRole: ProjectRole, requiredRole: ProjectRole): boolean {
 	return PROJECT_ROLE_RANK[userRole] >= PROJECT_ROLE_RANK[requiredRole];
 }
 

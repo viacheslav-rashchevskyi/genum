@@ -3,7 +3,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { PopoverContent } from "@/components/ui/popover";
 import AudioInput from "@/components/ui/audioInput";
 import { Loader2 } from "lucide-react";
-import { ReactNode, useState } from "react";
+import { type ReactNode, useState } from "react";
 
 interface PromptActionPopoverProps {
 	placeholder: string;

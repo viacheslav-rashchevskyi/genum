@@ -91,7 +91,11 @@ interface PlaygroundDraftActions {
 		testcaseId: ScopeParam,
 		memoryId: ScopeParam,
 	) => string;
-	clearMemoryValueDraft: (promptId: ScopeParam, testcaseId: ScopeParam, memoryId: ScopeParam) => void;
+	clearMemoryValueDraft: (
+		promptId: ScopeParam,
+		testcaseId: ScopeParam,
+		memoryId: ScopeParam,
+	) => void;
 
 	resetForTestcaseExit: (promptId: ScopeParam, prevTestcaseId: ScopeParam) => void;
 	resetAfterAddTestcase: (promptId: ScopeParam) => void;

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Column } from "@tanstack/react-table";
+import type { Column } from "@tanstack/react-table";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
 interface TableSortButtonProps<TData> {

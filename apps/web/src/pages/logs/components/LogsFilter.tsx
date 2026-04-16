@@ -286,7 +286,9 @@ export function LogsFilter({
 														<SelectValue placeholder="Choose a prompt" />
 													</SelectTrigger>
 													<SelectContent className="max-h-[200px]">
-														<SelectItem value="all">All prompts</SelectItem>
+														<SelectItem value="all">
+															All prompts
+														</SelectItem>
 														{promptOptions}
 													</SelectContent>
 												</Select>

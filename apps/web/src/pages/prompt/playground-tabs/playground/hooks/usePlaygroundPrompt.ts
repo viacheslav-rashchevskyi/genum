@@ -101,7 +101,10 @@ export function usePlaygroundPrompt({
 				return;
 			}
 
-			if (pendingValueRef.current === updateValue || lastSavedValueRef.current === updateValue) {
+			if (
+				pendingValueRef.current === updateValue ||
+				lastSavedValueRef.current === updateValue
+			) {
 				return;
 			}
 
@@ -124,12 +127,7 @@ export function usePlaygroundPrompt({
 				}
 			}
 		},
-		[
-			serverPromptValue,
-			clearLivePromptValue,
-			toast,
-			updatePrompt,
-		],
+		[serverPromptValue, clearLivePromptValue, toast, updatePrompt],
 	);
 
 	const handlePromptUpdate = useCallback(

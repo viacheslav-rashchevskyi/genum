@@ -19,12 +19,7 @@ type SignupFormProps = {
 	onLoginClick: () => void;
 };
 
-export default function SignupForm({
-	form,
-	isLoading,
-	onSubmit,
-	onLoginClick,
-}: SignupFormProps) {
+export default function SignupForm({ form, isLoading, onSubmit, onLoginClick }: SignupFormProps) {
 	return (
 		<>
 			<Form {...form}>
@@ -35,7 +30,9 @@ export default function SignupForm({
 						rules={signupFormValidationRules.name}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className="text-gray-900 dark:text-zinc-200">Name</FormLabel>
+								<FormLabel className="text-gray-900 dark:text-zinc-200">
+									Name
+								</FormLabel>
 								<FormControl>
 									<Input
 										type="text"
@@ -56,7 +53,9 @@ export default function SignupForm({
 						rules={signupFormValidationRules.email}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className="text-gray-900 dark:text-zinc-200">Email</FormLabel>
+								<FormLabel className="text-gray-900 dark:text-zinc-200">
+									Email
+								</FormLabel>
 								<FormControl>
 									<Input
 										type="email"

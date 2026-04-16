@@ -8,10 +8,7 @@ interface SelectedFilesListProps {
 	onRemove: (fileId: string) => void;
 }
 
-const SelectedFilesList: React.FC<SelectedFilesListProps> = ({
-	files,
-	onRemove,
-}) => {
+const SelectedFilesList: React.FC<SelectedFilesListProps> = ({ files, onRemove }) => {
 	if (files.length === 0) {
 		return null;
 	}

@@ -221,7 +221,10 @@ export interface DeleteConfirmDialogProps {
 export interface InviteMemberDialogProps {
 	open: boolean;
 	onOpenChange: (open: boolean) => void;
-	onInvite: (email: string, role: OrganizationRole) => Promise<{ success: boolean; inviteUrl?: string }>;
+	onInvite: (
+		email: string,
+		role: OrganizationRole,
+	) => Promise<{ success: boolean; inviteUrl?: string }>;
 	isInviting: boolean;
 }
 

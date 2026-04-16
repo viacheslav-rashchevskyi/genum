@@ -56,7 +56,6 @@ export const InputSelect: React.FC<{
 	renderOption,
 	listClassName,
 	popoverProps,
-	...restProps
 }) => {
 	const [selectedValue, setSelectedValue] = React.useState<string>(value);
 	const [isPopoverOpen, setIsPopoverOpen] = React.useState(false);

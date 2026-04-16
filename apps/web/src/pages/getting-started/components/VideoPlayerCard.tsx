@@ -33,10 +33,7 @@ const BalanceInfo = memo(function BalanceInfo({
 		<div className="mt-6 text-center">
 			<p className="font-semibold text-[16px]">Your balance: {formatBalance(balance)}</p>
 
-			<p
-				className="text-[12px] mt-1 min-h-4"
-				aria-live="polite"
-			>
+			<p className="text-[12px] mt-1 min-h-4" aria-live="polite">
 				<span
 					className={
 						isLoadingBalance

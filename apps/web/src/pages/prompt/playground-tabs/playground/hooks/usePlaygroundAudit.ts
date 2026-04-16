@@ -26,19 +26,9 @@ interface UseAuditOptions {
 export function useAudit(promptId: string | number | undefined, options?: UseAuditOptions) {
 	const queryClient = useQueryClient();
 	const auditDataKey = helperKeys.auditData(promptId);
-	const {
-		isAuditLoading,
-		isFixing,
-		showAuditModal,
-		diffModalInfo,
-	} = useAuditUI();
-	const {
-		openAuditModal,
-		closeAuditModal,
-		setDiffModal,
-		setFixingState,
-		setAuditLoading,
-	} = useAuditActions();
+	const { isAuditLoading, isFixing, showAuditModal, diffModalInfo } = useAuditUI();
+	const { openAuditModal, closeAuditModal, setDiffModal, setFixingState, setAuditLoading } =
+		useAuditActions();
 	const playgroundFlow = options?.playgroundFlow;
 	const promptValue = playgroundFlow?.promptValue;
 	const onAuditSuccess = options?.onAuditSuccess;
@@ -50,9 +40,9 @@ export function useAudit(promptId: string | number | undefined, options?: UseAud
 		queryKey: auditDataKey,
 		queryFn: () => {
 			if (!promptId) return null;
-			const cachedPrompt = queryClient.getQueryData<{ prompt?: { audit?: { data?: AuditData } } }>(
-				promptKeys.byId(Number(promptId)),
-			);
+			const cachedPrompt = queryClient.getQueryData<{
+				prompt?: { audit?: { data?: AuditData } };
+			}>(promptKeys.byId(Number(promptId)));
 			return (cachedPrompt?.prompt?.audit?.data ?? null) as AuditData | null;
 		},
 		enabled: !!promptId,

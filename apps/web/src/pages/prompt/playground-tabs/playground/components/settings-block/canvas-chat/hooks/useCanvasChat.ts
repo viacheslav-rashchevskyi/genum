@@ -1,4 +1,11 @@
-import { useState, useEffect, useCallback, useRef, type KeyboardEvent, useLayoutEffect } from "react";
+import {
+	useState,
+	useEffect,
+	useCallback,
+	useRef,
+	type KeyboardEvent,
+	useLayoutEffect,
+} from "react";
 import { useToast } from "@/hooks/useToast";
 import { promptApi } from "@/api/prompt";
 import { useAudit } from "@/pages/prompt/playground-tabs/playground/hooks/usePlaygroundAudit";
@@ -87,26 +94,24 @@ export const useCanvasChat = ({
 
 	useLayoutEffect(() => {
 		if (messages.length === 0) return;
-	  
+
 		const el = messagesRef.current;
 		if (!el) return;
-	  
+
 		el.scrollTo({
-		  top: el.scrollHeight,
-		  behavior: "smooth",
+			top: el.scrollHeight,
+			behavior: "smooth",
 		});
-	  }, [messages]);
+	}, [messages]);
 
 	// Audit hook
-	const { currentAuditData, runAudit, isAuditLoading, isFixing, fixRisks, hydrateAuditData } = useAudit(
-		promptId,
-		{
+	const { currentAuditData, runAudit, isAuditLoading, isFixing, fixRisks, hydrateAuditData } =
+		useAudit(promptId, {
 			onFixSuccess: (fixedPrompt: string) => {
 				uiActions.setDiffModalInfo({ prompt: fixedPrompt });
 				uiActions.setShowAuditModal(false);
 			},
-		},
-	);
+		});
 
 	// Actions handler
 	const actionsController = useCanvasChatActions({
@@ -149,14 +154,7 @@ export const useCanvasChat = ({
 				setIsLoading(false);
 			}
 		},
-		[
-			promptId,
-			ui.isOpen,
-			ui.mode,
-			uiActions,
-			sendMessageToApi,
-			actionsController,
-		],
+		[promptId, ui.isOpen, ui.mode, uiActions, sendMessageToApi, actionsController],
 	);
 
 	// Send message actions
@@ -202,11 +200,14 @@ export const useCanvasChat = ({
 	);
 
 	// Diff modal handlers
-	const onChangeDiff = useCallback((value: string) => {
-		uiActions.setDiffModalInfo(
-			ui.diffModalInfo ? { ...ui.diffModalInfo, prompt: value } : null,
-		);
-	}, [ui.diffModalInfo, uiActions]);
+	const onChangeDiff = useCallback(
+		(value: string) => {
+			uiActions.setDiffModalInfo(
+				ui.diffModalInfo ? { ...ui.diffModalInfo, prompt: value } : null,
+			);
+		},
+		[ui.diffModalInfo, uiActions],
+	);
 
 	const onSaveDiff = useCallback(
 		(value: string) => {

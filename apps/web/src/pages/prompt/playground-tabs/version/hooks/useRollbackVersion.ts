@@ -27,7 +27,8 @@ export const useRollbackVersion = () => {
 				await rollbackMutation.mutateAsync({ promptId, versionId });
 				return true;
 			} catch (error: unknown) {
-				const errorMessage = error instanceof Error ? error.message : "Something went wrong";
+				const errorMessage =
+					error instanceof Error ? error.message : "Something went wrong";
 				toast({
 					title: "Rollback failed",
 					description: errorMessage,

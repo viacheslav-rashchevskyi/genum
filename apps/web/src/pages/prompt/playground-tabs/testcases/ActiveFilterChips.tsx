@@ -1,5 +1,5 @@
 import type React from "react";
-import { XIcon  } from "@phosphor-icons/react";
+import { XIcon } from "@phosphor-icons/react";
 
 export type FilterChip = {
 	key: string | number;

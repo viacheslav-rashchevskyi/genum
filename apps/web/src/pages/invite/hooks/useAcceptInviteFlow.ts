@@ -75,7 +75,9 @@ export function useAcceptInviteFlow({ urlToken }: UseAcceptInviteFlowParams) {
 		},
 		onSuccess: async (result) => {
 			const invitedOrgId =
-				result.organization?.id?.toString() ?? result.member?.organizationId?.toString() ?? null;
+				result.organization?.id?.toString() ??
+				result.member?.organizationId?.toString() ??
+				null;
 
 			const config = await getInviteRequestConfig();
 			const freshUser = await userApi.getCurrentUser(config);

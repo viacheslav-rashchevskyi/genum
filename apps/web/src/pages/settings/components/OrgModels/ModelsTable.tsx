@@ -163,11 +163,15 @@ function ModelsTableComponent({ models, isLoading, pendingModelIds, onToggle }: 
 								<TableHead className="text-left p-4 w-[300px]">Model</TableHead>
 								<TableHead className="text-right p-4 w-[120px]">
 									Prompt Price
-									<div className="text-xs font-normal text-muted-foreground">/1M tokens</div>
+									<div className="text-xs font-normal text-muted-foreground">
+										/1M tokens
+									</div>
 								</TableHead>
 								<TableHead className="text-right p-4 w-[120px]">
 									Completion Price
-									<div className="text-xs font-normal text-muted-foreground">/1M tokens</div>
+									<div className="text-xs font-normal text-muted-foreground">
+										/1M tokens
+									</div>
 								</TableHead>
 								<TableHead className="text-right p-4 w-[120px]">Context</TableHead>
 								<TableHead className="text-center p-4 w-[100px]">Enabled</TableHead>

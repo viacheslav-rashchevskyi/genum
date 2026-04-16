@@ -19,12 +19,7 @@ type LoginFormProps = {
 	onSignupClick: () => void;
 };
 
-export default function LoginForm({
-	form,
-	isLoading,
-	onSubmit,
-	onSignupClick,
-}: LoginFormProps) {
+export default function LoginForm({ form, isLoading, onSubmit, onSignupClick }: LoginFormProps) {
 	return (
 		<>
 			<Form {...form}>
@@ -35,7 +30,9 @@ export default function LoginForm({
 						rules={loginFormValidationRules.email}
 						render={({ field }) => (
 							<FormItem>
-								<FormLabel className="text-gray-900 dark:text-zinc-200">Email</FormLabel>
+								<FormLabel className="text-gray-900 dark:text-zinc-200">
+									Email
+								</FormLabel>
 								<FormControl>
 									<Input
 										type="email"

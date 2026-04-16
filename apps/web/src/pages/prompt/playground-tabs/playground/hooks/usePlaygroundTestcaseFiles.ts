@@ -126,13 +126,7 @@ export function usePlaygroundTestcaseFiles({
 				logger.error("Failed to remove file from testcase:", error);
 			}
 		},
-		[
-			invalidateTestcaseQueries,
-			removeFileAsync,
-			selectedFiles,
-			setSelectedFiles,
-			testcaseId,
-		],
+		[invalidateTestcaseQueries, removeFileAsync, selectedFiles, setSelectedFiles, testcaseId],
 	);
 
 	return {

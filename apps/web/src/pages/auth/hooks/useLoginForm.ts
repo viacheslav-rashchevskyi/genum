@@ -5,7 +5,12 @@ import { useLocalAuth } from "@/contexts/LocalAuthContext";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/useToast";
 import { isCloudAuth } from "@/lib/auth";
-import { getLoginErrorMessage, getReturnTo, loginDefaultValues, type LoginFormData } from "../utils/loginForm";
+import {
+	getLoginErrorMessage,
+	getReturnTo,
+	loginDefaultValues,
+	type LoginFormData,
+} from "../utils/loginForm";
 
 export const useLoginForm = () => {
 	const [searchParams] = useSearchParams();

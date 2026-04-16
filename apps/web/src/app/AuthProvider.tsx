@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { type AppState, Auth0Provider } from "@auth0/auth0-react";
 import { LocalAuthProvider } from "@/contexts/LocalAuthContext";
+import { CloudAuthBridge } from "@/contexts/CloudAuthContext";
 import { isLocalAuth } from "@/lib/auth";
 import { runtimeConfig } from "@/lib/runtime-config";
 
@@ -21,7 +22,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 	}
 
 	const onRedirectCallback = (appState: AppState | undefined) => {
-		window.history.replaceState({}, document.title, appState?.returnTo || window.location.pathname);
+		window.history.replaceState(
+			{},
+			document.title,
+			appState?.returnTo || window.location.pathname,
+		);
 	};
 
 	return (
@@ -35,7 +40,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 				}}
 				onRedirectCallback={onRedirectCallback}
 			>
-				{children}
+				<CloudAuthBridge>{children}</CloudAuthBridge>
 			</Auth0Provider>
 		</LocalAuthProvider>
 	);

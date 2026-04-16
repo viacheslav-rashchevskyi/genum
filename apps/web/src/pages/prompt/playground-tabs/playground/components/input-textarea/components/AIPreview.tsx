@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from "react";
+import type React from "react";
+import { useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { helpersApi, ContentPrettifyResponse } from "@/api/helpers";
+import { helpersApi, type ContentPrettifyResponse } from "@/api/helpers";
 import { useQuery } from "@tanstack/react-query";
 import { helperKeys } from "@/query-keys/helpers.keys";
 

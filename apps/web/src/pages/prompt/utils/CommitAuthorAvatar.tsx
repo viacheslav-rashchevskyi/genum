@@ -13,11 +13,13 @@ export function CommitAuthorAvatar({
 	author,
 	size = "h-5 w-5",
 	textSize = "text-[10px]",
-	rounded = "rounded-full"
+	rounded = "rounded-full",
 }: CommitAuthorAvatarProps) {
-	const [imageState, setImageState] = useState<{ url: string | null; loaded: boolean; error: boolean }>(
-		{ url: null, loaded: false, error: false }
-	);
+	const [imageState, setImageState] = useState<{
+		url: string | null;
+		loaded: boolean;
+		error: boolean;
+	}>({ url: null, loaded: false, error: false });
 
 	const initial = getAvatarInitial(author.name ?? "U");
 	const colorClass = getAvatarColor(author.name ?? "U");
@@ -46,9 +48,7 @@ export function CommitAuthorAvatar({
 
 	return (
 		<Avatar className={`${size} ${rounded} cursor-default select-none`}>
-			{showSkeleton && (
-				<div className={`${size} ${rounded} bg-muted/40 animate-pulse`} />
-			)}
+			{showSkeleton && <div className={`${size} ${rounded} bg-muted/40 animate-pulse`} />}
 			{showImage && avatarUrl && (
 				<AvatarImage
 					src={avatarUrl}
@@ -58,7 +58,9 @@ export function CommitAuthorAvatar({
 				/>
 			)}
 			{showFallback && (
-				<AvatarFallback className={`${rounded} ${textSize} font-bold ${colorClass} cursor-default select-none`}>
+				<AvatarFallback
+					className={`${rounded} ${textSize} font-bold ${colorClass} cursor-default select-none`}
+				>
 					{initial}
 				</AvatarFallback>
 			)}

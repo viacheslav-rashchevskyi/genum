@@ -28,11 +28,7 @@ export function usePromptTune({
 	const [promptText, setPromptText] = useState("");
 	const [tuneText, setTuneText] = useState("");
 
-	const promptTuneMutation = useMutation<
-		PromptTuneResponse,
-		unknown,
-		{ context: string }
-	>({
+	const promptTuneMutation = useMutation<PromptTuneResponse, unknown, { context: string }>({
 		mutationKey: helperKeys.promptTune(),
 		mutationFn: async ({ context }) => {
 			return await helpersApi.promptTune({

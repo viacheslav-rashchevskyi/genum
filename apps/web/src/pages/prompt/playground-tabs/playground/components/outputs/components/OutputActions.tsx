@@ -45,7 +45,9 @@ export const OutputActions: React.FC<OutputActionsProps> = ({
 									<Button
 										size="sm"
 										onClick={onAddTestcase}
-										disabled={isTestcaseLoading || !modifiedValue.trim() || isRunning}
+										disabled={
+											isTestcaseLoading || !modifiedValue.trim() || isRunning
+										}
 										className="h-[32px] w-full text-[14px] sm:w-[138px]"
 									>
 										{isTestcaseLoading && (

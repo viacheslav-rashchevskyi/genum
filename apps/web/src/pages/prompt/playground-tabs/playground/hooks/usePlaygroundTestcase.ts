@@ -30,10 +30,7 @@ const hasVisibleMetrics = (value?: PromptResponse | null) =>
 	(value?.cost?.total ?? 0) > 0 ||
 	(value?.response_time_ms ?? 0) > 0;
 
-const isSameOutputSnapshot = (
-	first?: PromptResponse | null,
-	second?: PromptResponse | null,
-) => {
+const isSameOutputSnapshot = (first?: PromptResponse | null, second?: PromptResponse | null) => {
 	return (
 		(first?.answer ?? "") === (second?.answer ?? "") &&
 		(first?.tokens?.total ?? 0) === (second?.tokens?.total ?? 0) &&
@@ -136,7 +133,8 @@ export function usePlaygroundTestcaseController({
 				queryClient.setQueryData(
 					testcaseKeys.promptTestcases(promptId),
 					(prev: TestCase[] | undefined) =>
-						prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ?? prev,
+						prev?.map((tc) => (tc.id === updatedTestcase.id ? updatedTestcase : tc)) ??
+						prev,
 				);
 			}
 		},
@@ -159,11 +157,7 @@ export function usePlaygroundTestcaseController({
 		}
 
 		prevTestcaseIdRef.current = currentTestcaseId;
-	}, [
-		testcaseId,
-		resetPlaygroundState,
-		promptId,
-	]);
+	}, [testcaseId, resetPlaygroundState, promptId]);
 
 	// Load testcase data into playground query state
 	useEffect(() => {
@@ -218,7 +212,7 @@ export function usePlaygroundTestcaseController({
 							}
 						: formattedLastOutput;
 
-					const isUnchanged = isSameOutputSnapshot(storeOutputContent, mergedLastOutput);
+				const isUnchanged = isSameOutputSnapshot(storeOutputContent, mergedLastOutput);
 
 				if (!isUnchanged) {
 					setOutputContent(mergedLastOutput);
@@ -248,13 +242,12 @@ export function usePlaygroundTestcaseController({
 		usePlaygroundStore.getState().resetAfterAddTestcase(promptId);
 		clearExpectedOutputRef.current?.();
 		window.dispatchEvent(new CustomEvent("testcaseUpdated"));
-	}, [
-		promptId,
-	]);
+	}, [promptId]);
 
 	const handleSaveAsExpected = useCallback(
 		async (newExpectedContent: UpdateExpected) => {
-			const metricsSource = newExpectedContent.metrics ?? storeOutputContent ?? emptyPromptResponse;
+			const metricsSource =
+				newExpectedContent.metrics ?? storeOutputContent ?? emptyPromptResponse;
 			const expectedOutputData: PromptResponse = {
 				answer: newExpectedContent.answer,
 				tokens: metricsSource.tokens,

@@ -58,6 +58,9 @@ export function ProjectSwitcher({
 	const [newProjectDescription, setNewProjectDescription] = useState("");
 	const [isCreating, setIsCreating] = useState(false);
 
+	const location = useLocation();
+	const navigate = useNavigate();
+
 	const activeProject = selectedProjectId
 		? projects.find((project) => project.id === selectedProjectId)
 		: projects[0];
@@ -65,9 +68,6 @@ export function ProjectSwitcher({
 	if (!activeProject || projects.length === 0) {
 		return null;
 	}
-
-	const location = useLocation();
-	const navigate = useNavigate();
 
 	const handleProjectChange = (newProjectId: string) => {
 		const currentPath = location.pathname;

@@ -3,7 +3,7 @@ import { format, isBefore, isSameDay, addDays } from "date-fns";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
-import { DateRange } from "react-day-picker";
+import type { DateRange } from "react-day-picker";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { PlusCircle, RefreshCw, Edit, Trash2, Loader2, Server } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -43,7 +42,7 @@ export function CustomProviderSection({
 			setIsDeletingProvider(true);
 			await onDelete();
 			setDeleteProviderDialogOpen(false);
-		} catch (_error) {
+		} catch {
 			// Error is handled by the hook
 		} finally {
 			setIsDeletingProvider(false);

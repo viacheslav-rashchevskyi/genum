@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { userApi, type Notification as UserNotification } from "@/api/user";
 import { useToast } from "@/hooks/useToast";
 import { Button } from "@/components/ui/button";
@@ -13,15 +13,14 @@ import { Bell } from "lucide-react";
 import { SidebarMenuButton } from "@/components/sidebar/sidebar";
 import { NotificationIcon } from "@/components/ui/icons-tsx/NotificationIcon";
 import { formatNotificationPreview } from "@/lib/notificationPreview";
-import { getOrgId, getProjectId} from "@/api/client"
+import { getOrgId, getProjectId } from "@/api/client";
 import { logger } from "@/lib/logger";
 
 export function SidebarNotificationButton() {
 	const { toast } = useToast();
 	const navigate = useNavigate();
 	const orgId = getOrgId();
-	const projectId = getProjectId();	
-
+	const projectId = getProjectId();
 
 	const [open, setOpen] = useState(false);
 	const [notifications, setNotifications] = useState<UserNotification[]>([]);

@@ -26,9 +26,11 @@ export function usePlaygroundSession({
 
 	const setSession = useCallback(
 		(updater: (prev: PlaygroundSessionState) => PlaygroundSessionState) => {
-			usePlaygroundStore.getState().setSessionDraft(promptId, testcaseId, (prev) =>
-				updater(prev ?? defaultSessionState),
-			);
+			usePlaygroundStore
+				.getState()
+				.setSessionDraft(promptId, testcaseId, (prev) =>
+					updater(prev ?? defaultSessionState),
+				);
 		},
 		[promptId, testcaseId],
 	);

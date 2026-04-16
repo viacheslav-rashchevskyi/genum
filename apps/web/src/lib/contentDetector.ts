@@ -9,7 +9,7 @@ const isJSON = (text: string): boolean => {
 		try {
 			JSON.parse(trimmed);
 			return true;
-		} catch (e) {
+		} catch {
 			return false;
 		}
 	}
@@ -65,7 +65,7 @@ const isXML = (text: string): boolean => {
 			return false;
 		}
 		return true;
-	} catch (e) {
+	} catch {
 		return false;
 	}
 };

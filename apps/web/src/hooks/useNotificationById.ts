@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { userApi, Notification } from "@/api/user";
+import { userApi, type Notification } from "@/api/user";
 import { logger } from "@/lib/logger";
 
 export const useNotificationById = (notificationId?: string) => {

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { useToast } from "@/hooks/useToast";
-import { projectApi, ProjectRole } from "@/api/project";
+import { projectApi, type ProjectRole } from "@/api/project";
 import { organizationApi } from "@/api/organization/organization.api";
 import type { ProjectMember } from "@/api/project";
 import type { User } from "../utils/types";
@@ -79,9 +79,7 @@ export function useProjectMembers() {
 		async (id: number, role: ProjectRole) => {
 			try {
 				setUpdatingRoleId(id);
-				setMembers((prev) =>
-					prev.map((m) => (m.id === id ? { ...m, role } : m)),
-				);
+				setMembers((prev) => prev.map((m) => (m.id === id ? { ...m, role } : m)));
 				await projectApi.updateMemberRole(id, { role });
 				toast({
 					title: "Success",

@@ -339,17 +339,7 @@ function MemoryTableSkeleton() {
 }
 
 function LogsTableSkeleton() {
-	const headerWidths = [
-		"w-8",
-		"w-24",
-		"w-12",
-		"w-12",
-		"w-20",
-		"w-16",
-		"w-14",
-		"w-16",
-		"w-16",
-	];
+	const headerWidths = ["w-8", "w-24", "w-12", "w-12", "w-20", "w-16", "w-14", "w-16", "w-16"];
 	const headerSkeletonKeys = [
 		"logs-header-select",
 		"logs-header-time",

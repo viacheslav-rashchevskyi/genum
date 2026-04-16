@@ -16,7 +16,7 @@ import type { ProviderModelsTableProps } from "../../utils/types";
 import ModelConfigDialog from "../dialogs/ModelConfigDialog";
 import { logger } from "@/lib/logger";
 
-export function ProviderModelsTable({ providerId: _providerId }: ProviderModelsTableProps) {
+export function ProviderModelsTable(_: ProviderModelsTableProps) {
 	const { toast } = useToast();
 	const [models, setModels] = useState<LanguageModel[]>([]);
 	const [isLoading, setIsLoading] = useState(true);

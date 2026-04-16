@@ -12,5 +12,3 @@ export function usePlaygroundModels() {
 	// Hook returns a slightly different Model type; normalize for SettingsBar expectations.
 	return { models: models as unknown as Model[] };
 }
-
-

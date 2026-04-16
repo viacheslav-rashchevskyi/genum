@@ -51,13 +51,19 @@ export default function Playground() {
 		minVisibleMs: 350,
 	});
 
-	const handleTextEditorReadyStateChange = useCallback((isReady: boolean) => {
-		setTextEditorReadyPromptId(isReady ? promptId : undefined);
-	}, [promptId]);
+	const handleTextEditorReadyStateChange = useCallback(
+		(isReady: boolean) => {
+			setTextEditorReadyPromptId(isReady ? promptId : undefined);
+		},
+		[promptId],
+	);
 
-	const handleSettingsBarReadyStateChange = useCallback((isReady: boolean) => {
-		setSettingsBarReadyPromptId(isReady ? promptId : undefined);
-	}, [promptId]);
+	const handleSettingsBarReadyStateChange = useCallback(
+		(isReady: boolean) => {
+			setSettingsBarReadyPromptId(isReady ? promptId : undefined);
+		},
+		[promptId],
+	);
 
 	return (
 		<div className="relative h-full w-full min-w-0 max-w-[1470px] overflow-x-hidden px-3 pt-8 text-foreground lg:pr-6">

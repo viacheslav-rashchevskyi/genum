@@ -117,8 +117,7 @@ export default function ModelConfigDialog({
 			hasEmptyResponseFormat,
 			hasInvalidTokenRange,
 			hasInvalidTemperatureRange,
-		} =
-			getModelConfigValidationState(parametersConfig);
+		} = getModelConfigValidationState(parametersConfig);
 		setHasEmptyField(hasEmptyField);
 		setHasEmptyResponseFormat(hasEmptyResponseFormat);
 		setHasInvalidTokenRange(hasInvalidTokenRange);
@@ -160,7 +159,7 @@ export default function ModelConfigDialog({
 			const defaultValue =
 				typeof current.default === "string" && nextAllowed.includes(current.default)
 					? current.default
-					: nextAllowed[0] ?? "text";
+					: (nextAllowed[0] ?? "text");
 
 			return {
 				...prev,
@@ -289,9 +288,7 @@ export default function ModelConfigDialog({
 									value={paramName}
 									className="border rounded-md px-4"
 								>
-									<AccordionTrigger
-										className="hover:no-underline"
-									>
+									<AccordionTrigger className="hover:no-underline">
 										<div
 											className="flex items-center gap-3"
 											onPointerDown={(event) => event.stopPropagation()}
@@ -320,9 +317,14 @@ export default function ModelConfigDialog({
 															>
 																<Checkbox
 																	id={`param-${paramName}-${val}`}
-																	checked={(config.allowed ?? []).includes(val)}
+																	checked={(
+																		config.allowed ?? []
+																	).includes(val)}
 																	onCheckedChange={() =>
-																		toggleAllowedValue(paramName, val)
+																		toggleAllowedValue(
+																			paramName,
+																			val,
+																		)
 																	}
 																	disabled={!config.enabled}
 																/>
@@ -330,7 +332,8 @@ export default function ModelConfigDialog({
 																	htmlFor={`param-${paramName}-${val}`}
 																	className="cursor-pointer"
 																>
-																	{parameterValueLabels[val] ?? val}
+																	{parameterValueLabels[val] ??
+																		val}
 																</label>
 															</div>
 														))}
@@ -343,7 +346,11 @@ export default function ModelConfigDialog({
 														<Select
 															value={String(config.default ?? "text")}
 															onValueChange={(value) =>
-																updateParameterValue(paramName, "default", value)
+																updateParameterValue(
+																	paramName,
+																	"default",
+																	value,
+																)
 															}
 															disabled={!config.enabled}
 														>
@@ -351,20 +358,27 @@ export default function ModelConfigDialog({
 																<SelectValue placeholder="Select default" />
 															</SelectTrigger>
 															<SelectContent>
-																{(config.allowed ?? []).map((val) => (
-																	<SelectItem key={val} value={val}>
-																		{parameterValueLabels[val] ?? val}
-																	</SelectItem>
-																))}
+																{(config.allowed ?? []).map(
+																	(val) => (
+																		<SelectItem
+																			key={val}
+																			value={val}
+																		>
+																			{parameterValueLabels[
+																				val
+																			] ?? val}
+																		</SelectItem>
+																	),
+																)}
 															</SelectContent>
 														</Select>
 													</div>
 												</div>
 											) : paramName === "temperature" ||
-											  paramName === "max_tokens" ||
-											  config.min !== undefined ||
-											  config.max !== undefined ||
-											  typeof config.default === "number" ? (
+												paramName === "max_tokens" ||
+												config.min !== undefined ||
+												config.max !== undefined ||
+												typeof config.default === "number" ? (
 												<div className="grid grid-cols-3 gap-3">
 													<div className="space-y-1">
 														<Label className="text-sm text-muted-foreground">
@@ -383,7 +397,9 @@ export default function ModelConfigDialog({
 																)
 															}
 															min={0}
-															max={getModelParamBounds(paramName)?.max}
+															max={
+																getModelParamBounds(paramName)?.max
+															}
 															disabled={!config.enabled}
 															className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-ring"
 														/>
@@ -405,7 +421,9 @@ export default function ModelConfigDialog({
 																)
 															}
 															min={0}
-															max={getModelParamBounds(paramName)?.max}
+															max={
+																getModelParamBounds(paramName)?.max
+															}
 															disabled={!config.enabled}
 															className="[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [-moz-appearance:textfield] focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-ring"
 														/>
@@ -442,7 +460,8 @@ export default function ModelConfigDialog({
 																		);
 																	if (
 																		nextDefault === undefined ||
-																		nextDefault === current.default
+																		nextDefault ===
+																			current.default
 																	) {
 																		return prev;
 																	}
@@ -459,14 +478,18 @@ export default function ModelConfigDialog({
 																getModelParamBounds(paramName)
 																	? typeof config.min === "number"
 																		? config.min
-																		: getModelParamBounds(paramName)?.min
+																		: getModelParamBounds(
+																				paramName,
+																			)?.min
 																	: 0
 															}
 															max={
 																getModelParamBounds(paramName)
 																	? typeof config.max === "number"
 																		? config.max
-																		: getModelParamBounds(paramName)?.max
+																		: getModelParamBounds(
+																				paramName,
+																			)?.max
 																	: undefined
 															}
 															disabled={!config.enabled}

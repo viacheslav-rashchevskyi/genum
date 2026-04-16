@@ -1,5 +1,5 @@
 import React from "react";
-import type{ Message } from "@/types/Canvas";
+import type { Message } from "@/types/Canvas";
 import { ChatMessage } from "./ChatMessage";
 import { LoadingIndicator } from "./LoadingIndicator";
 
@@ -26,7 +26,7 @@ export const MessagesList = React.memo<MessagesListProps>(
 				{isLoading && <LoadingIndicator />}
 			</div>
 		);
-	}
+	},
 );
 
 MessagesList.displayName = "MessagesList";

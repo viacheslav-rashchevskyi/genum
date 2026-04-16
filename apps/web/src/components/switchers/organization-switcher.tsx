@@ -230,11 +230,12 @@ export function OrganizationSwitcher({
 		setIsCreateDialogOpen(false);
 	};
 
-	const orgInitials = activeOrganization.name
-		.match(/[\p{L}\d]/gu)
-		?.slice(0, 2)
-		.join("")
-		.toUpperCase() || null;
+	const orgInitials =
+		activeOrganization.name
+			.match(/[\p{L}\d]/gu)
+			?.slice(0, 2)
+			.join("")
+			.toUpperCase() || null;
 
 	return (
 		<>

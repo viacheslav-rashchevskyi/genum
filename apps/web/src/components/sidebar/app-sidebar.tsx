@@ -1,14 +1,12 @@
-import * as React from "react";
-import { Folder, GalleryVerticalEnd, File } from "lucide-react";
+import type * as React from "react";
+import { Folder, GalleryVerticalEnd } from "lucide-react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 
 import { NavMain } from "@/components/sidebar/nav-main";
 import { NavProjects } from "@/components/sidebar/nav-projects";
 import { NavUser } from "@/components/sidebar/nav-user";
 import { NavBottom } from "@/components/sidebar/nav-bottom";
-import { SidebarNotificationButton } from "@/components/sidebar/sidebar-notification-button";
 import { TeamSwitcher } from "@/components/switchers/workspace-switcher";
-import { SocialIcons } from "@/components/ui/icons-tsx/social-icons";
 
 import {
 	Sidebar,

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { Option } from "@/components/ui/MultiSelect";
-import { TestStatus } from "@/types/TestСase";
+import type { Option } from "@/components/ui/MultiSelect";
+import type { TestStatus } from "@/types/TestСase";
 
 type SelectedValue = TestStatus | "_all";
 

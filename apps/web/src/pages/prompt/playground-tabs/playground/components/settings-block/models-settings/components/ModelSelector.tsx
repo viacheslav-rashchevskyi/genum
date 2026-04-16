@@ -132,12 +132,7 @@ export const ModelSelector = memo(
 								);
 							}}
 						>
-							{({
-								placeholder,
-								disabled,
-								selectedValue,
-								setIsPopoverOpen,
-							}) => (
+							{({ placeholder, disabled, selectedValue, setIsPopoverOpen }) => (
 								<InputSelectTrigger
 									options={triggerOptions}
 									placeholder={placeholder}
@@ -145,7 +140,8 @@ export const ModelSelector = memo(
 									selectedValue={selectedValue}
 									setIsPopoverOpen={setIsPopoverOpen}
 									className={`mt-1 text-[14px] dark:border-[#3C3D3F] h-9 ${
-										showStatusState && (!selectedModelName || isSelectedDisabled)
+										showStatusState &&
+										(!selectedModelName || isSelectedDisabled)
 											? "border-amber-500"
 											: ""
 									}`}

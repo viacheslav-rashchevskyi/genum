@@ -88,18 +88,18 @@ export default function OrgMembers() {
 							</CardHeader>
 
 							<div className="pb-4">
-                            <p className="text-sm text-muted-foreground">
-                                Invite team members to collaborate on prompts and projects.{" "}
-                                <a
-                                    href="https://docs.genum.ai/teamwork"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="text-blue-600 hover:text-blue-800 underline"
-                                >
-                                    Learn more
-                                </a>
-                            </p>
-                        </div>
+								<p className="text-sm text-muted-foreground">
+									Invite team members to collaborate on prompts and projects.{" "}
+									<a
+										href="https://docs.genum.ai/teamwork"
+										target="_blank"
+										rel="noopener noreferrer"
+										className="text-blue-600 hover:text-blue-800 underline"
+									>
+										Learn more
+									</a>
+								</p>
+							</div>
 
 							<MembersTable
 								members={members}
@@ -139,9 +139,8 @@ export default function OrgMembers() {
 				title="Remove Member"
 				description={
 					<>
-						Are you sure you want to remove{" "}
-						<strong>{memberToDelete?.user.name}</strong> (
-						{memberToDelete?.user.email}) from the organization? They will also be
+						Are you sure you want to remove <strong>{memberToDelete?.user.name}</strong>{" "}
+						({memberToDelete?.user.email}) from the organization? They will also be
 						removed from all projects.
 					</>
 				}

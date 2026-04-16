@@ -1,4 +1,4 @@
-import { useState, useEffect, MouseEvent } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";

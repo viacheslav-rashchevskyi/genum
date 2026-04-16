@@ -13,7 +13,6 @@ import {
 } from "@/components/ui/dialog";
 import type { EditProfileDialogProps } from "../../utils/types";
 
-
 export function EditProfileDialog({
 	open,
 	onOpenChange,

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Form } from "@/components/ui/form";
 import JsonSchemaModal from "./components/ai-interface-editor/json-schema-editor/JsonSchemaModal";
@@ -75,19 +75,21 @@ const ModelsSettings = ({
 			: undefined;
 	const toolsParam = activeModelConfig?.parameters as Record<string, unknown> | undefined;
 	const activeParameters = activeModelConfig?.parameters as Record<string, unknown> | undefined;
-	const lastKnownParametersRef = useRef<Record<string, unknown>>({});
+	const [lastKnownParameters, setLastKnownParameters] = useState<Record<string, unknown>>({});
+	const [prevActiveParameters, setPrevActiveParameters] = useState(activeParameters);
 
-	useEffect(() => {
+	if (prevActiveParameters !== activeParameters) {
+		setPrevActiveParameters(activeParameters);
 		if (activeParameters && Object.keys(activeParameters).length > 0) {
-			lastKnownParametersRef.current = activeParameters;
+			setLastKnownParameters(activeParameters);
 		}
-	}, [activeParameters]);
+	}
 
 	const resolvedParameters =
 		activeParameters !== undefined
 			? activeParameters
 			: isUpdatingModel
-				? lastKnownParametersRef.current
+				? lastKnownParameters
 				: {};
 	const toolsEnabled =
 		typeof toolsParam?.tools === "object" &&

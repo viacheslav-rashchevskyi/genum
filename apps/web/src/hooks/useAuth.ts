@@ -1,34 +1,30 @@
-import { useAuth0 } from "@auth0/auth0-react";
 import { useLocalAuth } from "@/contexts/LocalAuthContext";
-import { getAuthMode } from "@/lib/auth";
+import { useCloudAuth } from "@/contexts/CloudAuthContext";
 
 /**
- * Unified authentication hook that works for both cloud (Auth0) and self-hosted modes
- * Returns a consistent interface regardless of the authentication mode
+ * Unified authentication hook for both cloud (Auth0) and self-hosted modes.
+ *
+ * Both hooks are called unconditionally:
+ * - useLocalAuth()  — safe in all modes (LocalAuthProvider is always mounted)
+ * - useCloudAuth()  — reads CloudAuthContext, returns null in local mode
+ *
+ * In cloud mode CloudAuthBridge (inside Auth0Provider) populates CloudAuthContext,
+ * so useCloudAuth() returns the Auth0 auth and takes precedence.
  */
 export function useAuth() {
-	const authMode = getAuthMode();
+	const localAuth = useLocalAuth();
+	const cloudAuth = useCloudAuth();
 
-	if (authMode === "local") {
-		const localAuth = useLocalAuth();
-		return {
-			isAuthenticated: localAuth.isAuthenticated,
-			isLoading: localAuth.isLoading,
-			user: localAuth.user,
-			getAccessTokenSilently: localAuth.getAccessTokenSilently,
-			loginWithRedirect: localAuth.loginWithRedirect,
-			logout: localAuth.logout,
-		};
+	if (cloudAuth) {
+		return cloudAuth;
 	}
 
-	// Cloud mode - use Auth0
-	const auth0 = useAuth0();
 	return {
-		isAuthenticated: auth0.isAuthenticated,
-		isLoading: auth0.isLoading,
-		user: auth0.user,
-		getAccessTokenSilently: auth0.getAccessTokenSilently,
-		loginWithRedirect: auth0.loginWithRedirect,
-		logout: auth0.logout,
+		isAuthenticated: localAuth.isAuthenticated,
+		isLoading: localAuth.isLoading,
+		user: localAuth.user,
+		getAccessTokenSilently: localAuth.getAccessTokenSilently,
+		loginWithRedirect: localAuth.loginWithRedirect,
+		logout: localAuth.logout,
 	};
 }

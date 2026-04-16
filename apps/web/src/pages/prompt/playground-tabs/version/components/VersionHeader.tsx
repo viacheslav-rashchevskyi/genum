@@ -16,9 +16,7 @@ export const VersionHeader: React.FC<VersionHeaderProps> = ({
 }) => {
 	return (
 		<div>
-			<div className="text-xl leading-5 font-medium mb-6 text-foreground">
-				{commitMsg}
-			</div>
+			<div className="text-xl leading-5 font-medium mb-6 text-foreground">{commitMsg}</div>
 			<div className="flex items-center space-x-2.5 text-sm text-muted-foreground">
 				<span className="text-xs font-medium px-2.5 py-0 rounded-sm border border-border text-foreground">
 					{commitHash ? commitHash.substring(0, 8) : ""}

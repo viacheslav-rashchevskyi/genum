@@ -9,9 +9,7 @@ export function usePlaygroundOutput({
 	promptId: number | undefined;
 	testcaseId: string | null;
 }) {
-	const outputContent = usePlaygroundStore((state) =>
-		state.getOutputDraft(promptId, testcaseId),
-	);
+	const outputContent = usePlaygroundStore((state) => state.getOutputDraft(promptId, testcaseId));
 	const expectedOutput = usePlaygroundStore((state) =>
 		state.getExpectedOutputDraft(promptId, testcaseId),
 	);

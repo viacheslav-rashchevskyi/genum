@@ -61,7 +61,10 @@ export function useAddTestcaseFromLog({
 						},
 					});
 				} catch (error) {
-					logger.error("Failed to refresh prompt testcases after create from log:", error);
+					logger.error(
+						"Failed to refresh prompt testcases after create from log:",
+						error,
+					);
 				}
 				return;
 			}

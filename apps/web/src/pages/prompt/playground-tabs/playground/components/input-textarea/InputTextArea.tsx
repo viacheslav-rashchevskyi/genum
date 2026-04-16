@@ -59,7 +59,7 @@ export const InputTextArea = forwardRef<HTMLTextAreaElement, InputTextAreaProps>
 		const hasActualInput = inputContent.trim().length > 0;
 		const isAIButtonActive = hasPromptContent && !hasActualInput && !!promptId;
 		const isPreviewDisabled = !hasActualInput;
-		
+
 		const getInactiveReason = () => {
 			if (!hasPromptContent) return "No prompt available";
 			if (hasActualInput) return "Input already exists";

@@ -1,4 +1,4 @@
-import { apiClient, ApiRequestConfig } from "../client";
+import { apiClient, type ApiRequestConfig } from "../client";
 
 // ============================================================================
 // Types

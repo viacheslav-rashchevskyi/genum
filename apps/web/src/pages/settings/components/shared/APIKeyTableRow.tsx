@@ -34,10 +34,7 @@ export function APIKeyTableRow({
 			<TableCell className="px-4 py-3 text-center">
 				<div className="flex items-center justify-center gap-2">
 					<Avatar className="h-6 w-6 rounded-lg">
-						<AvatarImage
-							src={authorAvatar}
-							alt={authorName}
-						/>
+						<AvatarImage src={authorAvatar} alt={authorName} />
 						<AvatarFallback className={`rounded-lg text-xs font-bold ${authorColor}`}>
 							{authorInitial}
 						</AvatarFallback>

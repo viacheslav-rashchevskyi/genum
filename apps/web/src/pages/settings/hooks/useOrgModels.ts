@@ -25,7 +25,8 @@ export function useOrgModels() {
 			mutationKey: toggleMutationKey,
 			status: "pending",
 		},
-		select: (mutation) => (mutation.state.variables as ToggleModelVariables | undefined)?.modelId,
+		select: (mutation) =>
+			(mutation.state.variables as ToggleModelVariables | undefined)?.modelId,
 	}).filter((modelId): modelId is number => typeof modelId === "number");
 
 	const toggleMutation = useMutation({
@@ -35,7 +36,9 @@ export function useOrgModels() {
 		onMutate: async ({ modelId, enabled }) => {
 			await queryClient.cancelQueries({ queryKey: modelsQueryKey });
 
-			const previousData = queryClient.getQueryData<{ models: LanguageModel[] }>(modelsQueryKey);
+			const previousData = queryClient.getQueryData<{ models: LanguageModel[] }>(
+				modelsQueryKey,
+			);
 
 			queryClient.setQueryData<{ models: LanguageModel[] }>(modelsQueryKey, (current) => {
 				if (!current) {

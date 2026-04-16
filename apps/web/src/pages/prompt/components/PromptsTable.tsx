@@ -18,12 +18,7 @@ type PromptsTableProps = {
 	onRowClick: (prompt: Prompt) => void;
 };
 
-export function PromptsTable({
-	table,
-	isLoading,
-	columnsCount,
-	onRowClick,
-}: PromptsTableProps) {
+export function PromptsTable({ table, isLoading, columnsCount, onRowClick }: PromptsTableProps) {
 	return (
 		<div className="rounded-md overflow-auto">
 			<Table>
@@ -62,12 +57,14 @@ export function PromptsTable({
 										key={cell.id}
 										className="text-center"
 										onClick={
-											cell.column.id !== "actions" && cell.column.id !== "select"
+											cell.column.id !== "actions" &&
+											cell.column.id !== "select"
 												? () => onRowClick(row.original)
 												: undefined
 										}
 										style={{
-											cursor: cell.column.id === "name" ? "pointer" : undefined,
+											cursor:
+												cell.column.id === "name" ? "pointer" : undefined,
 										}}
 									>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
