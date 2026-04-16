@@ -1,6 +1,7 @@
 import { transformToVisualSchema, type VisualSchema } from "../../shared/utils/schemaHelpers";
 import { TabsValue } from "../../shared/utils/types";
 import { validateStrictMode } from "../../shared/utils/schemaHelpers";
+import { logger } from "@/lib/logger";
 
 interface UseAISchemaProps {
 	setSchema: (schema: VisualSchema) => void;
@@ -39,7 +40,7 @@ export const useAISchema = ({ setSchema, setValidationErrors, setActiveTab }: Us
 			setValidationErrors([]);
 			setActiveTab(TabsValue.VISUAL);
 		} catch (error) {
-			console.error("Error applying AI schema:", error);
+			logger.error("Error applying AI schema:", error);
 			setValidationErrors(["Error applying AI-generated schema"]);
 		}
 	};

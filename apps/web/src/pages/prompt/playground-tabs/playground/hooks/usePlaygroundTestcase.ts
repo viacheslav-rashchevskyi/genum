@@ -7,6 +7,7 @@ import type { TestCase } from "@/types/TestСase";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
 import usePlaygroundStore from "@/stores/playground.store";
+import { logger } from "@/lib/logger";
 
 const emptyPromptResponse: PromptResponse = {
 	answer: "",
@@ -275,7 +276,7 @@ export function usePlaygroundTestcaseController({
 
 				await updateExpectedAsync(updateData);
 			} catch (error) {
-				console.error("Failed to save as expected:", error);
+				logger.error("Failed to save as expected:", error);
 			}
 		},
 		[
@@ -294,7 +295,7 @@ export function usePlaygroundTestcaseController({
 			try {
 				await updateTestcaseInputMutation.mutateAsync(inputContent);
 			} catch (error) {
-				console.error("Failed to update testcase input:", error);
+				logger.error("Failed to update testcase input:", error);
 			}
 		}
 	}, [inputContent, testcaseId, updateTestcaseInputMutation]);

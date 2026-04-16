@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/useToast";
+import { logger } from "@/lib/logger";
 
 interface InviteUrlDialogProps {
 	open: boolean;
@@ -33,7 +34,7 @@ export function InviteUrlDialog({ open, onOpenChange, inviteUrl }: InviteUrlDial
 				duration: 3000,
 			});
 		} catch (error) {
-			console.error("Failed to copy:", error);
+			logger.error("Failed to copy:", error);
 		}
 	};
 

@@ -6,6 +6,7 @@ import type { ProjectAPIKey } from "@/api/project";
 import type { NewKeyResponse } from "../utils/types";
 import { getOrgId, getProjectId } from "@/api/client";
 import { projectKeys } from "@/query-keys/project.keys";
+import { logger } from "@/lib/logger";
 
 export function useProjectAPIKeys() {
 	const { toast } = useToast();
@@ -58,7 +59,7 @@ export function useProjectAPIKeys() {
 				});
 				return true;
 			} catch (error) {
-				console.error("Error creating API key:", error);
+				logger.error("Error creating API key:", error);
 				toast({
 					title: "Error",
 					description: "Failed to create API key",
@@ -84,7 +85,7 @@ export function useProjectAPIKeys() {
 					duration: 3000,
 				});
 			} catch (error) {
-				console.error("Error deleting API key:", error);
+				logger.error("Error deleting API key:", error);
 				toast({
 					title: "Error",
 					description: "Failed to delete API key",

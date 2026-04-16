@@ -10,6 +10,7 @@ import { filesApi, type FileMetadata } from "@/api/files";
 import { useRefetchOnWorkspaceChange } from "@/hooks/useRefetchOnWorkspaceChange";
 import { useFilesTableColumns } from "./useFilesTableColumns";
 import { fileKeys } from "@/query-keys/files.keys";
+import { logger } from "@/lib/logger";
 
 export function useFilesPage() {
 	const [sorting, setSorting] = useState<SortingState>([]);
@@ -34,7 +35,7 @@ export function useFilesPage() {
 			const url = await filesApi.getFileUrl(file.id);
 			window.open(url, "_blank");
 		} catch (error) {
-			console.error("Failed to get file URL:", error);
+			logger.error("Failed to get file URL:", error);
 		}
 	}, []);
 
@@ -79,7 +80,7 @@ export function useFilesPage() {
 			setDeleteDialogOpen(false);
 			setSelectedFile(null);
 		} catch (error) {
-			console.error("Failed to delete file:", error);
+			logger.error("Failed to delete file:", error);
 		} finally {
 			setIsDeleting(false);
 		}

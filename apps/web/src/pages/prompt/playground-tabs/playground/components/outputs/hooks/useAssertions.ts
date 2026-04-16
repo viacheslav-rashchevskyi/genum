@@ -5,6 +5,7 @@ import { promptApi } from "@/api/prompt";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { promptKeys } from "@/query-keys/prompt.keys";
 import type { PromptSettings } from "@/types/Prompt";
+import { logger } from "@/lib/logger";
 
 interface UseAssertionsProps {
 	promptId: number | undefined;
@@ -50,7 +51,7 @@ export const useAssertions = ({
 			});
 		},
 		onError: (error) => {
-			console.error("Failed to update prompt:", error);
+			logger.error("Failed to update prompt:", error);
 			toast({
 				title: "Something went wrong",
 				variant: "destructive",

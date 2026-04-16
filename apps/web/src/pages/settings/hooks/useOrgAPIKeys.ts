@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/useToast";
 import { organizationApi } from "@/api/organization";
 import { projectApi } from "@/api/project";
 import { organizationKeys } from "@/query-keys/organization.keys";
+import { logger } from "@/lib/logger";
 
 export interface OrgKey {
 	id: number;
@@ -54,7 +55,7 @@ export function useOrgAPIKeys(): UseOrgAPIKeysReturn {
 			await deleteMutation.mutateAsync(key.id);
 			toast({ title: "Deleted", description: "Key removed" });
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Cannot delete key",

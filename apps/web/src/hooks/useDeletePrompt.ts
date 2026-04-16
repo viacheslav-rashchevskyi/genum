@@ -1,5 +1,6 @@
 import { promptApi } from "@/api/prompt";
 import { useMutation } from "@tanstack/react-query";
+import { logger } from "@/lib/logger";
 
 export function useDeletePrompt() {
 	const deletePromptMutation = useMutation({
@@ -13,7 +14,7 @@ export function useDeletePrompt() {
 			await deletePromptMutation.mutateAsync(id);
 			return true;
 		} catch (err: any) {
-			console.error("Delete prompt error:", err);
+			logger.error("Delete prompt error:", err);
 			return false;
 		}
 	};

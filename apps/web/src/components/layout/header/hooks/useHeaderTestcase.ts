@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { testcasesApi } from "@/api/testcases/testcases.api";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
 import type { TestCase } from "@/types/TestСase";
+import { logger } from "@/lib/logger";
 
 export const useHeaderTestcase = (
 	testcaseId: string | null,
@@ -28,7 +29,7 @@ export const useHeaderTestcase = (
 				queryFn: () => testcasesApi.getTestcase(testcaseId),
 			});
 		} catch (error) {
-			console.error("Failed to refresh testcase:", error);
+			logger.error("Failed to refresh testcase:", error);
 			return null;
 		}
 	}, [queryClient, testcaseId]);

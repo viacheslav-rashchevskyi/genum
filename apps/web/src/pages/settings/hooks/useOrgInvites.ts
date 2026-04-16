@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/useToast";
 import { organizationApi, type Invite } from "@/api/organization";
 import { organizationKeys } from "@/query-keys/organization.keys";
+import { logger } from "@/lib/logger";
 
 export function useOrgInvites(orgId: string | undefined) {
 	const { toast } = useToast();
@@ -28,7 +29,7 @@ export function useOrgInvites(orgId: string | undefined) {
 			await deleteMutation.mutateAsync(invite);
 			toast({ title: "Success", description: "Invite deleted successfully" });
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Failed to delete invite",

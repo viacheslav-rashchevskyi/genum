@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/useToast";
 import { useTheme } from "@/components/theme/theme-provider";
 import { useVoiceVisualizer, VoiceVisualizer } from "react-voice-visualizer";
 import { helpersApi } from "@/api/helpers";
+import { logger } from "@/lib/logger";
 
 interface AudioInputProps {
 	disabled?: boolean;
@@ -60,7 +61,7 @@ const AudioInput = ({
 				onTextReceived(data.text?.trim());
 			}
 		} catch (error) {
-			console.error("Error sending audio:", error);
+			logger.error("Error sending audio:", error);
 			toast({
 				title: "Failed to convert speech to text",
 				variant: "destructive",
@@ -141,7 +142,7 @@ const AudioInput = ({
 	const finalColors = { ...defaultColors, ...colors };
 
 	if (error) {
-		console.error("Voice Visualizer Error:", error);
+		logger.error("Voice Visualizer Error:", error);
 	}
 
 	if (isRecordingInProgress && !isLoading) {

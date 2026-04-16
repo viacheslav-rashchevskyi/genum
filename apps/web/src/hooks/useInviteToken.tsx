@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { logger } from "@/lib/logger";
 
 const INVITE_TOKEN_KEY = "pending_invite_token";
 const INVITE_EXPIRY_KEY = "pending_invite_expiry";
@@ -13,7 +14,7 @@ export const useInviteToken = () => {
 			localStorage.setItem(INVITE_EXPIRY_KEY, expiryTime.toString());
 			return true;
 		} catch (error) {
-			console.error("Failed to save invite token:", error);
+			logger.error("Failed to save invite token:", error);
 			return false;
 		}
 	}, []);
@@ -23,7 +24,7 @@ export const useInviteToken = () => {
 			localStorage.removeItem(INVITE_TOKEN_KEY);
 			localStorage.removeItem(INVITE_EXPIRY_KEY);
 		} catch (error) {
-			console.error("Failed to clear invite token:", error);
+			logger.error("Failed to clear invite token:", error);
 		}
 	}, []);
 
@@ -43,7 +44,7 @@ export const useInviteToken = () => {
 
 			return token;
 		} catch (error) {
-			console.error("Failed to get invite token:", error);
+			logger.error("Failed to get invite token:", error);
 			return null;
 		}
 	}, [clearInviteToken]);

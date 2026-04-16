@@ -8,6 +8,7 @@ import { NotificationIcon } from "@/components/ui/icons-tsx/NotificationIcon";
 import { userApi, Notification } from "@/api/user";
 import { formatNotificationPreview } from "@/lib/notificationPreview";
 import { getOrgId, getProjectId } from "@/api/client";
+import { logger } from "@/lib/logger";
 
 export default function Notifications() {
 	const { toast } = useToast();
@@ -39,7 +40,7 @@ export default function Notifications() {
 				setTotalPages(Math.ceil((response.totalCount || 0) / limit));
 			}
 		} catch (error) {
-			console.error("Error fetching notifications:", error);
+			logger.error("Error fetching notifications:", error);
 			toast({
 				title: "Error",
 				description: "Failed to load notifications.",
@@ -66,7 +67,7 @@ export default function Notifications() {
 			await userApi.markNotificationAsRead(notificationId);
 			fetchNotifications();
 		} catch (error) {
-			console.error("Error marking notification as read:", error);
+			logger.error("Error marking notification as read:", error);
 		}
 	};
 
@@ -80,7 +81,7 @@ export default function Notifications() {
 			});
 			fetchNotifications();
 		} catch (error) {
-			console.error("Error marking all notifications as read:", error);
+			logger.error("Error marking all notifications as read:", error);
 			toast({
 				title: "Error",
 				description: "Failed to mark all notifications as read.",

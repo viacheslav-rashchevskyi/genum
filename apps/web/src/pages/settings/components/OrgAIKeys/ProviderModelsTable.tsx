@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import type { ProviderModelsTableProps } from "../../utils/types";
 import ModelConfigDialog from "../dialogs/ModelConfigDialog";
+import { logger } from "@/lib/logger";
 
 export function ProviderModelsTable({ providerId: _providerId }: ProviderModelsTableProps) {
 	const { toast } = useToast();
@@ -28,7 +29,7 @@ export function ProviderModelsTable({ providerId: _providerId }: ProviderModelsT
 			const data = await organizationApi.getProviderModels();
 			setModels(data.models);
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Failed to load models",

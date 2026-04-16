@@ -10,6 +10,7 @@ interface UseAIToolProps {
 
 import { TabsValue } from "../../shared/utils/types";
 import type { ToolItem } from "../../../../utils/types";
+import { logger } from "@/lib/logger";
 
 export const useAITool = ({
 	setToolName,
@@ -47,7 +48,7 @@ export const useAITool = ({
 			setValidationErrors([]);
 			setActiveTab(TabsValue.VISUAL);
 		} catch (e) {
-			console.error("Error applying AI tool:", e);
+			logger.error("Error applying AI tool:", e);
 			setValidationErrors(["Error applying AI-generated tool"]);
 		}
 	};

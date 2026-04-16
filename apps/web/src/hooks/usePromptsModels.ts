@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import type { ResponseModelConfig } from "@/types/AIModel";
 import { promptApi } from "@/api/prompt";
+import { logger } from "@/lib/logger";
 
 // Define types for model and model configuration
 interface Model {
@@ -33,7 +34,7 @@ export function usePromptsModels() {
 			}
 			return false;
 		} catch (err: any) {
-			console.error("❌ Fetch models error:", err);
+			logger.error("❌ Fetch models error:", err);
 			setError(err.message || "Failed to fetch models");
 			return false;
 		} finally {
@@ -49,7 +50,7 @@ export function usePromptsModels() {
 			setModelConfig(data.config);
 			return data.config;
 		} catch (err: any) {
-			console.error("❌ Fetch model configuration error:", err);
+			logger.error("❌ Fetch model configuration error:", err);
 			setError(err.message || "Failed to fetch model configuration");
 			return null;
 		} finally {
@@ -67,7 +68,7 @@ export function usePromptsModels() {
 				await promptApi.updatePromptModel(promptId, modelId);
 				return true;
 			} catch (err: any) {
-				console.error("❌ Error updating prompt model:", err);
+				logger.error("❌ Error updating prompt model:", err);
 				setError(err.message || "Failed to update prompt model");
 				return false;
 			} finally {
@@ -87,7 +88,7 @@ export function usePromptsModels() {
 				await promptApi.updateModelConfig(promptId, payload);
 				return true;
 			} catch (err: any) {
-				console.error("❌ Error updating model settings:", err);
+				logger.error("❌ Error updating model settings:", err);
 				setError(err.message || "Failed to update model settings");
 				return false;
 			} finally {

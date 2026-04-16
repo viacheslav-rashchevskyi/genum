@@ -17,6 +17,7 @@ import { modelSettingsSchema } from "../utils/schema";
 import { buildModelSettingsPayload, getFormValuesFromPrompt } from "../utils/payload";
 import { groupModelsByVendor } from "../utils/helpers";
 import type { ModelSettingsFormValues, ToolItem } from "../utils/types";
+import { logger } from "@/lib/logger";
 
 interface UseModelsSettingsProps {
 	prompt?: PromptSettings;
@@ -209,7 +210,7 @@ export function useModelsSettings({
 				return result.prompt;
 			}
 		} catch (error) {
-			console.error("❌ Failed to get commit status:", error);
+			logger.error("❌ Failed to get commit status:", error);
 		}
 		return null;
 	}, [promptId, queryClient, setIsCommitted]);
@@ -386,7 +387,7 @@ export function useModelsSettings({
 				await getCommitStatus();
 				await getModelConfig(draftSelectedModelId);
 			} catch (error) {
-				console.error("❌ Error updating model settings:", error);
+				logger.error("❌ Error updating model settings:", error);
 				toast({
 					title: "Error",
 					description: "Failed to update model settings",
@@ -561,7 +562,7 @@ export function useModelsSettings({
 					description: `Model changed to ${model.name}`,
 				});
 			} catch (error) {
-				console.error("❌ Error changing model:", error);
+				logger.error("❌ Error changing model:", error);
 				toast({
 					title: "Error",
 					description: "Failed to change model",
@@ -615,7 +616,7 @@ export function useModelsSettings({
 				});
 				await persistLatestDraft();
 			} catch (error) {
-				console.error("❌ Error updating response format:", error);
+				logger.error("❌ Error updating response format:", error);
 				toast({
 					title: "Error",
 					description: "Failed to update response format",
@@ -654,7 +655,7 @@ export function useModelsSettings({
 				});
 				await persistLatestDraft();
 			} catch (error) {
-				console.error("Failed to update schema:", error);
+				logger.error("Failed to update schema:", error);
 				if (prompt?.languageModelConfig) {
 					const config = prompt.languageModelConfig;
 					const jsonSchema = config.json_schema;

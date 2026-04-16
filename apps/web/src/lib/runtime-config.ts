@@ -144,6 +144,7 @@ export const runtimeConfig = {
  */
 export function debugConfig(): void {
 	if (import.meta.env.DEV) {
+		// eslint-disable-next-line no-console
 		console.log("[Runtime Config] Current configuration:", {
 			source: typeof window !== "undefined" && window.__ENV__ ? "runtime" : "build-time",
 			config: {

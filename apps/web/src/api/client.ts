@@ -6,6 +6,7 @@ import axios, {
 	AxiosError,
 } from "axios";
 import { isCloudAuth, getApiUrl } from "@/lib/auth";
+import { logger } from "@/lib/logger";
 
 /**
  * Custom error class for API errors with status code and response data
@@ -92,7 +93,7 @@ const createAxiosInstance = (): AxiosInstance => {
 						config.headers.Authorization = `Bearer ${token}`;
 					}
 				} catch (error) {
-					console.warn("[API Client] Failed to get auth token:", error);
+					logger.warn("[API Client] Failed to get auth token:", error);
 				}
 			}
 
@@ -177,7 +178,7 @@ const createAxiosInstance = (): AxiosInstance => {
 
 			// Log error for debugging (in production, you might want to send to error tracking)
 			if (import.meta.env.DEV) {
-				console.error("[API Client] Request failed:", {
+				logger.error("[API Client] Request failed:", {
 					url: error.config?.url,
 					method: error.config?.method,
 					status,
@@ -216,7 +217,7 @@ export const createRequestWithContext = (context: ApiClientContext): AxiosInstan
 						config.headers.Authorization = `Bearer ${token}`;
 					}
 				} catch (error) {
-					console.warn("[API Client] Failed to get auth token:", error);
+					logger.warn("[API Client] Failed to get auth token:", error);
 				}
 			}
 

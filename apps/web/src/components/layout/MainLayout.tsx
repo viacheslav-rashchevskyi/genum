@@ -28,6 +28,7 @@ import PendingInviteHandler from "@/pages/invite/PendingInviteHandler";
 import { useQuery } from "@tanstack/react-query";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
 import { testcasesApi } from "@/api/testcases";
+import { logger } from "@/lib/logger";
 
 const GENUMLAB_LAST_ORG_ID = "genumlab_last_org_id";
 const GENUMLAB_LAST_PROJECT_ID = "genumlab_last_project_id";
@@ -85,7 +86,7 @@ function LayoutContent({ user }: { user: UserType }) {
 					setVersion(data);
 				})
 				.catch((error) => {
-					console.error("Failed to fetch version:", error);
+					logger.error("Failed to fetch version:", error);
 				})
 				.finally(() => {
 					setIsRefetching(false);

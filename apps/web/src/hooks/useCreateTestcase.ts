@@ -1,5 +1,6 @@
 import { testcasesApi } from "@/api/testcases/testcases.api";
 import { useMutation } from "@tanstack/react-query";
+import { logger } from "@/lib/logger";
 
 export interface TestcasePayload {
 	promptId: number;
@@ -23,7 +24,7 @@ export function useCreateTestcase() {
 			await createTestcaseMutation.mutateAsync(payload);
 			return true;
 		} catch (err: any) {
-			console.error("Create testcase error:", err);
+			logger.error("Create testcase error:", err);
 			return false;
 		}
 	};

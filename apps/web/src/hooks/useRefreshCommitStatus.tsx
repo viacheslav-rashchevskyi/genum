@@ -1,5 +1,6 @@
 import { useCallback } from "react";
 import { promptApi } from "@/api/prompt";
+import { logger } from "@/lib/logger";
 
 export function useRefreshCommitStatus(
 	promptId: number | undefined,
@@ -15,7 +16,7 @@ export function useRefreshCommitStatus(
 				return commited;
 			}
 		} catch (err) {
-			console.error("Failed to refresh commit status", err);
+			logger.error("Failed to refresh commit status", err);
 		}
 		return false;
 	}, [promptId, onCommitStatusChange]);

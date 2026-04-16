@@ -2,6 +2,7 @@ import { useState, useCallback, useEffect } from "react";
 import { useToast } from "@/hooks/useToast";
 import { organizationApi } from "@/api/organization";
 import type { CustomProvider, CustomProviderDeleteStatus } from "@/api/organization";
+import { logger } from "@/lib/logger";
 
 interface UseCustomProviderReturn {
 	provider: CustomProvider | null;
@@ -33,7 +34,7 @@ export function useCustomProvider(): UseCustomProviderReturn {
 			const data = await organizationApi.getCustomProvider();
 			setProvider(data?.provider ?? null);
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			setProvider(null);
 		} finally {
 			setIsLoading(false);
@@ -54,7 +55,7 @@ export function useCustomProvider(): UseCustomProviderReturn {
 
 			await fetchProvider();
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: error instanceof Error ? error.message : "Failed to sync models",
@@ -72,7 +73,7 @@ export function useCustomProvider(): UseCustomProviderReturn {
 			const status = await organizationApi.getCustomProviderDeleteStatus();
 			setDeleteStatus(status);
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			setDeleteStatus(null);
 			setDeleteStatusError("Failed to check if the provider can be deleted.");
 		} finally {
@@ -98,7 +99,7 @@ export function useCustomProvider(): UseCustomProviderReturn {
 			toast({ title: "Deleted", description: "Custom provider removed" });
 			setProvider(null);
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Cannot delete provider",

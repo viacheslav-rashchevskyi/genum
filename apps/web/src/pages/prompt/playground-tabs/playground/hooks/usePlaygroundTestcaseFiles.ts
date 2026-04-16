@@ -4,6 +4,7 @@ import type { FileMetadata } from "@/api/files";
 import { testcasesApi } from "@/api/testcases/testcases.api";
 import type { TestCaseFile } from "@/types/TestСase";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
+import { logger } from "@/lib/logger";
 
 interface UsePlaygroundTestcaseFilesParams {
 	testcaseId: string | null;
@@ -96,7 +97,7 @@ export function usePlaygroundTestcaseFiles({
 
 				await invalidateTestcaseQueries();
 			} catch (error) {
-				console.error("Failed to update testcase files:", error);
+				logger.error("Failed to update testcase files:", error);
 			}
 		},
 		[
@@ -122,7 +123,7 @@ export function usePlaygroundTestcaseFiles({
 				await removeFileAsync(fileId);
 				await invalidateTestcaseQueries();
 			} catch (error) {
-				console.error("Failed to remove file from testcase:", error);
+				logger.error("Failed to remove file from testcase:", error);
 			}
 		},
 		[

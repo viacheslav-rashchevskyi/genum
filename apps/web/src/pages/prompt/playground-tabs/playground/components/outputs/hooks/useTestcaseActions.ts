@@ -6,6 +6,7 @@ import { useToast } from "@/hooks/useToast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useMemorySelection } from "@/pages/prompt/playground-tabs/memory/hooks/useMemorySelection";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
+import { logger } from "@/lib/logger";
 
 interface UseTestcaseActionsProps {
 	promptId: number | undefined;
@@ -34,7 +35,7 @@ export const useTestcaseActions = ({ promptId, onTestcaseAdded, selectedFiles }:
 					},
 				});
 			} catch (error) {
-				console.error("Failed to refresh prompt testcases after create:", error);
+				logger.error("Failed to refresh prompt testcases after create:", error);
 			}
 			onTestcaseAdded?.();
 		},
@@ -66,7 +67,7 @@ export const useTestcaseActions = ({ promptId, onTestcaseAdded, selectedFiles }:
 				await createTestcaseMutation.mutateAsync(createPayload);
 				success = true;
 			} catch (err) {
-				console.error("Create testcase error:", err);
+				logger.error("Create testcase error:", err);
 				success = false;
 			} finally {
 				toast({

@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useToast } from "@/hooks/useToast";
 import { userApi } from "@/api/user";
+import { logger } from "@/lib/logger";
 
 export function useUserFeedback() {
 	const { toast } = useToast();
@@ -27,7 +28,7 @@ export function useUserFeedback() {
 
 				return true;
 			} catch (error) {
-				console.error("Error sending feedback:", error);
+				logger.error("Error sending feedback:", error);
 				toast({
 					title: "Error",
 					description: "Failed to send feedback. Please try again.",

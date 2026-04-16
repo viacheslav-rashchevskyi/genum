@@ -5,6 +5,7 @@ import * as z from "zod";
 import { getOrgId, getProjectId } from "@/api/client";
 import { projectKeys } from "@/query-keys/project.keys";
 import { authKeys } from "@/query-keys/auth.keys";
+import { logger } from "@/lib/logger";
 
 export const projectFormSchema = z.object({
 	name: z.string().min(1, { message: "Project name is required" }),
@@ -43,7 +44,7 @@ export function useProject() {
 			toast({ title: "Saved", description: "Project updated" });
 			return true;
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Could not update project",

@@ -10,6 +10,7 @@ import type { FileMetadata } from "@/api/files";
 import { useQueryClient } from "@tanstack/react-query";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
 import { usePromptActions } from "@/stores/prompt.store";
+import { logger } from "@/lib/logger";
 
 export function usePlaygroundPromptRun({
 	promptId,
@@ -95,7 +96,7 @@ export function usePlaygroundPromptRun({
 		} catch (err: unknown) {
 			const error =
 				err instanceof Error ? err : new Error("Failed to run prompt/testcase");
-			console.error("Failed to run prompt/testcase:", err);
+			logger.error("Failed to run prompt/testcase:", err);
 			setRunError(error.message);
 			toast({
 				title: "Error",

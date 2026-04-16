@@ -14,6 +14,7 @@ import { SidebarMenuButton } from "@/components/sidebar/sidebar";
 import { NotificationIcon } from "@/components/ui/icons-tsx/NotificationIcon";
 import { formatNotificationPreview } from "@/lib/notificationPreview";
 import { getOrgId, getProjectId} from "@/api/client"
+import { logger } from "@/lib/logger";
 
 export function SidebarNotificationButton() {
 	const { toast } = useToast();
@@ -32,7 +33,7 @@ export function SidebarNotificationButton() {
 			const data = await userApi.getNotifications({ limit: 3 });
 			setNotifications(data.notifications ?? []);
 		} catch (error) {
-			console.error("Error fetching notifications:", error);
+			logger.error("Error fetching notifications:", error);
 			toast({
 				title: "Error",
 				description: "Failed to load notifications.",
@@ -73,7 +74,7 @@ export function SidebarNotificationButton() {
 				),
 			);
 		} catch (error) {
-			console.error("Error marking notification as read:", error);
+			logger.error("Error marking notification as read:", error);
 		}
 	};
 
@@ -103,7 +104,7 @@ export function SidebarNotificationButton() {
 				duration: 3000,
 			});
 		} catch (error) {
-			console.error("Error marking all notifications as read:", error);
+			logger.error("Error marking all notifications as read:", error);
 			toast({
 				title: "Error",
 				description: "Failed to mark all notifications as read.",

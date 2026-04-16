@@ -5,6 +5,7 @@ import { organizationApi } from "@/api/organization";
 import type { NavigateFunction } from "react-router-dom";
 import { organizationKeys } from "@/query-keys/organization.keys";
 import { authKeys } from "@/query-keys/auth.keys";
+import { logger } from "@/lib/logger";
 
 export interface Project {
 	id: number;
@@ -73,7 +74,7 @@ export function useOrgProjects() {
 			});
 			return true;
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Project creation failed",
@@ -114,7 +115,7 @@ export function useOrgProjects() {
 				}
 			}
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Deletion failed",

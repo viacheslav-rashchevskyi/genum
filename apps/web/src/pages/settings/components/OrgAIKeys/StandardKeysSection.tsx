@@ -13,6 +13,7 @@ import { AddAIKeyDialog } from "../dialogs/AddAIKeyDialog";
 import { DeleteConfirmDialog } from "../shared/DeleteConfirmDialog";
 import type { AIKey, StandardKeysSectionProps } from "../../utils/types";
 import { useToast } from "@/hooks/useToast";
+import { logger } from "@/lib/logger";
 
 export function StandardKeysSection({
 	keys,
@@ -39,7 +40,7 @@ export function StandardKeysSection({
 			setDeleteDialogOpen(false);
 			setKeyToDelete(null);
 		} catch (error) {
-			console.error("Error while deleting. Please, try again", error);
+			logger.error("Error while deleting. Please, try again", error);
 			toast({
 				title: "Error",
 				description: "Error while deleting. Please, try again",

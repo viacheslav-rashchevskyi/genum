@@ -7,6 +7,7 @@ import {
 
 import { TabsValue } from "../../shared/utils/types";
 import type { ToolItem } from "../../../../utils/types";
+import { logger } from "@/lib/logger";
 
 interface UseToolStateProps {
 	editingTool?: ToolItem | null;
@@ -38,7 +39,7 @@ export const useToolState = ({ editingTool, open }: UseToolStateProps) => {
 					const visual = transformToVisualSchema(mockSchemaForTransform);
 					setSchema(visual);
 				} catch (e) {
-					console.error("Error parsing tool parameters", e);
+					logger.error("Error parsing tool parameters", e);
 					setSchema({ ...baseSchema, properties: [] });
 				}
 			} else {

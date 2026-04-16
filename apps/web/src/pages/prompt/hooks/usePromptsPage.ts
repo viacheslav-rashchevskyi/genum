@@ -14,6 +14,7 @@ import { useRefetchOnWorkspaceChange } from "@/hooks/useRefetchOnWorkspaceChange
 import { usePromptsTableColumns } from "./usePromptsTableColumns";
 import { getNewPromptName } from "../utils/promptCounters";
 import type { DeletePromptModalState, Prompt } from "../utils/types";
+import { logger } from "@/lib/logger";
 
 const defaultDeleteModalState: DeletePromptModalState = {
 	open: false,
@@ -78,7 +79,7 @@ export function usePromptsPage() {
 			addPromptLocally(newPrompt as Prompt);
 			navigate(addParamsToUrl(`/prompt/${newPrompt.id}/playground`));
 		} catch (err) {
-			console.error("Error:", err);
+			logger.error("Error:", err);
 		}
 	}, [addParamsToUrl, addPromptLocally, createPrompt, navigate, prompts]);
 

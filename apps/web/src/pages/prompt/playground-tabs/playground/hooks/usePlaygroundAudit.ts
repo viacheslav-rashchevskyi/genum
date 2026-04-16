@@ -6,6 +6,7 @@ import type { AuditData } from "@/types/audit";
 import { helperKeys } from "@/query-keys/helpers.keys";
 import { promptKeys } from "@/query-keys/prompt.keys";
 import { useAuditActions, useAuditUI } from "@/stores/audit.store";
+import { logger } from "@/lib/logger";
 
 interface UseAuditOptions {
 	onAuditSuccess?: (data: AuditData) => void;
@@ -83,7 +84,7 @@ export function useAudit(promptId: string | number | undefined, options?: UseAud
 		},
 		onError: (err) => {
 			const error = err instanceof Error ? err : new Error("Audit failed");
-			console.error("Audit failed:", err);
+			logger.error("Audit failed:", err);
 			onAuditError?.(error);
 		},
 		onSettled: () => {
@@ -127,7 +128,7 @@ export function useAudit(promptId: string | number | undefined, options?: UseAud
 		},
 		onError: (err) => {
 			const error = err instanceof Error ? err : new Error("Error tuning prompt");
-			console.error("Error tuning prompt:", err);
+			logger.error("Error tuning prompt:", err);
 			onFixError?.(error);
 		},
 	});

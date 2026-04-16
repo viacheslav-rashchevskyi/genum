@@ -7,6 +7,7 @@ import { usePromptStatus } from "@/contexts/PromptStatusContext";
 import { useTestcaseStatusCounts } from "@/hooks/useTestcaseStatusCounts";
 import usePromptStore from "@/stores/prompt.store";
 import type { UpdatePromptContentOptions } from "./types";
+import { logger } from "@/lib/logger";
 
 export function usePlaygroundPrompt({
 	promptId,
@@ -111,7 +112,7 @@ export function usePlaygroundPrompt({
 				lastSavedValueRef.current = updateValue;
 				clearLivePromptValue();
 			} catch (error) {
-				console.error("Failed to update prompt content:", error);
+				logger.error("Failed to update prompt content:", error);
 				toast({
 					title: "Failed to save prompt",
 					description: "Could not save prompt. Please try again.",

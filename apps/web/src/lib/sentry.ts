@@ -44,6 +44,7 @@ export const initSentry = () => {
 		});
 		isSentryInitialized = true;
 	} catch (error) {
+		// eslint-disable-next-line no-console
 		console.error("[Sentry] Failed to initialize Sentry:", error);
 	}
 };

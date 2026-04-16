@@ -4,6 +4,7 @@ import {
 	type JsonSchemaRoot,
 } from "../../shared/utils/schemaHelpers";
 import { TabsValue } from "../../shared/utils/types";
+import { logger } from "@/lib/logger";
 
 interface UseSchemaSaveProps {
 	promptId: number | undefined;
@@ -52,7 +53,7 @@ export const useSchemaSave = ({
 		}
 
 		if (!promptId) {
-			console.error("Prompt ID is missing");
+			logger.error("Prompt ID is missing");
 			return;
 		}
 
@@ -63,7 +64,7 @@ export const useSchemaSave = ({
 			});
 			setOpen(false);
 		} catch (error) {
-			console.error("Error saving structured output config:", error);
+			logger.error("Error saving structured output config:", error);
 			setValidationErrors(["Error saving configuration."]);
 		}
 	};

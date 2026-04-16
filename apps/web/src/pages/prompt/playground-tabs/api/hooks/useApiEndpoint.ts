@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { runtimeConfig } from "@/lib/runtime-config";
+import { logger } from "@/lib/logger";
 
 export const useApiEndpoint = () => {
 	const { id } = useParams<{ id: string }>();
@@ -18,7 +19,7 @@ export const useApiEndpoint = () => {
 			setCopiedId(true);
 			setTimeout(() => setCopiedId(false), 3000);
 		} catch (e) {
-			console.error("Clipboard error", e);
+			logger.error("Clipboard error", e);
 		}
 	}, [promptId]);
 
@@ -28,7 +29,7 @@ export const useApiEndpoint = () => {
 			setCopiedURL(true);
 			setTimeout(() => setCopiedURL(false), 3000);
 		} catch (e) {
-			console.error("Clipboard error", e);
+			logger.error("Clipboard error", e);
 		}
 	}, [apiUrl]);
 

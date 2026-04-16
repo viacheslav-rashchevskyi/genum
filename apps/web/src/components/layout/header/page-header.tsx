@@ -17,6 +17,7 @@ import { getPageHeaderRouteState } from "./utils/pageHeaderRoute";
 import { getTestCaseIcon } from "./utils/testcaseIcon";
 import { PageHeaderTitleInput } from "./components/PageHeaderTitleInput";
 import { useShallow } from "zustand/react/shallow";
+import { logger } from "@/lib/logger";
 
 type NavItem = {
 	label: string;
@@ -156,7 +157,7 @@ export function PageHeader({ title, navItems = [] }: PageHeaderProps) {
 			await updatePrompt({ name: trimmedTitle });
 			setPageHeaderUi({ editableTitle: trimmedTitle });
 		} catch (error) {
-			console.error("Error updating prompt name:", error);
+			logger.error("Error updating prompt name:", error);
 			setPageHeaderUi({ editableTitle: prompt?.prompt?.name || title });
 			toast({
 				title: "Rename failed",
@@ -180,7 +181,7 @@ export function PageHeader({ title, navItems = [] }: PageHeaderProps) {
 			await renameTestcase(trimmedName);
 			setPageHeaderUi({ editableTitle: trimmedName });
 		} catch (error) {
-			console.error("Error updating testcase name:", error);
+			logger.error("Error updating testcase name:", error);
 			setPageHeaderUi({ editableTitle: testcase?.name || title });
 			toast({
 				title: "Rename failed",

@@ -2,6 +2,7 @@ import { useState, useCallback } from "react";
 import { useToast } from "@/hooks/useToast";
 import { useInvalidateCurrentUser } from "@/hooks/useCurrentUser";
 import { userApi } from "@/api/user";
+import { logger } from "@/lib/logger";
 
 export function useUserProfile() {
 	const { toast } = useToast();
@@ -23,7 +24,7 @@ export function useUserProfile() {
 				await invalidateCurrentUser();
 				return true;
 			} catch (error) {
-				console.error("Error updating user name:", error);
+				logger.error("Error updating user name:", error);
 				toast({
 					title: "Error",
 					description: "Failed to update your name. Please try again.",

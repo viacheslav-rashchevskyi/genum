@@ -4,6 +4,7 @@ import { projectApi, ProjectRole } from "@/api/project";
 import { organizationApi } from "@/api/organization/organization.api";
 import type { ProjectMember } from "@/api/project";
 import type { User } from "../utils/types";
+import { logger } from "@/lib/logger";
 
 export function useProjectMembers() {
 	const { toast } = useToast();
@@ -21,7 +22,7 @@ export function useProjectMembers() {
 			const data = await projectApi.getMembers();
 			setMembers(data.members ?? []);
 		} catch (error) {
-			console.error("Error fetching members:", error);
+			logger.error("Error fetching members:", error);
 			toast({
 				title: "Error",
 				description: "Failed to load members",
@@ -40,7 +41,7 @@ export function useProjectMembers() {
 			setAvailableUsers(allUsers);
 			setHasAvailableUsersEndpoint(true);
 		} catch (error) {
-			console.error("Error fetching available users:", error);
+			logger.error("Error fetching available users:", error);
 			setHasAvailableUsersEndpoint(false);
 			setAvailableUsers([]);
 		}
@@ -59,7 +60,7 @@ export function useProjectMembers() {
 				await fetchMembers();
 				return true;
 			} catch (error) {
-				console.error("Error adding member:", error);
+				logger.error("Error adding member:", error);
 				toast({
 					title: "Error",
 					description: "Failed to add member",
@@ -88,7 +89,7 @@ export function useProjectMembers() {
 					duration: 3000,
 				});
 			} catch (error) {
-				console.error("Error updating role:", error);
+				logger.error("Error updating role:", error);
 				toast({
 					title: "Error",
 					description: "Failed to update role",
@@ -115,7 +116,7 @@ export function useProjectMembers() {
 				});
 				await fetchMembers();
 			} catch (error) {
-				console.error("Error deleting member:", error);
+				logger.error("Error deleting member:", error);
 				toast({
 					title: "Error",
 					description: "Failed to remove member",

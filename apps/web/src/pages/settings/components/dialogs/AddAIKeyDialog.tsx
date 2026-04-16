@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/useToast";
 import type { Vendor, AddAIKeyDialogProps } from "../../utils/types";
+import { logger } from "@/lib/logger";
 
 export function AddAIKeyDialog({ onAdd }: AddAIKeyDialogProps) {
 	const { toast } = useToast();
@@ -40,7 +41,7 @@ export function AddAIKeyDialog({ onAdd }: AddAIKeyDialogProps) {
 			setSecret("");
 			setShowSecret(false);
 		} catch (error) {
-			console.error("Error adding API key:", error);
+			logger.error("Error adding API key:", error);
 			toast({
 				title: "Error",
 				description: "Failed to add API key. Please try again.",

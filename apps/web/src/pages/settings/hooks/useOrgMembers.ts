@@ -3,6 +3,7 @@ import { useToast } from "@/hooks/useToast";
 import { organizationApi, type Member, type OrganizationRole } from "@/api/organization";
 import { isLocalAuth } from "@/lib/auth";
 import { organizationKeys } from "@/query-keys/organization.keys";
+import { logger } from "@/lib/logger";
 
 export function useOrgMembers(orgId: string | undefined) {
 	const { toast } = useToast();
@@ -60,14 +61,14 @@ export function useOrgMembers(orgId: string | undefined) {
 						inviteUrl = `${window.location.origin}/invite/${newInvite.token}`;
 					}
 				} catch (error) {
-					console.error("Failed to fetch invite URL:", error);
+					logger.error("Failed to fetch invite URL:", error);
 				}
 			}
 
 			toast({ title: "Sent", description: "Invitation email sent" });
 			return { success: true, inviteUrl };
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Could not send invite",
@@ -83,7 +84,7 @@ export function useOrgMembers(orgId: string | undefined) {
 			toast({ title: "Updated", description: "Member role updated" });
 			return true;
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Failed to update role",
@@ -99,7 +100,7 @@ export function useOrgMembers(orgId: string | undefined) {
 			toast({ title: "Removed", description: "Member removed from organization" });
 			return true;
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Failed to remove member",

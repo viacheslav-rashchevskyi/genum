@@ -24,6 +24,7 @@ import {
 } from "../utils/testcases.utils";
 import { useRefetchOnWorkspaceChange } from "@/hooks/useRefetchOnWorkspaceChange";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
+import { logger } from "@/lib/logger";
 
 type UseTestcasesTableOptions = {
 	promptId?: number;
@@ -221,14 +222,14 @@ export const useTestcasesTable = ({
 							prevState.filter((state) => Number(state) !== Number(item.id)),
 						);
 					} catch (error) {
-						console.error(`Error running test case ${item.id}:`, error);
+						logger.error(`Error running test case ${item.id}:`, error);
 						setRunningRows((prevState) =>
 							prevState.filter((state) => Number(state) !== Number(item.id)),
 						);
 					}
 				}
 			} catch (error) {
-				console.error("Failed to run test cases:", error);
+				logger.error("Failed to run test cases:", error);
 				setRunningRows([]);
 			} finally {
 				setIsRunning(false);
@@ -263,7 +264,7 @@ export const useTestcasesTable = ({
 				setConfirmModalOpen(false);
 				setSelectedTestcase(null);
 			} catch (error) {
-				console.error("Failed to delete testcase:", error);
+				logger.error("Failed to delete testcase:", error);
 			} finally {
 				setIsDeleting(false);
 			}

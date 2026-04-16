@@ -13,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/useToast";
 import type { CreateAPIKeyDialogProps } from "../../utils/types";
+import { logger } from "@/lib/logger";
 
 export function CreateAPIKeyDialog({
 	open,
@@ -46,7 +47,7 @@ export function CreateAPIKeyDialog({
 				duration: 3000,
 			});
 		} catch (error) {
-			console.error("Failed to copy:", error);
+			logger.error("Failed to copy:", error);
 		}
 	};
 

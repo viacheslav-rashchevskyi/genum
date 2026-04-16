@@ -20,6 +20,7 @@ import {
 	SelectValue,
 } from "@/components/ui/select";
 import { userApi } from "@/api/user";
+import { logger } from "@/lib/logger";
 
 interface FeedbackButtonProps {
 	className?: string;
@@ -68,7 +69,7 @@ export function FeedbackButton({
 			setSubject("");
 			setMessage("");
 		} catch (error) {
-			console.error("Error sending feedback:", error);
+			logger.error("Error sending feedback:", error);
 			toast({
 				title: "Error",
 				description: "Failed to send feedback. Please try again.",

@@ -5,6 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { setApiContext, clearApiContext } from "@/api/client";
 import { OrganizationRole, hasOrgAccess } from "@/api/organization";
+import { logger } from "@/lib/logger";
 
 /**
  * This component is the "entry point" for the authenticated part of the app.
@@ -62,7 +63,7 @@ const RedirectedToProjectRoute = ({ Element }: RedirectedToProjectRouteProps) =>
 
 	// Basic validation: email is required
 	if (!userData.email) {
-		console.error("[RedirectedToProjectRoute] Invalid user data structure:", userData);
+		logger.error("[RedirectedToProjectRoute] Invalid user data structure:", userData);
 		return null;
 	}
 

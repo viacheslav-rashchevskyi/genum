@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { userApi, Notification } from "@/api/user";
+import { logger } from "@/lib/logger";
 
 export const useNotificationById = (notificationId?: string) => {
 	const [notification, setNotification] = useState<Notification | null>(null);
@@ -18,7 +19,7 @@ export const useNotificationById = (notificationId?: string) => {
 			const data = await userApi.getNotification(notificationId);
 			setNotification(data);
 		} catch (err: any) {
-			console.error("Error fetching notification:", err);
+			logger.error("Error fetching notification:", err);
 			setError(err?.message || "Failed to fetch notification");
 		} finally {
 			setLoading(false);

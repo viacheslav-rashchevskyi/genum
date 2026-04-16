@@ -4,6 +4,7 @@ import { organizationApi } from "@/api/organization";
 import type { AIKey, Vendor } from "../utils/types";
 import { organizationKeys } from "@/query-keys/organization.keys";
 import { isLocalAuth } from "@/lib/auth";
+import { logger } from "@/lib/logger";
 
 interface UseAIKeysReturn {
 	// State
@@ -68,7 +69,7 @@ export function useAIKeys(): UseAIKeysReturn {
 			await createKeyMutation.mutateAsync({ key, vendor });
 			toast({ title: "Success", description: "Key added" });
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Cannot add key",
@@ -83,7 +84,7 @@ export function useAIKeys(): UseAIKeysReturn {
 			await deleteKeyMutation.mutateAsync(keyId);
 			toast({ title: "Deleted", description: "Key removed" });
 		} catch (error) {
-			console.error(error);
+			logger.error(error);
 			toast({
 				title: "Error",
 				description: "Cannot delete key",

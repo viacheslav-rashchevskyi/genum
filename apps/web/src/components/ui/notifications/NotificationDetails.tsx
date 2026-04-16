@@ -8,6 +8,7 @@ import remarkGfm from "remark-gfm";
 import { NotificationIcon } from "@/components/ui/icons-tsx/NotificationIcon";
 import { userApi, type Notification as UserNotification } from "@/api/user/user.api";
 import { getOrgId, getProjectId } from "@/api/client";
+import { logger } from "@/lib/logger";
 
 export default function NotificationDetails() {
 	const { toast } = useToast();
@@ -35,7 +36,7 @@ export default function NotificationDetails() {
 				setNotification(data);
 			}
 		} catch (error) {
-			console.error("Error fetching notification:", error);
+			logger.error("Error fetching notification:", error);
 			toast({
 				title: "Error",
 				description: "Failed to load notification details.",

@@ -6,6 +6,7 @@ import {
 } from "../../shared/utils/schemaHelpers";
 import { TabsValue } from "../../shared/utils/types";
 import { validateStrictMode } from "../../shared/utils/schemaHelpers";
+import { logger } from "@/lib/logger";
 
 interface UseSchemaStateProps {
 	jsonSchema: string | null;
@@ -45,7 +46,7 @@ export const useSchemaState = ({ jsonSchema, open }: UseSchemaStateProps) => {
 				setActiveTab(TabsValue.VISUAL);
 				setCode("");
 			} catch (error) {
-				console.error("Error loading existing schema:", error);
+				logger.error("Error loading existing schema:", error);
 				setSchema({ ...baseSchema, properties: [] });
 				setValidationErrors(["Error loading existing schema"]);
 			}

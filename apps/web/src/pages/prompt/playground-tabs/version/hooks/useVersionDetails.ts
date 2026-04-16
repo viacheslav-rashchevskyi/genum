@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { promptApi } from "@/api/prompt";
 import type { AuditData } from "../utils/types";
 import { versionKeys } from "@/query-keys/version.keys";
+import { logger } from "@/lib/logger";
 
 export const useVersionDetails = (id: string | undefined, versionId: string | undefined) => {
 	const query = useQuery({
@@ -25,7 +26,7 @@ export const useVersionDetails = (id: string | undefined, versionId: string | un
 			}
 			return jsonSchema;
 		} catch (e) {
-			console.error("Failed to parse JSON schema:", e);
+			logger.error("Failed to parse JSON schema:", e);
 			return null;
 		}
 	}, [data]);

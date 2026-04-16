@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { logger } from "@/lib/logger";
 
 export default function CustomModelDialog({
 	open,
@@ -76,7 +77,7 @@ export default function CustomModelDialog({
 
 			setConnectionTestResult(result);
 		} catch (e) {
-			console.error(e);
+			logger.error(e);
 			setConnectionTestResult({
 				success: false,
 				error: e instanceof Error ? e.message : "Connection failed",
@@ -117,7 +118,7 @@ export default function CustomModelDialog({
 
 			await onSaved();
 		} catch (e) {
-			console.error(e);
+			logger.error(e);
 			toast({
 				title: "Error",
 				description: e instanceof Error ? e.message : "Cannot save provider",

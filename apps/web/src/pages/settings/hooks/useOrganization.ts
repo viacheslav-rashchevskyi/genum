@@ -5,6 +5,7 @@ import { organizationApi } from "@/api/organization";
 import * as z from "zod";
 import { authKeys } from "@/query-keys/auth.keys";
 import { organizationKeys } from "@/query-keys/organization.keys";
+import { logger } from "@/lib/logger";
 
 export const organizationFormSchema = z.object({
 	name: z.string().min(1, { message: "Organization name is required" }),
@@ -45,7 +46,7 @@ export function useOrganization() {
 			});
 			return true;
 		} catch (error) {
-			console.error("Error updating organization:", error);
+			logger.error("Error updating organization:", error);
 			toast({
 				title: "Error",
 				description: "Failed to update organization details",

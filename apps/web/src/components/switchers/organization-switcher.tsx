@@ -33,6 +33,7 @@ import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { userApi } from "@/api/user";
 import { getOrgId } from "@/api/client";
 import { authKeys } from "@/query-keys/auth.keys";
+import { logger } from "@/lib/logger";
 
 const organizationFormSchema = z.object({
 	name: z.string().min(1, { message: "Organization name is required" }),
@@ -78,7 +79,7 @@ function CreateOrganizationForm({ onClose, onSuccess }: CreateOrganizationFormPr
 			await queryClient.invalidateQueries({ queryKey: authKeys.currentUser() });
 			onSuccess(response.organization.id);
 		} catch (error) {
-			console.error("Error creating organization:", error);
+			logger.error("Error creating organization:", error);
 			toast({
 				title: "Error",
 				description: "Failed to create organization",

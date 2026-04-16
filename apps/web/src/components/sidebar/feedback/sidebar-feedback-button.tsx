@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select";
 import { SidebarMenuButton } from "@/components/sidebar/sidebar";
 import { MessageSquare } from "lucide-react";
+import { logger } from "@/lib/logger";
 
 export function SidebarFeedbackButton() {
 	const { toast } = useToast();
@@ -67,7 +68,7 @@ export function SidebarFeedbackButton() {
 			setType("Question");
 			setOpen(false);
 		} catch (error) {
-			console.error("Error submitting feedback:", error);
+			logger.error("Error submitting feedback:", error);
 			toast({
 				title: "Error",
 				description: "Failed to submit feedback. Please try again.",

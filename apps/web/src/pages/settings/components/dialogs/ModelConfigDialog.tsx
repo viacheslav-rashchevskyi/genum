@@ -36,6 +36,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import type { ModelConfigDialogProps } from "../../utils/types";
+import { logger } from "@/lib/logger";
 
 const DEFAULT_PARAMETERS: Record<string, ModelParameterConfig> = {
 	temperature: {
@@ -231,7 +232,7 @@ export default function ModelConfigDialog({
 			onSaved();
 			onOpenChange(false);
 		} catch (e) {
-			console.error(e);
+			logger.error(e);
 			toast({
 				title: "Error",
 				description: "Failed to save configuration",

@@ -7,6 +7,7 @@ import { promptApi } from "@/api/prompt/prompt.api";
 import type { Log } from "@/types/logs";
 import { testcaseKeys } from "@/query-keys/testcases.keys";
 import type { Memory } from "@/api/prompt/prompt.api";
+import { logger } from "@/lib/logger";
 
 interface UseAddTestcaseFromLogParams {
 	promptId?: number;
@@ -60,7 +61,7 @@ export function useAddTestcaseFromLog({
 						},
 					});
 				} catch (error) {
-					console.error("Failed to refresh prompt testcases after create from log:", error);
+					logger.error("Failed to refresh prompt testcases after create from log:", error);
 				}
 				return;
 			}

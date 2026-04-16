@@ -26,6 +26,7 @@ import { useToast } from "@/hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
 import { organizationApi } from "@/api/organization";
 import { authKeys } from "@/query-keys/auth.keys";
+import { logger } from "@/lib/logger";
 
 type Project = {
 	id: string;
@@ -123,7 +124,7 @@ export function ProjectSwitcher({
 			const newId = result?.project?.id;
 			if (newId) handleProjectChange(String(newId));
 		} catch (error) {
-			console.error("Error creating project:", error);
+			logger.error("Error creating project:", error);
 			toast({
 				title: "Error",
 				description: "Failed to create project",

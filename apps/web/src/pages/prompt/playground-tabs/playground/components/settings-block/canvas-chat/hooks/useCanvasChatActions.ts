@@ -1,6 +1,7 @@
 import { useCallback } from "react";
 import type { Action } from "@/types/Canvas";
 import type { UseCanvasChatActionsProps } from "../types";
+import { logger } from "@/lib/logger";
 
 export const useCanvasChatActions = ({
 	onEditPrompt,
@@ -29,7 +30,7 @@ export const useCanvasChatActions = ({
 					handleAuditPrompt(action.value);
 				}
 			} catch (error) {
-				console.error("Error in processAction:", error);
+				logger.error("Error in processAction:", error);
 			}
 		},
 		[handleEditPrompt, handleAuditPrompt],
