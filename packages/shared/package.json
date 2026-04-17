@@ -1,0 +1,17 @@
+{
+  "name": "@genum/shared",
+  "version": "1.5.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/generated/schemas/index.ts",
+  "types": "./src/generated/schemas/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/generated/schemas/index.ts",
+      "default": "./src/generated/schemas/index.ts"
+    }
+  },
+  "dependencies": {
+    "zod": "^4.3.5"
+  }
+}
